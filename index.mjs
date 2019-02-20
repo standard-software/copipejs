@@ -1,2 +1,2 @@
-const Copipe = require('./index.js')
-export default Copipe;
+const copipe = require('./index.js')
+export default copipe;

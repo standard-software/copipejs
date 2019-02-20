@@ -1,4 +1,2 @@
-function Copipe() {
-  console.log('Hello npm Copipe.js');
-}
-module.exports = Copipe;
+var copipe = require('./dest/copipe_core');
+module.exports = copipe;
