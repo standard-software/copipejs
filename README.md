@@ -41,6 +41,10 @@ console.log(
 
 ## Version
 
+### 0.1.4
+2019/02/20(Wed)  
+update file directory structure
+
 ### 0.1.3
 2019/02/19(Tue)  
 update README.md
@@ -53,7 +57,7 @@ update file directory structure
 2019/02/19(Tue)  
 update README.md
 
-### 0.1.0
+### 0.1.0 
 2019/01/21(Mon)  
 update README.md
 

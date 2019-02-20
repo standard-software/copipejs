@@ -1,4 +1,4 @@
 var copipe = {};
-copipe.VERSION = '0.1.3';
+copipe.VERSION = '0.1.4';
 
 module.exports = copipe;
