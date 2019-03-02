@@ -3,10 +3,10 @@
   "name": "@standard-software/copipe",
   "version": "0.1.4",
   "description": "simple code parts",
-  "main": "./dist/node/",
+  "main": "./release/node/",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node ./test/test_index.js && node --experimental-modules ./test/test_index.mjs"
   },
-  "author": "",
+  "author": "Satoshi Yamamoto",
   "license": "MIT"
 }
