@@ -1,12 +1,17 @@
 {
   "private": false,
   "name": "@standard-software/copipe",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "simple code parts",
   "main": "./release/node/",
   "scripts": {
+    "tsc_node": "tsc -p tsconfig.node.json & node ./npm_scripts/tsc_node.js",
     "test": "node ./test/test_index.js && node --experimental-modules ./test/test_index.mjs"
   },
   "author": "Satoshi Yamamoto",
+  "devDependencies": {
+    "@types/node": "^11.10.4",
+    "typescript": "^3.3.3333"
+  },
   "license": "MIT"
 }

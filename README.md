@@ -41,6 +41,10 @@ console.log(
 
 ## Version
 
+### 0.1.5
+2019/03/03(Sun)  
+TypeScript Environment
+
 ### 0.1.4
 2019/02/20(Wed)  
 update file directory structure
