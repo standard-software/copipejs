@@ -41,6 +41,10 @@ console.log(
 
 ## Version
 
+### 0.1.6
+2019/03/15(Fri)
+TypeScript + WebPack Environment
+
 ### 0.1.5
 2019/03/03(Sun)  
 TypeScript Environment
