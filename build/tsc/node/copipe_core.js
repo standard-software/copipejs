@@ -1,9 +1,9 @@
+"use strict";
 /**
  * copipe.js
  * version 0.1.7
  *  copipe_core.js
  */
-let copipe: any = {};
+var copipe = {};
 copipe.VERSION = '0.1.7';
-
-export = copipe;
+module.exports = copipe;
