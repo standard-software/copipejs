@@ -1,15 +1,17 @@
 {
   "private": false,
   "name": "@standard-software/copipe",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "simple code parts",
   "main": "./release/node/copipe",
   "scripts": {
     "tsc_init": "tsc --init",
-    "tsc_node": "tsc -p ./tsconfig.node.json",
-    "webpack_node": "webpack --config webpack.config.node.js",
-    "test_node1": "node ./source/test/node/test_index.js",
-    "test_node2": "node --experimental-modules ./source/test/node/test_index.mjs",
+    "tsc:node": "tsc -p ./tsconfig.node.json",
+    "webpack:node": "webpack --config webpack.config.node.js",
+    "test:node1": "node ./source/test/node/test_index.js",
+    "test:node2": "node --experimental-modules ./source/test/node/test_index.mjs",
+    "test:node": "npm run test:node1 && npm run test:node2",
+    "start:node": "npm run tsc:node && npm run webpack:node && npm run test:node",
     "test": ""
   },
   "author": "Satoshi Yamamoto",
