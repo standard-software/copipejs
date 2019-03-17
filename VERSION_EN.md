@@ -2,6 +2,20 @@
 
 ## Version
 
+### 0.2.0
+#### 2019/03/17(Sun)
+- Updated package.json, npm script.
+- Added type check function (multiple arguments).  
+copipe.type:{
+  isUndefined, isNull, isBoolean, isNumber, isInteger, isFunction, isObject, isArray, isDate
+}
+- Added type check function.  
+for isNot---, is---Array, isNot---Array.  
+- Added function.  
+copipe.syntax:{checkEqual, alert}
+- Added test code.  
+test_build_copipe.js, test_copipe_core.js, test_release_copipe.js, test_release_copipe.mjs
+
 ### 0.1.8
 2019/03/16(Sat)  
 assert _isUndefined _isNull _isBoolean + Test Code
