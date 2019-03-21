@@ -41,19 +41,16 @@ console.log(
 
 ## Version
 
-### 0.2.0
-#### 2019/03/17(Sun)
-- Updated package.json, npm script.
-- Added type check function (multiple arguments).  
-copipe.type:{
-  isUndefined, isNull, isBoolean, isNumber, isInteger, isFunction, isObject, isArray, isDate
-}
-- Added type check function.  
-for isNot---, is---Array, isNot---Array.  
-- Added function.  
-copipe.syntax:{checkEqual, alert}
-- Added test code.  
-test_build_copipe.js, test_copipe_core.js, test_release_copipe.js, test_release_copipe.mjs
+### 0.2.1
+#### 2019/03/21(Thu)
+- Updated FileTitle
+- Updated hide type check function single arguments (_is---)
+- Updated NameSpace structure.  
+  copipe.type.isNull etc = copile.isNull etc
+  copipe.syntax.assert etc = copipe.assert etc
+- Added function or
+- Added function if_
+- Added function switch_
 
 ### More Info
 [VERSION_EN.md](https://github.com/standard-software/copipejs/blob/master/VERSION_EN.md)
