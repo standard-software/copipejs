@@ -4,7 +4,7 @@
  */
 
 namespace copipe {
-  export const VERSION = '0.2.2';
+  export const VERSION = '0.3.0';
 }
 
 namespace copipe {
@@ -86,22 +86,91 @@ namespace copipe {
 
   /**
    * 文法拡張
-   * ここでは型判定関数で使うための assert のみ記載
+   * 型判定関数で使うための assert を記載する
+   */
+
+  /**
+   * 契約プログラミングで使用する assert
+   *  assert(boolean, message) の形式で記載。
+   *  boolean に false が入ると assert=宣言する ことが false になるので
+   *  例外を発生して停止させるものとして使う。
    */
   export namespace syntax {
     const { _isBoolean, _isString } = _type;
   
-    export function assert(value: boolean, message: string = '') {
-      if (!_isString(message)) {
-        throw new Error('assert argsType:' + message);
-      }
+    export const assert = (value: boolean, message: string = '') => {
       if (!_isBoolean(value)) {
-        throw new Error('assert argsType:' + message);
+        throw new TypeError('assert args1(value) type is not boolean. message:' + message);
+      }
+      if (!_isString(message)) {
+        throw new TypeError('assert args2(message) type is not string. message:' + message);
       }
       if (!value) {
-        throw new Error('assert:' + message);
+        throw new Error('assert error. message:' + message);
       }
     };
+
+    /**
+     * assert を発展させた guard 節 として使用する。
+     *  guard の構文に従っていない場合は SyntaxError が出るようにしている
+     *  TypeError と迷ったが、guard で守られている場合は TypeError を投げるべきで
+     *  guard 構文の記載ミスの場合なので SyntaxError としている
+     */
+    let guard_status: boolean = true;
+    let guard_message: any;
+    export const guard = (guardFunc: () => any[], runFunc: () => void | undefined): boolean => {
+      guard_message = '';
+      if (guard_status === false) { return false };
+
+      if (!isFunction(guardFunc)) {
+        throw new SyntaxError('guard args1(guardFunc) type is not function.');
+      }
+      const result = guardFunc();
+      if (!isArray(result)) {
+        throw new SyntaxError('guard args1(guardFunc) result type is not array.');
+      }
+      for (let i = 0; i < result.length; i += 1) {
+        let resultValue;
+        let message = '';
+        if (isArray(result[i])) {
+          if (!(1 <= result[i].length)) {
+            throw new SyntaxError('guard args1(guardFunc) result item is not array.length >= 1.');
+          }
+          resultValue = result[i][0];
+          if (2 <= result[i].length) {
+            message = result[i][1] 
+          }
+        } else {
+          resultValue = result[i];
+        }
+        resultValue = functionValue(resultValue);
+        if (!isBoolean(resultValue)) {
+          throw new SyntaxError('guard args1(guardFunc) result item value type is not boolean.');
+        }
+        if (resultValue === false) {
+          guard_message = message;
+          if (!isUndefined(runFunc)) {
+            if (!isFunction(runFunc)) {
+              throw new SyntaxError('guard args2(runFunc) type is not function');
+            }
+            runFunc();
+          }
+          return true
+        }
+      }
+      return false;
+    };
+    guard.message = () => guard_message;
+    
+    guard.status = (value: boolean): boolean => {
+      return guard_status = value;
+    };
+    guard.on = (): void => {
+      guard_status = true;
+    }
+    guard.off = (): void => {
+      guard_status = false;
+    }
   }
 
   /**
@@ -265,7 +334,7 @@ namespace copipe.syntax {
       return value;
     }
   };
-  
+
   /**
    * 二番目の引数を比較関数として利用して結果を返す関数
    *  sc は second call の略

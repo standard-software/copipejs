@@ -41,11 +41,11 @@ console.log(
 
 ## Version
 
-### 0.2.2
-#### 2019/03/21(Thu)
-- Added function equal
-- Added function sc (second call)
-
+### 0.3.0
+#### 2019/03/28(Thu)
+- Added function guard
+- Updated function assert
+  throw TypeError
 
 ### More Info
 [VERSION_EN.md](https://github.com/standard-software/copipejs/blob/master/VERSION_EN.md)

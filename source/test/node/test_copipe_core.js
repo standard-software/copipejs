@@ -6,7 +6,7 @@ var test_copipe;
    * 各関数を変数として宣言
    */
   let {
-    checkEqual, or, if_, switch_, equal, sc, 
+    checkEqual, or, if_, switch_, equal, sc, guard, 
     isUndefined, isNotUndefined, isUndefinedArray, isNotUndefinedArray,
     isNull, isNotNull, isNullArray, isNotNullArray,
     isBoolean, isNotBoolean, isBooleanArray, isNotBooleanArray,
@@ -35,7 +35,7 @@ var test_copipe;
       isArray, isNotArray, isArrayArray, isNotArrayArray,
       isDate, isNotDate, isDateArray, isNotDateArray,
     } = copipe.type);
-    ({ checkEqual, or, if_, switch_, equal, sc } = copipe.syntax);
+    ({ checkEqual, or, if_, switch_, equal, sc, guard } = copipe.syntax);
   }
   test_copipe.initialize = initialize;
 
@@ -518,6 +518,111 @@ var test_copipe;
     };
     syntax.test_sc = test_sc;
 
+    const test_guard = function() {
+
+      var guardFunc = ()=>[
+        isInteger(value1), [isInteger(value2), 'testmessage'] 
+      ];
+      {
+        // ガードされない処理
+        var result1 = false; var value1 = 1; var value2 = 2;
+        if (guard(guardFunc)) { result1 = true }
+        checkEqual(false, result1);
+        checkEqual('', guard.message());
+  
+        // ガードされる処理
+        {
+          var result1 = false; var value1 = '1'; var value2 = 2;
+          if (guard(guardFunc)) { result1 = true }
+          checkEqual(true, result1);
+          checkEqual('', guard.message());
+
+          var result1 = false; var value1 = 1; var value2 = '2';
+          if (guard(guardFunc)) { result1 = true }
+          checkEqual(true, result1);
+          checkEqual('testmessage', guard.message());
+        }
+
+        // ガードされる処理だがガードOFFされているので実行されない
+        guard.off();
+        {
+          var result1 = false; var value1 = '1'; var value2 = 2;
+          if (guard(guardFunc)) { result1 = true }
+          checkEqual(false, result1);
+          checkEqual('', guard.message());     
+
+          var result1 = false; var value1 = 1; var value2 = '2';
+          if (guard(guardFunc)) { result1 = true }
+          checkEqual(false, result1);
+          checkEqual('', guard.message());
+        }
+        guard.on();   
+      }
+
+      var guardFunc = ()=>[
+        isInteger(value1), isArray(value2), 1 <= value2.length
+      ];
+      {
+        var result1 = false; var value1 = 1; var value2 = [1];
+        if (guard(guardFunc)) { result1 = true }
+        checkEqual(false, result1);
+  
+        var result1 = false; var value1 = 1; var value2 = [];
+        if (guard(guardFunc)) { result1 = true }
+        checkEqual(true, result1);
+  
+        var result1 = false; var value1 = [1]; var value2 = [1];
+        if (guard(guardFunc)) { result1 = true }
+        checkEqual(true, result1);
+      }
+
+      var guardFunc = ()=>[
+        isArray(value1), 
+        [1 <= value1.length], 
+        [value1[0] === 1, 'value1[0]error'],
+        () => isArray(value2),
+        [() => 2 <= value2.length],
+        [() => value2[0] === 1, 'value2[0]error'],
+      ];
+      {
+        var result1 = false; var value1 = [1]; var value2 = [1,2];
+        if (guard(guardFunc)) { result1 = true }
+        checkEqual(false, result1);
+        checkEqual('', guard.message());
+  
+        var result1 = false; var value1 = 1; var value2 = [1,2];
+        if (guard(guardFunc)) { result1 = true }
+        checkEqual(true, result1);
+        checkEqual('', guard.message());
+  
+        var result1 = false; var value1 = []; var value2 = [1,2];
+        if (guard(guardFunc)) { result1 = true }
+        checkEqual(true, result1);
+        checkEqual('', guard.message());
+  
+        var result1 = false; var value1 = [2]; var value2 = [1,2];
+        if (guard(guardFunc)) { result1 = true }
+        checkEqual(true, result1);
+        checkEqual('value1[0]error', guard.message());
+  
+        var result1 = false; var value1 = [1]; var value2 = '[1,2]';
+        if (guard(guardFunc)) { result1 = true }
+        checkEqual(true, result1);
+        checkEqual('', guard.message());
+  
+        var result1 = false; var value1 = [1]; var value2 = [1];
+        if (guard(guardFunc)) { result1 = true }
+        checkEqual(true, result1);
+        checkEqual('', guard.message());
+  
+        var result1 = false; var value1 = [1]; var value2 = [2,2];
+        if (guard(guardFunc)) { result1 = true }
+        checkEqual(true, result1);
+        checkEqual('value2[0]error', guard.message());
+      }
+    };
+    syntax.test_guard = test_guard;
+
   })(syntax = test_copipe.syntax || (test_copipe.syntax = {}));
 })(test_copipe || (test_copipe = {}));
 
@@ -544,6 +649,7 @@ test_copipe.run = (copipe) => {
     test_if_,
     test_switch_,
     test_sc,
+    test_guard,
   } = test_copipe.syntax;
 
   test_isUndefined();
@@ -560,6 +666,7 @@ test_copipe.run = (copipe) => {
   test_if_();
   test_switch_();
   test_sc();
+  test_guard();
 
   console.log('test_copipe_core finish.');
 };

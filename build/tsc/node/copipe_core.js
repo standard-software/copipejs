@@ -5,7 +5,7 @@
  */
 var copipe;
 (function (copipe) {
-    copipe.VERSION = '0.2.2';
+    copipe.VERSION = '0.3.0';
 })(copipe || (copipe = {}));
 (function (copipe) {
     /**
@@ -67,25 +67,92 @@ var copipe;
     })(_type || (_type = {}));
     /**
      * 文法拡張
-     * ここでは型判定関数で使うための assert のみ記載
+     * 型判定関数で使うための assert を記載する
+     */
+    /**
+     * 契約プログラミングで使用する assert
+     *  assert(boolean, message) の形式で記載。
+     *  boolean に false が入ると assert=宣言する ことが false になるので
+     *  例外を発生して停止させるものとして使う。
      */
     var syntax;
     (function (syntax) {
         var _isBoolean = _type._isBoolean, _isString = _type._isString;
-        function assert(value, message) {
+        syntax.assert = function (value, message) {
             if (message === void 0) { message = ''; }
-            if (!_isString(message)) {
-                throw new Error('assert argsType:' + message);
-            }
             if (!_isBoolean(value)) {
-                throw new Error('assert argsType:' + message);
+                throw new TypeError('assert args1(value) type is not boolean. message:' + message);
+            }
+            if (!_isString(message)) {
+                throw new TypeError('assert args2(message) type is not string. message:' + message);
             }
             if (!value) {
-                throw new Error('assert:' + message);
+                throw new Error('assert error. message:' + message);
             }
-        }
-        syntax.assert = assert;
-        ;
+        };
+        /**
+         * assert を発展させた guard 節 として使用する。
+         *  guard の構文に従っていない場合は SyntaxError が出るようにしている
+         *  TypeError と迷ったが、guard で守られている場合は TypeError を投げるべきで
+         *  guard 構文の記載ミスの場合なので SyntaxError としている
+         */
+        var guard_status = true;
+        var guard_message;
+        syntax.guard = function (guardFunc, runFunc) {
+            guard_message = '';
+            if (guard_status === false) {
+                return false;
+            }
+            ;
+            if (!copipe.isFunction(guardFunc)) {
+                throw new SyntaxError('guard args1(guardFunc) type is not function.');
+            }
+            var result = guardFunc();
+            if (!copipe.isArray(result)) {
+                throw new SyntaxError('guard args1(guardFunc) result type is not array.');
+            }
+            for (var i = 0; i < result.length; i += 1) {
+                var resultValue = void 0;
+                var message = '';
+                if (copipe.isArray(result[i])) {
+                    if (!(1 <= result[i].length)) {
+                        throw new SyntaxError('guard args1(guardFunc) result item is not array.length >= 1.');
+                    }
+                    resultValue = result[i][0];
+                    if (2 <= result[i].length) {
+                        message = result[i][1];
+                    }
+                }
+                else {
+                    resultValue = result[i];
+                }
+                resultValue = syntax.functionValue(resultValue);
+                if (!copipe.isBoolean(resultValue)) {
+                    throw new SyntaxError('guard args1(guardFunc) result item value type is not boolean.');
+                }
+                if (resultValue === false) {
+                    guard_message = message;
+                    if (!copipe.isUndefined(runFunc)) {
+                        if (!copipe.isFunction(runFunc)) {
+                            throw new SyntaxError('guard args2(runFunc) type is not function');
+                        }
+                        runFunc();
+                    }
+                    return true;
+                }
+            }
+            return false;
+        };
+        syntax.guard.message = function () { return guard_message; };
+        syntax.guard.status = function (value) {
+            return guard_status = value;
+        };
+        syntax.guard.on = function () {
+            guard_status = true;
+        };
+        syntax.guard.off = function () {
+            guard_status = false;
+        };
     })(syntax = copipe.syntax || (copipe.syntax = {}));
     /**
      * 複数引数や関数引数の場合の型判定関数
