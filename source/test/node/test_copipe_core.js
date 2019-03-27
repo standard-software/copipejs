@@ -6,8 +6,17 @@ var test_copipe;
    * 各関数を変数として宣言
    */
   let {
-    checkEqual, or, if_, switch_,
+    checkEqual, or, if_, switch_, equal, sc, 
     isUndefined, isNotUndefined, isUndefinedArray, isNotUndefinedArray,
+    isNull, isNotNull, isNullArray, isNotNullArray,
+    isBoolean, isNotBoolean, isBooleanArray, isNotBooleanArray,
+    isNumber, isNotNumber, isNumberArray, isNotNumberArray,
+    isInteger, isNotInteger, isIntegerArray, isNotIntegerArray,
+    isString, isNotString, isStringArray, isNotStringArray,
+    isFunction, isNotFunction, isFunctionArray, isNotFunctionArray,
+    isObject, isNotObject, isObjectArray, isNotObjectArray,
+    isArray, isNotArray, isArrayArray, isNotArrayArray,
+    isDate, isNotDate, isDateArray, isNotDateArray,
   } = {};
   
   /**
@@ -26,7 +35,7 @@ var test_copipe;
       isArray, isNotArray, isArrayArray, isNotArrayArray,
       isDate, isNotDate, isDateArray, isNotDateArray,
     } = copipe.type);
-    ({ checkEqual, or, if_, switch_ } = copipe.syntax);
+    ({ checkEqual, or, if_, switch_, equal, sc } = copipe.syntax);
   }
   test_copipe.initialize = initialize;
 
@@ -500,6 +509,15 @@ var test_copipe;
     }
     syntax.test_switch_ = test_switch_;
 
+    const test_sc = function() {
+      checkEqual(true,  sc(1, equal, 1));
+      checkEqual(false, sc(1, equal, 2));
+
+      checkEqual(true,  sc(1, or, [1, 2]));
+      checkEqual(false, sc(0, or, [1, 2]));
+    };
+    syntax.test_sc = test_sc;
+
   })(syntax = test_copipe.syntax || (test_copipe.syntax = {}));
 })(test_copipe || (test_copipe = {}));
 
@@ -525,6 +543,7 @@ test_copipe.run = (copipe) => {
     test_or,
     test_if_,
     test_switch_,
+    test_sc,
   } = test_copipe.syntax;
 
   test_isUndefined();
@@ -540,6 +559,7 @@ test_copipe.run = (copipe) => {
   test_or();
   test_if_();
   test_switch_();
+  test_sc();
 
   console.log('test_copipe_core finish.');
 };

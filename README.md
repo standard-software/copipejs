@@ -41,16 +41,11 @@ console.log(
 
 ## Version
 
-### 0.2.1
+### 0.2.2
 #### 2019/03/21(Thu)
-- Updated FileTitle
-- Updated hide type check function single arguments (_is---)
-- Updated NameSpace structure.  
-  copipe.type.isNull etc = copile.isNull etc
-  copipe.syntax.assert etc = copipe.assert etc
-- Added function or
-- Added function if_
-- Added function switch_
+- Added function equal
+- Added function sc (second call)
+
 
 ### More Info
 [VERSION_EN.md](https://github.com/standard-software/copipejs/blob/master/VERSION_EN.md)

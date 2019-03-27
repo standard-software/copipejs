@@ -4,13 +4,14 @@
  */
 
 namespace copipe {
-  export const VERSION = '0.2.1';
+  export const VERSION = '0.2.2';
 }
 
 namespace copipe {
   
   /**
    * 単独引数の場合の型判定関数
+   *  assert などの防御はなし。
    */
   export namespace type {
     export const objectToString = (value: any): string => {
@@ -266,12 +267,32 @@ namespace copipe.syntax {
   };
   
   /**
+   * 二番目の引数を比較関数として利用して結果を返す関数
+   *  sc は second call の略
+   */
+  export const sc = (
+    argsFirst: any, 
+    // func: (args1: any, ...args: any) => any,
+    func: any,
+    ...argsRest: any
+  ) => {
+    return func(argsFirst, ...argsRest);
+  }
+  
+  /**
+   * 比較する関数
+   */
+  export const equal = (valueA: any, valueB: any) => {
+    return valueA === valueB;
+  }
+
+  /**
    * 配列内に value と一致する値があるかどうかを判定する関数
    */
-  export const or = (value: any, compares: any[]) => {
-    assert(isArray(compares));
-    for (let i = 0; i < compares.length; i += 1) {
-      if (value === compares[i]) {
+  export const or = (value: any, compareArray: any[]) => {
+    assert(isArray(compareArray));
+    for (let i = 0; i < compareArray.length; i += 1) {
+      if (value === compareArray[i]) {
         return true;
       }
     }
@@ -354,7 +375,6 @@ namespace copipe.syntax {
     };
   };
 }
-
 
 /**
  * 名前空間ルートの公開

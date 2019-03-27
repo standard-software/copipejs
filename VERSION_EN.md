@@ -2,6 +2,11 @@
 
 ## Version
 
+### 0.2.2
+#### 2019/03/21(Thu)
+- Added function equal
+- Added function sc (second call)
+
 ### 0.2.1
 #### 2019/03/21(Thu)
 - Updated FileTitle

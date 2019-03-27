@@ -5,11 +5,12 @@
  */
 var copipe;
 (function (copipe) {
-    copipe.VERSION = '0.2.1';
+    copipe.VERSION = '0.2.2';
 })(copipe || (copipe = {}));
 (function (copipe) {
     /**
      * 単独引数の場合の型判定関数
+     *  assert などの防御はなし。
      */
     var type;
     (function (type) {
@@ -221,12 +222,31 @@ var copipe;
             }
         };
         /**
+         * 二番目の引数を比較関数として利用して結果を返す関数
+         *  sc は second call の略
+         */
+        syntax.sc = function (argsFirst, 
+        // func: (args1: any, ...args: any) => any,
+        func) {
+            var argsRest = [];
+            for (var _i = 2; _i < arguments.length; _i++) {
+                argsRest[_i - 2] = arguments[_i];
+            }
+            return func.apply(void 0, [argsFirst].concat(argsRest));
+        };
+        /**
+         * 比較する関数
+         */
+        syntax.equal = function (valueA, valueB) {
+            return valueA === valueB;
+        };
+        /**
          * 配列内に value と一致する値があるかどうかを判定する関数
          */
-        syntax.or = function (value, compares) {
-            syntax.assert(copipe.isArray(compares));
-            for (var i = 0; i < compares.length; i += 1) {
-                if (value === compares[i]) {
+        syntax.or = function (value, compareArray) {
+            syntax.assert(copipe.isArray(compareArray));
+            for (var i = 0; i < compareArray.length; i += 1) {
+                if (value === compareArray[i]) {
                     return true;
                 }
             }
