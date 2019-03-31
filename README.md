@@ -41,6 +41,11 @@ console.log(
 
 ## Version
 
+### 0.3.2
+### 2019/04/01(Mon)
+- Updated checkThrow >> isThrown
+- Added isThrownValue isThrownException isNotThrown
+
 ### 0.3.1
 ### 2019/03/31(Sun)
 - Added isException

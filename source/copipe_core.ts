@@ -4,7 +4,7 @@
  */
 
 namespace copipe {
-  export const VERSION = '0.3.1';
+  export const VERSION = '0.3.2';
 }
 
 namespace copipe {
@@ -28,7 +28,7 @@ namespace copipe {
       return ((value: any): boolean => typeof value === typeName);
     }
 
-    type ObjectTypeName = 'Object' | 'Array' | 'Date';
+    type ObjectTypeName = 'Object' | 'Array' | 'Date' | 'Error';
     const _objectTypeCheckFunc =
     (typeName: ObjectTypeName): (args1: any) => boolean => {
       return ((value: any) => objectToString(value) === `[object ${typeName}]`);
@@ -69,6 +69,8 @@ namespace copipe {
 
     export const _isDate = _objectTypeCheckFunc('Date');
 
+    export const _isError = _objectTypeCheckFunc('Error');
+
     /**
      * 例外オブジェクト判定
      *  Errorオブジェクトを含む例外(Exception)オブジェクトは
@@ -92,6 +94,8 @@ namespace copipe {
             return true;
           }
         }
+      } else if (_isError(value)) {
+        return true;
       }
       return false;
     };
@@ -365,17 +369,14 @@ namespace copipe.syntax {
   }
 
   /**
-   * 例外が投げられたかどうかを判定する関数
+   * 例外や値が投げられたかどうかを判定する関数
    *  テストコードに使うためのもの
    *  compareFunc で 引数として投げられた値が渡されるのでそこで判定する
    *  関数になっているのはオブジェクトを値比較ができないため
    */
-  export const checkThrow = (targetFunc: Function, compareFunc: Function, message: string = '') => {
+  export const isThrown = (targetFunc: Function, compareFunc: Function) => {
     if (!isFunction(targetFunc, compareFunc)) {
       throw new SyntaxError('checkThrow args(targetFunc or compareFunc) type is not function.');
-    }
-    if (!isString(message)) {
-      throw new SyntaxError('checkEqual args(message) type is not string.');
     }
     try {
       targetFunc();
@@ -383,6 +384,38 @@ namespace copipe.syntax {
       return compareFunc(e);
     }
     return false;
+  };
+
+  /**
+   * 値が投げられたかどうか判定する関数
+   */
+  export const isThrownValue = (targetFunc: Function, thrownValue: any) => {
+    return isThrown(targetFunc, (thrown: any) => {
+      return thrown === thrownValue
+    })
+  };
+
+  /**
+   * 例外が投げられたかどうか判定する関数
+   */
+  export const isThrownException = (targetFunc: Function, exceptionName: string) => {
+    if (!isString(exceptionName)) {
+      throw new SyntaxError('isThrownException args2(exceptionName) type is not string.');
+    }
+
+    return isThrown(targetFunc, (thrown: any) => {
+      if (isException(thrown)) {
+        return thrown.name === exceptionName;
+      }
+      return false;
+    })
+  };
+
+  /**
+   * 例外や値が投げられていないことを判定する関数
+   */
+  export const isNotThrown = (targetFunc: Function) => {
+    return !isThrown(targetFunc, () => true);
   };
 
   /**
@@ -528,6 +561,7 @@ namespace copipe {
     isObject,
     isArray,
     isDate,
+    isException,
 
     isNotUndefined,
     isNotNull,
@@ -539,6 +573,7 @@ namespace copipe {
     isNotObject,
     isNotArray,
     isNotDate,
+    isNotException,
 
     isUndefinedArray,
     isNullArray,
@@ -550,6 +585,7 @@ namespace copipe {
     isObjectArray,
     isArrayArray,
     isDateArray,
+    isExceptionArray,
 
     isNotUndefinedArray,
     isNotNullArray,
@@ -561,6 +597,7 @@ namespace copipe {
     isNotObjectArray,
     isNotArrayArray,
     isNotDateArray,
+    isNotExceptionArray,
 
     isUndef,
     isBool,
@@ -569,6 +606,7 @@ namespace copipe {
     isStr,
     isFunc,
     isObj,
+    isExcept,
 
     isNotUndef,
     isNotBool,
@@ -577,6 +615,7 @@ namespace copipe {
     isNotStr,
     isNotFunc,
     isNotObj,
+    isNotExcept,
   } = copipe.type;
 
   /**
@@ -585,6 +624,7 @@ namespace copipe {
   export const {
     assert,
     checkEqual,
+    isThrown, isThrownValue, isThrownException, isNotThrown,
   } = copipe.syntax;
 }
 

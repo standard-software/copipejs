@@ -5,7 +5,7 @@
  */
 var copipe;
 (function (copipe) {
-    copipe.VERSION = '0.3.1';
+    copipe.VERSION = '0.3.2';
 })(copipe || (copipe = {}));
 (function (copipe) {
     /**
@@ -51,6 +51,7 @@ var copipe;
         };
         _type._isArray = _objectTypeCheckFunc('Array');
         _type._isDate = _objectTypeCheckFunc('Date');
+        _type._isError = _objectTypeCheckFunc('Error');
         /**
          * 例外オブジェクト判定
          *  Errorオブジェクトを含む例外(Exception)オブジェクトは
@@ -74,6 +75,9 @@ var copipe;
                         return true;
                     }
                 }
+            }
+            else if (_type._isError(value)) {
+                return true;
             }
             return false;
         };
@@ -314,18 +318,14 @@ var copipe;
             return false;
         };
         /**
-         * 例外が投げられたかどうかを判定する関数
+         * 例外や値が投げられたかどうかを判定する関数
          *  テストコードに使うためのもの
          *  compareFunc で 引数として投げられた値が渡されるのでそこで判定する
          *  関数になっているのはオブジェクトを値比較ができないため
          */
-        syntax.checkThrow = function (targetFunc, compareFunc, message) {
-            if (message === void 0) { message = ''; }
+        syntax.isThrown = function (targetFunc, compareFunc) {
             if (!copipe.isFunction(targetFunc, compareFunc)) {
                 throw new SyntaxError('checkThrow args(targetFunc or compareFunc) type is not function.');
-            }
-            if (!copipe.isString(message)) {
-                throw new SyntaxError('checkEqual args(message) type is not string.');
             }
             try {
                 targetFunc();
@@ -334,6 +334,34 @@ var copipe;
                 return compareFunc(e);
             }
             return false;
+        };
+        /**
+         * 値が投げられたかどうか判定する関数
+         */
+        syntax.isThrownValue = function (targetFunc, thrownValue) {
+            return syntax.isThrown(targetFunc, function (thrown) {
+                return thrown === thrownValue;
+            });
+        };
+        /**
+         * 例外が投げられたかどうか判定する関数
+         */
+        syntax.isThrownException = function (targetFunc, exceptionName) {
+            if (!copipe.isString(exceptionName)) {
+                throw new SyntaxError('isThrownException args2(exceptionName) type is not string.');
+            }
+            return syntax.isThrown(targetFunc, function (thrown) {
+                if (copipe.isException(thrown)) {
+                    return thrown.name === exceptionName;
+                }
+                return false;
+            });
+        };
+        /**
+         * 例外や値が投げられていないことを判定する関数
+         */
+        syntax.isNotThrown = function (targetFunc) {
+            return !syntax.isThrown(targetFunc, function () { return true; });
         };
         /**
          * 非関数の場合はそのままの値、関数の場合は実行結果を返す関数
@@ -471,10 +499,10 @@ var copipe;
     /**
      * 型判定
      */
-    _a = copipe.type, copipe.isUndefined = _a.isUndefined, copipe.isNull = _a.isNull, copipe.isBoolean = _a.isBoolean, copipe.isNumber = _a.isNumber, copipe.isInteger = _a.isInteger, copipe.isString = _a.isString, copipe.isFunction = _a.isFunction, copipe.isObject = _a.isObject, copipe.isArray = _a.isArray, copipe.isDate = _a.isDate, copipe.isNotUndefined = _a.isNotUndefined, copipe.isNotNull = _a.isNotNull, copipe.isNotBoolean = _a.isNotBoolean, copipe.isNotNumber = _a.isNotNumber, copipe.isNotInteger = _a.isNotInteger, copipe.isNotString = _a.isNotString, copipe.isNotFunction = _a.isNotFunction, copipe.isNotObject = _a.isNotObject, copipe.isNotArray = _a.isNotArray, copipe.isNotDate = _a.isNotDate, copipe.isUndefinedArray = _a.isUndefinedArray, copipe.isNullArray = _a.isNullArray, copipe.isBooleanArray = _a.isBooleanArray, copipe.isNumberArray = _a.isNumberArray, copipe.isIntegerArray = _a.isIntegerArray, copipe.isStringArray = _a.isStringArray, copipe.isFunctionArray = _a.isFunctionArray, copipe.isObjectArray = _a.isObjectArray, copipe.isArrayArray = _a.isArrayArray, copipe.isDateArray = _a.isDateArray, copipe.isNotUndefinedArray = _a.isNotUndefinedArray, copipe.isNotNullArray = _a.isNotNullArray, copipe.isNotBooleanArray = _a.isNotBooleanArray, copipe.isNotNumberArray = _a.isNotNumberArray, copipe.isNotIntegerArray = _a.isNotIntegerArray, copipe.isNotStringArray = _a.isNotStringArray, copipe.isNotFunctionArray = _a.isNotFunctionArray, copipe.isNotObjectArray = _a.isNotObjectArray, copipe.isNotArrayArray = _a.isNotArrayArray, copipe.isNotDateArray = _a.isNotDateArray, copipe.isUndef = _a.isUndef, copipe.isBool = _a.isBool, copipe.isNum = _a.isNum, copipe.isInt = _a.isInt, copipe.isStr = _a.isStr, copipe.isFunc = _a.isFunc, copipe.isObj = _a.isObj, copipe.isNotUndef = _a.isNotUndef, copipe.isNotBool = _a.isNotBool, copipe.isNotNum = _a.isNotNum, copipe.isNotInt = _a.isNotInt, copipe.isNotStr = _a.isNotStr, copipe.isNotFunc = _a.isNotFunc, copipe.isNotObj = _a.isNotObj;
+    _a = copipe.type, copipe.isUndefined = _a.isUndefined, copipe.isNull = _a.isNull, copipe.isBoolean = _a.isBoolean, copipe.isNumber = _a.isNumber, copipe.isInteger = _a.isInteger, copipe.isString = _a.isString, copipe.isFunction = _a.isFunction, copipe.isObject = _a.isObject, copipe.isArray = _a.isArray, copipe.isDate = _a.isDate, copipe.isException = _a.isException, copipe.isNotUndefined = _a.isNotUndefined, copipe.isNotNull = _a.isNotNull, copipe.isNotBoolean = _a.isNotBoolean, copipe.isNotNumber = _a.isNotNumber, copipe.isNotInteger = _a.isNotInteger, copipe.isNotString = _a.isNotString, copipe.isNotFunction = _a.isNotFunction, copipe.isNotObject = _a.isNotObject, copipe.isNotArray = _a.isNotArray, copipe.isNotDate = _a.isNotDate, copipe.isNotException = _a.isNotException, copipe.isUndefinedArray = _a.isUndefinedArray, copipe.isNullArray = _a.isNullArray, copipe.isBooleanArray = _a.isBooleanArray, copipe.isNumberArray = _a.isNumberArray, copipe.isIntegerArray = _a.isIntegerArray, copipe.isStringArray = _a.isStringArray, copipe.isFunctionArray = _a.isFunctionArray, copipe.isObjectArray = _a.isObjectArray, copipe.isArrayArray = _a.isArrayArray, copipe.isDateArray = _a.isDateArray, copipe.isExceptionArray = _a.isExceptionArray, copipe.isNotUndefinedArray = _a.isNotUndefinedArray, copipe.isNotNullArray = _a.isNotNullArray, copipe.isNotBooleanArray = _a.isNotBooleanArray, copipe.isNotNumberArray = _a.isNotNumberArray, copipe.isNotIntegerArray = _a.isNotIntegerArray, copipe.isNotStringArray = _a.isNotStringArray, copipe.isNotFunctionArray = _a.isNotFunctionArray, copipe.isNotObjectArray = _a.isNotObjectArray, copipe.isNotArrayArray = _a.isNotArrayArray, copipe.isNotDateArray = _a.isNotDateArray, copipe.isNotExceptionArray = _a.isNotExceptionArray, copipe.isUndef = _a.isUndef, copipe.isBool = _a.isBool, copipe.isNum = _a.isNum, copipe.isInt = _a.isInt, copipe.isStr = _a.isStr, copipe.isFunc = _a.isFunc, copipe.isObj = _a.isObj, copipe.isExcept = _a.isExcept, copipe.isNotUndef = _a.isNotUndef, copipe.isNotBool = _a.isNotBool, copipe.isNotNum = _a.isNotNum, copipe.isNotInt = _a.isNotInt, copipe.isNotStr = _a.isNotStr, copipe.isNotFunc = _a.isNotFunc, copipe.isNotObj = _a.isNotObj, copipe.isNotExcept = _a.isNotExcept;
     /**
      * 文法拡張
      */
-    _b = copipe.syntax, copipe.assert = _b.assert, copipe.checkEqual = _b.checkEqual;
+    _b = copipe.syntax, copipe.assert = _b.assert, copipe.checkEqual = _b.checkEqual, copipe.isThrown = _b.isThrown, copipe.isThrownValue = _b.isThrownValue, copipe.isThrownException = _b.isThrownException, copipe.isNotThrown = _b.isNotThrown;
 })(copipe || (copipe = {}));
 module.exports = copipe;

@@ -6,8 +6,9 @@ var test_copipe;
    * 各関数を変数として宣言
    */
   let {
-    checkEqual, checkThrow,
     or, if_, switch_, equal, sc, guard, 
+    checkEqual,
+    isThrown, isThrownValue, isThrownException, isNotThrown,
     isUndefined, isNotUndefined, isUndefinedArray, isNotUndefinedArray,
     isNull, isNotNull, isNullArray, isNotNullArray,
     isBoolean, isNotBoolean, isBooleanArray, isNotBooleanArray,
@@ -38,7 +39,11 @@ var test_copipe;
       isDate, isNotDate, isDateArray, isNotDateArray,
       isException, isNotException, isExceptionArray, isNotExceptionArray,
     } = copipe.type);
-    ({ checkEqual, checkThrow, or, if_, switch_, equal, sc, guard } = copipe.syntax);
+    ({ 
+      or, if_, switch_, equal, sc, guard,
+      checkEqual, 
+      isThrown, isThrownValue, isThrownException, isNotThrown,
+    } = copipe.syntax);
   }
   test_copipe.initialize = initialize;
 
@@ -378,10 +383,10 @@ var test_copipe;
       checkEqual(false, isException({name: ''}));
       checkEqual(false, isException({message: ''}));
 
-      checkEqual(false, isException(new Error()));
-      checkEqual(false, isException(new TypeError()));
-      checkEqual(false, isException(new SyntaxError()));
-      checkEqual(false, isException(new ReferenceError()));
+      checkEqual(true,  isException(new Error()));
+      checkEqual(true,  isException(new TypeError()));
+      checkEqual(true,  isException(new SyntaxError()));
+      checkEqual(true,  isException(new ReferenceError()));
 
       const UserException = function(message) {
         this.message = message;
@@ -468,41 +473,27 @@ var test_copipe;
       checkEqual('ELSE', if_(false)(ifElseFunc));
 
       // Error
-      checkEqual(
-        true, 
-        checkThrow(
-          () => { if_(true)() }, 
-          (throwValue) => { 
-            return throwValue.name === 'SyntaxError';
-            // console.log(throwValue) 
-          },
-        )
-      );
-      checkEqual(
-        true, 
-        checkThrow(
-          () => { if_(true)({}) }, 
-          (throwValue) => { 
-            return throwValue.name === 'SyntaxError';
-          },
-        )
-      );
-      checkEqual(
-        true, 
-        checkThrow(
-          () => { if_(true)({thenn: ''}) }, 
-          (throwValue) => { 
-            return throwValue.name === 'SyntaxError';
-          },
-        )
-      );
-      checkEqual(
-        false, 
-        checkThrow(
-          () => { if_(true)({then: ''}) }, 
-          () => {},
-        )
-      );
+      checkEqual(true, isThrownException(
+        () => { if_(true)() },
+        'SyntaxError'
+      ));
+
+      checkEqual(true, isThrownException(
+        () => { if_(true)({}) },
+        'SyntaxError'
+      ));
+
+      checkEqual(true, isThrownException(
+        () => { if_(true)({thenn: ''}) },
+        'SyntaxError'
+      ));
+
+      checkEqual(false, isNotThrown(
+        () => { if_(true)() }
+      ));
+      checkEqual(true, isNotThrown(
+        () => { if_(true)({then: ''}) }
+      ));
     }
     syntax.test_if_ = test_if_;
 
@@ -680,17 +671,17 @@ var test_copipe;
     syntax.test_guard = test_guard;
 
     const test_checkThrow = () => {
-      checkEqual(true,  checkThrow(() => { throw 1 }, (throwValue) => { return throwValue === 1; } ));
-      checkEqual(false, checkThrow(() => { throw 1 }, (throwValue) => { return throwValue !== 1; } ));
-      checkEqual(false, checkThrow(() => { throw 2 }, (throwValue) => { return throwValue === 1; } ));
-      checkEqual(false, checkThrow(() => { throw 1 }, (throwValue) => { return throwValue === '1'; } ));
-      checkEqual(true,  checkThrow(() => { throw '1' }, (throwValue) => { return throwValue === '1'; } ));
-      checkEqual(true,  checkThrow(() => { throw '' }, (throwValue) => { return throwValue === ''; } ));
-      checkEqual(true,  checkThrow(() => { throw {test:'TEST'} }, (throwValue) => { return throwValue.test === 'TEST'; } ));
-      checkEqual(false, checkThrow(() => { throw {test:'TEST'} }, (throwValue) => { return throwValue.test === 'test'; } ));
+      checkEqual(true,  isThrown(() => { throw 1 }, (throwValue) => { return throwValue === 1; } ));
+      checkEqual(false, isThrown(() => { throw 1 }, (throwValue) => { return throwValue !== 1; } ));
+      checkEqual(false, isThrown(() => { throw 2 }, (throwValue) => { return throwValue === 1; } ));
+      checkEqual(false, isThrown(() => { throw 1 }, (throwValue) => { return throwValue === '1'; } ));
+      checkEqual(true,  isThrown(() => { throw '1' }, (throwValue) => { return throwValue === '1'; } ));
+      checkEqual(true,  isThrown(() => { throw '' }, (throwValue) => { return throwValue === ''; } ));
+      checkEqual(true,  isThrown(() => { throw {test:'TEST'} }, (throwValue) => { return throwValue.test === 'TEST'; } ));
+      checkEqual(false, isThrown(() => { throw {test:'TEST'} }, (throwValue) => { return throwValue.test === 'test'; } ));
 
-      checkEqual(false,  checkThrow(() => { }, () => { } ));
-      // 例外を投げない場合は checkThrow は false
+      checkEqual(false,  isThrown(() => { }, () => { } ));
+      // 例外を投げない場合は isThrown は false
     };
     syntax.test_checkThrow = test_checkThrow;
   })(syntax = test_copipe.syntax || (test_copipe.syntax = {}));
