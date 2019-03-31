@@ -468,8 +468,41 @@ var test_copipe;
       checkEqual('ELSE', if_(false)(ifElseFunc));
 
       // Error
-      // if_(true)({});
-      // if_(true)({ thenn: '' });
+      checkEqual(
+        true, 
+        checkThrow(
+          () => { if_(true)() }, 
+          (throwValue) => { 
+            return throwValue.name === 'SyntaxError';
+            // console.log(throwValue) 
+          },
+        )
+      );
+      checkEqual(
+        true, 
+        checkThrow(
+          () => { if_(true)({}) }, 
+          (throwValue) => { 
+            return throwValue.name === 'SyntaxError';
+          },
+        )
+      );
+      checkEqual(
+        true, 
+        checkThrow(
+          () => { if_(true)({thenn: ''}) }, 
+          (throwValue) => { 
+            return throwValue.name === 'SyntaxError';
+          },
+        )
+      );
+      checkEqual(
+        false, 
+        checkThrow(
+          () => { if_(true)({then: ''}) }, 
+          () => {},
+        )
+      );
     }
     syntax.test_if_ = test_if_;
 

@@ -446,22 +446,25 @@ namespace copipe.syntax {
    *  例外を発生する
    */
   export const if_ = (condition: boolean): any => {
-    assert(isBoolean(condition), 'if_ argsType')
-    const assertObjectThenElse = (args: any) => {
-      assert(isObject(args), 'if_() argsType');
-      assert(
-        !(isUndefined(args.then) && isUndefined(args.else)),
-        'if_() argsType'
-      );
+    if (!isBoolean(condition)) {
+      throw new TypeError('if_ args(condition) type is not boolean.');
+    }
+    const checkSyntax = (args: any) => {
+      if (!isObject(args)) {
+        throw new SyntaxError('if_() args type is not object.');
+      }
+      if (isUndefined(args.then) && isUndefined(args.else)) {
+        throw new SyntaxError('if_() args .then .else both nothing.');
+      }
     }
     if (condition) {
       return (args: any) => {
-        assertObjectThenElse(args);
+        checkSyntax(args);
         return functionValue(args.then);
       };
     } else {
       return (args: any) => {
-        assertObjectThenElse(args);
+        checkSyntax(args);
         return functionValue(args.else);
       }
     }

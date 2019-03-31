@@ -394,20 +394,26 @@ var copipe;
          *  例外を発生する
          */
         syntax.if_ = function (condition) {
-            syntax.assert(copipe.isBoolean(condition), 'if_ argsType');
-            var assertObjectThenElse = function (args) {
-                syntax.assert(copipe.isObject(args), 'if_() argsType');
-                syntax.assert(!(copipe.isUndefined(args.then) && copipe.isUndefined(args.else)), 'if_() argsType');
+            if (!copipe.isBoolean(condition)) {
+                throw new TypeError('if_ args(condition) type is not boolean.');
+            }
+            var checkSyntax = function (args) {
+                if (!copipe.isObject(args)) {
+                    throw new SyntaxError('if_() args type is not object.');
+                }
+                if (copipe.isUndefined(args.then) && copipe.isUndefined(args.else)) {
+                    throw new SyntaxError('if_() args .then .else both nothing.');
+                }
             };
             if (condition) {
                 return function (args) {
-                    assertObjectThenElse(args);
+                    checkSyntax(args);
                     return syntax.functionValue(args.then);
                 };
             }
             else {
                 return function (args) {
-                    assertObjectThenElse(args);
+                    checkSyntax(args);
                     return syntax.functionValue(args.else);
                 };
             }
