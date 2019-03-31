@@ -70,6 +70,33 @@ namespace copipe {
     export const _isDate = _objectTypeCheckFunc('Date');
 
     /**
+     * 例外オブジェクト判定
+     *  Errorオブジェクトを含む例外(Exception)オブジェクトは
+     *  name と message プロパティの有無によって判定する
+     *  
+     *  Errorオブジェクトの判定は下記のように実装することが可能
+     *  export const _isError = _objectTypeCheckFunc('Error');
+     *  だが
+     *  Errorオブジェクトを継承して
+     *  独自エラーオブジェクトを作成する方法は記載が難しいために利用しずらい
+     *  なので、単に name と message プロパティを持つオブジェクトかどうかの判定で
+     *  機能として十分になる
+     * 
+     *  参考：独自例外(Exception)オブジェクト作成方法
+     *    https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Statements/throw
+     */
+    export const _isException = (value: any) => {
+      if (_isObject(value)) {
+        if ('name' in value) {
+          if ('message' in value) {
+            return true;
+          }
+        }
+      }
+      return false;
+    };
+
+    /**
      * 単独引数の場合の型判定関数の否定形
      */
     export const _isNotUndefined = (value: any) => !_isUndefined(value);
@@ -82,6 +109,7 @@ namespace copipe {
     export const _isNotObject = (value: any) => !_isObject(value);
     export const _isNotArray = (value: any) => !_isArray(value);
     export const _isNotDate = (value: any) => !_isDate(value);
+    export const _isNotException = (value: any) => !_isException(value);
   }
 
   /**
@@ -190,6 +218,7 @@ namespace copipe {
       _isObject,
       _isArray,
       _isDate,
+      _isException,
 
       _isNotUndefined,
       _isNotNull,
@@ -201,6 +230,7 @@ namespace copipe {
       _isNotObject,
       _isNotArray,
       _isNotDate,
+      _isNotException,
     } = _type;
   
     const _isTypeCheck = (
@@ -247,6 +277,7 @@ namespace copipe {
     export const isObject = _isTypeCheckArgsFunc(_isObject);
     export const isArray = _isTypeCheckArgsFunc(_isArray);
     export const isDate = _isTypeCheckArgsFunc(_isDate);
+    export const isException = _isTypeCheckArgsFunc(_isException);
   
     export const isNotUndefined = _isTypeCheckArgsFunc(_isNotUndefined);
     export const isNotNull = _isTypeCheckArgsFunc(_isNotNull);
@@ -258,6 +289,7 @@ namespace copipe {
     export const isNotObject = _isTypeCheckArgsFunc(_isNotObject);
     export const isNotArray = _isTypeCheckArgsFunc(_isNotArray);
     export const isNotDate = _isTypeCheckArgsFunc(_isNotDate);
+    export const isNotException = _isTypeCheckArgsFunc(_isNotException);
   
     export const isUndefinedArray = _isTypeCheckArrayFunc(_isUndefined);
     export const isNullArray = _isTypeCheckArrayFunc(_isNull);
@@ -269,6 +301,7 @@ namespace copipe {
     export const isObjectArray = _isTypeCheckArrayFunc(_isObject);
     export const isArrayArray = _isTypeCheckArrayFunc(_isArray);
     export const isDateArray = _isTypeCheckArrayFunc(_isDate);
+    export const isExceptionArray = _isTypeCheckArrayFunc(_isException);
   
     export const isNotUndefinedArray = _isTypeCheckArrayFunc(_isNotUndefined);
     export const isNotNullArray = _isTypeCheckArrayFunc(_isNotNull);
@@ -280,6 +313,7 @@ namespace copipe {
     export const isNotObjectArray = _isTypeCheckArrayFunc(_isNotObject);
     export const isNotArrayArray = _isTypeCheckArrayFunc(_isNotArray);
     export const isNotDateArray = _isTypeCheckArrayFunc(_isNotDate);
+    export const isNotExceptionArray = _isTypeCheckArrayFunc(_isNotException);
   }
 }
 
@@ -294,6 +328,7 @@ namespace copipe.type {
   export const isStr = isString;
   export const isFunc = isFunction
   export const isObj = isObject
+  export const isExcept = isException
 
   export const isNotUndef = isNotUndefined;
   export const isNotBool = isNotBoolean;
@@ -302,6 +337,7 @@ namespace copipe.type {
   export const isNotStr = isNotString;
   export const isNotFunc = isNotFunction
   export const isNotObj = isNotObject
+  export const isNotExcept = isNotException
 }
 
 /**
