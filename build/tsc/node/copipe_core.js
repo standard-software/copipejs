@@ -5,7 +5,7 @@
  */
 var copipe;
 (function (copipe) {
-    copipe.VERSION = '0.3.0';
+    copipe.VERSION = '0.3.1';
 })(copipe || (copipe = {}));
 (function (copipe) {
     /**
@@ -52,6 +52,32 @@ var copipe;
         _type._isArray = _objectTypeCheckFunc('Array');
         _type._isDate = _objectTypeCheckFunc('Date');
         /**
+         * 例外オブジェクト判定
+         *  Errorオブジェクトを含む例外(Exception)オブジェクトは
+         *  name と message プロパティの有無によって判定する
+         *
+         *  Errorオブジェクトの判定は下記のように実装することが可能
+         *  export const _isError = _objectTypeCheckFunc('Error');
+         *  だが
+         *  Errorオブジェクトを継承して
+         *  独自エラーオブジェクトを作成する方法は記載が難しいために利用しずらい
+         *  なので、単に name と message プロパティを持つオブジェクトかどうかの判定で
+         *  機能として十分になる
+         *
+         *  参考：独自例外(Exception)オブジェクト作成方法
+         *    https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Statements/throw
+         */
+        _type._isException = function (value) {
+            if (_type._isObject(value)) {
+                if ('name' in value) {
+                    if ('message' in value) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        };
+        /**
          * 単独引数の場合の型判定関数の否定形
          */
         _type._isNotUndefined = function (value) { return !_type._isUndefined(value); };
@@ -64,6 +90,7 @@ var copipe;
         _type._isNotObject = function (value) { return !_type._isObject(value); };
         _type._isNotArray = function (value) { return !_type._isArray(value); };
         _type._isNotDate = function (value) { return !_type._isDate(value); };
+        _type._isNotException = function (value) { return !_type._isException(value); };
     })(_type || (_type = {}));
     /**
      * 文法拡張
@@ -159,7 +186,7 @@ var copipe;
      */
     (function (type) {
         var assert = syntax.assert;
-        var _isUndefined = _type._isUndefined, _isNull = _type._isNull, _isBoolean = _type._isBoolean, _isNumber = _type._isNumber, _isInteger = _type._isInteger, _isString = _type._isString, _isFunction = _type._isFunction, _isObject = _type._isObject, _isArray = _type._isArray, _isDate = _type._isDate, _isNotUndefined = _type._isNotUndefined, _isNotNull = _type._isNotNull, _isNotBoolean = _type._isNotBoolean, _isNotNumber = _type._isNotNumber, _isNotInteger = _type._isNotInteger, _isNotString = _type._isNotString, _isNotFunction = _type._isNotFunction, _isNotObject = _type._isNotObject, _isNotArray = _type._isNotArray, _isNotDate = _type._isNotDate;
+        var _isUndefined = _type._isUndefined, _isNull = _type._isNull, _isBoolean = _type._isBoolean, _isNumber = _type._isNumber, _isInteger = _type._isInteger, _isString = _type._isString, _isFunction = _type._isFunction, _isObject = _type._isObject, _isArray = _type._isArray, _isDate = _type._isDate, _isException = _type._isException, _isNotUndefined = _type._isNotUndefined, _isNotNull = _type._isNotNull, _isNotBoolean = _type._isNotBoolean, _isNotNumber = _type._isNotNumber, _isNotInteger = _type._isNotInteger, _isNotString = _type._isNotString, _isNotFunction = _type._isNotFunction, _isNotObject = _type._isNotObject, _isNotArray = _type._isNotArray, _isNotDate = _type._isNotDate, _isNotException = _type._isNotException;
         var _isTypeCheck = function (checkFunc, argsArray) {
             assert(_isFunction(checkFunc));
             assert(_isArray(argsArray));
@@ -201,6 +228,7 @@ var copipe;
         type.isObject = _isTypeCheckArgsFunc(_isObject);
         type.isArray = _isTypeCheckArgsFunc(_isArray);
         type.isDate = _isTypeCheckArgsFunc(_isDate);
+        type.isException = _isTypeCheckArgsFunc(_isException);
         type.isNotUndefined = _isTypeCheckArgsFunc(_isNotUndefined);
         type.isNotNull = _isTypeCheckArgsFunc(_isNotNull);
         type.isNotBoolean = _isTypeCheckArgsFunc(_isNotBoolean);
@@ -211,6 +239,7 @@ var copipe;
         type.isNotObject = _isTypeCheckArgsFunc(_isNotObject);
         type.isNotArray = _isTypeCheckArgsFunc(_isNotArray);
         type.isNotDate = _isTypeCheckArgsFunc(_isNotDate);
+        type.isNotException = _isTypeCheckArgsFunc(_isNotException);
         type.isUndefinedArray = _isTypeCheckArrayFunc(_isUndefined);
         type.isNullArray = _isTypeCheckArrayFunc(_isNull);
         type.isBooleanArray = _isTypeCheckArrayFunc(_isBoolean);
@@ -221,6 +250,7 @@ var copipe;
         type.isObjectArray = _isTypeCheckArrayFunc(_isObject);
         type.isArrayArray = _isTypeCheckArrayFunc(_isArray);
         type.isDateArray = _isTypeCheckArrayFunc(_isDate);
+        type.isExceptionArray = _isTypeCheckArrayFunc(_isException);
         type.isNotUndefinedArray = _isTypeCheckArrayFunc(_isNotUndefined);
         type.isNotNullArray = _isTypeCheckArrayFunc(_isNotNull);
         type.isNotBooleanArray = _isTypeCheckArrayFunc(_isNotBoolean);
@@ -231,6 +261,7 @@ var copipe;
         type.isNotObjectArray = _isTypeCheckArrayFunc(_isNotObject);
         type.isNotArrayArray = _isTypeCheckArrayFunc(_isNotArray);
         type.isNotDateArray = _isTypeCheckArrayFunc(_isNotDate);
+        type.isNotExceptionArray = _isTypeCheckArrayFunc(_isNotException);
     })(type = copipe.type || (copipe.type = {}));
 })(copipe || (copipe = {}));
 /**
@@ -246,6 +277,7 @@ var copipe;
         type.isStr = type.isString;
         type.isFunc = type.isFunction;
         type.isObj = type.isObject;
+        type.isExcept = type.isException;
         type.isNotUndef = type.isNotUndefined;
         type.isNotBool = type.isNotBoolean;
         type.isNotNum = type.isNotNumber;
@@ -253,6 +285,7 @@ var copipe;
         type.isNotStr = type.isNotString;
         type.isNotFunc = type.isNotFunction;
         type.isNotObj = type.isNotObject;
+        type.isNotExcept = type.isNotException;
     })(type = copipe.type || (copipe.type = {}));
 })(copipe || (copipe = {}));
 /**
@@ -263,10 +296,13 @@ var copipe;
     (function (syntax) {
         /**
          * a, b の2つの引数が一致するかどうかを判定する関数
-         * テストコードに使うためのもの
+         *  テストコードに使うためのもの
          */
         syntax.checkEqual = function (a, b, message) {
             if (message === void 0) { message = ''; }
+            if (!copipe.isString(message)) {
+                throw new SyntaxError('checkEqual args(message) type is not string.');
+            }
             if (a === b) {
                 return true;
             }
@@ -275,6 +311,28 @@ var copipe;
                 ("A = " + String(a) + "\n") +
                 ("B = " + String(b));
             console.log(message);
+            return false;
+        };
+        /**
+         * 例外が投げられたかどうかを判定する関数
+         *  テストコードに使うためのもの
+         *  compareFunc で 引数として投げられた値が渡されるのでそこで判定する
+         *  関数になっているのはオブジェクトを値比較ができないため
+         */
+        syntax.checkThrow = function (targetFunc, compareFunc, message) {
+            if (message === void 0) { message = ''; }
+            if (!copipe.isFunction(targetFunc, compareFunc)) {
+                throw new SyntaxError('checkThrow args(targetFunc or compareFunc) type is not function.');
+            }
+            if (!copipe.isString(message)) {
+                throw new SyntaxError('checkEqual args(message) type is not string.');
+            }
+            try {
+                targetFunc();
+            }
+            catch (e) {
+                return compareFunc(e);
+            }
             return false;
         };
         /**

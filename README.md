@@ -41,11 +41,11 @@ console.log(
 
 ## Version
 
-### 0.3.0
-#### 2019/03/28(Thu)
-- Added function guard
-- Updated function assert
-  throw TypeError
+### 0.3.1
+### 2019/03/31(Sun)
+- Added isException
+- Added function checkThrow
+- file move test_copipe_core.js
 
 ### More Info
 [VERSION_EN.md](https://github.com/standard-software/copipejs/blob/master/VERSION_EN.md)

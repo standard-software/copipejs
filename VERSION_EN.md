@@ -2,6 +2,12 @@
 
 ## Version
 
+### 0.3.1
+### 2019/03/31(Sun)
+- Added function checkThrow
+- file move test_copipe_core.js
+- Added isException
+
 ### 0.3.0
 #### 2019/03/28(Thu)
 - Added function guard
