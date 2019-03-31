@@ -347,10 +347,14 @@ namespace copipe.syntax {
 
   /**
    * a, b の2つの引数が一致するかどうかを判定する関数
-   * テストコードに使うためのもの
+   *  テストコードに使うためのもの
    */
   export const checkEqual = 
   (a: any, b: any, message: string = ''): boolean => {
+    if (!isString(message)) {
+      throw new SyntaxError('checkEqual args(message) type is not string.');
+    }
+
     if (a === b) { return true; }
     message = `Test: ${message}\n` +
       'A !== B\n' +
@@ -359,6 +363,27 @@ namespace copipe.syntax {
     console.log(message);
     return false
   }
+
+  /**
+   * 例外が投げられたかどうかを判定する関数
+   *  テストコードに使うためのもの
+   *  compareFunc で 引数として投げられた値が渡されるのでそこで判定する
+   *  関数になっているのはオブジェクトを値比較ができないため
+   */
+  export const checkThrow = (targetFunc: Function, compareFunc: Function, message: string = '') => {
+    if (!isFunction(targetFunc, compareFunc)) {
+      throw new SyntaxError('checkThrow args(targetFunc or compareFunc) type is not function.');
+    }
+    if (!isString(message)) {
+      throw new SyntaxError('checkEqual args(message) type is not string.');
+    }
+    try {
+      targetFunc();
+    } catch(e) {
+      return compareFunc(e);
+    }
+    return false;
+  };
 
   /**
    * 非関数の場合はそのままの値、関数の場合は実行結果を返す関数
