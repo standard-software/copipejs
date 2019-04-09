@@ -2,6 +2,11 @@
 
 ## Version
 
+### 0.3.3
+### 2019/04/10(Wed)
+- Updated copipe.syntax.checkEqual >> copipe.test.checkEqual.
+- Updated error message etc.
+
 ### 0.3.2
 ### 2019/04/01(Mon)
 - Updated checkThrow >> isThrown

@@ -4,7 +4,7 @@
  */
 
 namespace copipe {
-  export const VERSION = '0.3.2';
+  export const VERSION = '0.3.3';
 }
 
 namespace copipe {
@@ -350,25 +350,6 @@ namespace copipe.type {
 namespace copipe.syntax {
 
   /**
-   * a, b の2つの引数が一致するかどうかを判定する関数
-   *  テストコードに使うためのもの
-   */
-  export const checkEqual = 
-  (a: any, b: any, message: string = ''): boolean => {
-    if (!isString(message)) {
-      throw new SyntaxError('checkEqual args(message) type is not string.');
-    }
-
-    if (a === b) { return true; }
-    message = `Test: ${message}\n` +
-      'A !== B\n' +
-      `A = ${String(a)}\n` +
-      `B = ${String(b)}`
-    console.log(message);
-    return false
-  }
-
-  /**
    * 例外や値が投げられたかどうかを判定する関数
    *  テストコードに使うためのもの
    *  compareFunc で 引数として投げられた値が渡されるのでそこで判定する
@@ -376,7 +357,7 @@ namespace copipe.syntax {
    */
   export const isThrown = (targetFunc: Function, compareFunc: Function) => {
     if (!isFunction(targetFunc, compareFunc)) {
-      throw new SyntaxError('checkThrow args(targetFunc or compareFunc) type is not function.');
+      throw new SyntaxError('isThrown args(targetFunc or compareFunc) type is not function.');
     }
     try {
       targetFunc();
@@ -398,7 +379,9 @@ namespace copipe.syntax {
   /**
    * 例外が投げられたかどうか判定する関数
    */
-  export const isThrownException = (targetFunc: Function, exceptionName: string) => {
+  export const isThrownException = (
+    targetFunc: Function, exceptionName: string
+  ) => {
     if (!isString(exceptionName)) {
       throw new SyntaxError('isThrownException args2(exceptionName) type is not string.');
     }
@@ -526,9 +509,13 @@ namespace copipe.syntax {
    */
   export const switch_ = (expression: any): any => {
     return (args: any[]) => {
-      assert(isArray(args), 'switch_() argsType');
+      if (!isArray(args)) {
+        throw new SyntaxError('switch_() args type is not array.');
+      }
       for (let i = 0; i < args.length; i += 1) {
-        assert(isArray(args[i]), 'switch_() argsType not[[]]');
+        if (!isArray(args[i])) {
+          throw new SyntaxError('switch_() args type is not array in array.');
+        }
       }
       for (let i = 0; i < args.length; i += 1) {
         if (args[i].length === 0 ) { return undefined; };
@@ -539,6 +526,31 @@ namespace copipe.syntax {
       }
       return undefined;
     };
+  };
+}
+
+/**
+ * テスト
+ */
+namespace copipe.test {
+
+  /**
+   * a, b の2つの引数が一致するかどうかを判定する関数
+   *  テストコードに使うためのもの
+   */
+  export const checkEqual = 
+  (a: any, b: any, message: string = ''): boolean => {
+    if (!isString(message)) {
+      throw new SyntaxError('checkEqual args(message) type is not string.');
+    }
+
+    if (a === b) { return true; }
+    message = `Test: ${message}\n` +
+      'A !== B\n' +
+      `A = ${String(a)}\n` +
+      `B = ${String(b)}`
+    console.log(message);
+    return false
   };
 }
 
@@ -623,9 +635,15 @@ namespace copipe {
    */
   export const {
     assert,
-    checkEqual,
     isThrown, isThrownValue, isThrownException, isNotThrown,
   } = copipe.syntax;
+
+  /**
+   * テスト
+   */
+  export const {
+    checkEqual,
+  } = copipe.test;
 }
 
 export = copipe;

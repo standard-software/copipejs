@@ -41,9 +41,11 @@ var test_copipe;
     } = copipe.type);
     ({ 
       or, if_, switch_, equal, sc, guard,
-      checkEqual, 
       isThrown, isThrownValue, isThrownException, isNotThrown,
     } = copipe.syntax);
+    ({ 
+      checkEqual, 
+    } = copipe.test);
   }
   test_copipe.initialize = initialize;
 
@@ -525,8 +527,18 @@ var test_copipe;
       checkEqual(undefined,  switch_(2)(switchResultValue3));
 
       // Error
-      // switch_(1)([[1, '1'], 'default']);
-      // switch_(2)([[1, '1'], 'default']);
+      const switchResultValue4 = [
+        [1, '1'], 
+        'default'
+      ]
+      checkEqual(true, isThrownException(
+        () => { switch_(1)(switchResultValue4) },
+        'SyntaxError'
+      ));
+      checkEqual(true, isThrownException(
+        () => { switch_(2)(switchResultValue4) },
+        'SyntaxError'
+      ));
 
       const switchResultFunc1 = [
         [1, () => 'number 1'],
@@ -670,7 +682,7 @@ var test_copipe;
     };
     syntax.test_guard = test_guard;
 
-    const test_checkThrow = () => {
+    const test_isThrown = () => {
       checkEqual(true,  isThrown(() => { throw 1 }, (throwValue) => { return throwValue === 1; } ));
       checkEqual(false, isThrown(() => { throw 1 }, (throwValue) => { return throwValue !== 1; } ));
       checkEqual(false, isThrown(() => { throw 2 }, (throwValue) => { return throwValue === 1; } ));
@@ -683,7 +695,7 @@ var test_copipe;
       checkEqual(false,  isThrown(() => { }, () => { } ));
       // 例外を投げない場合は isThrown は false
     };
-    syntax.test_checkThrow = test_checkThrow;
+    syntax.test_checkThrow = test_isThrown;
   })(syntax = test_copipe.syntax || (test_copipe.syntax = {}));
 
 })(test_copipe || (test_copipe = {}));
@@ -692,7 +704,7 @@ test_copipe.run = (copipe) => {
 
   test_copipe.initialize(copipe);
 
-  const { checkEqual } = copipe.syntax;
+  const { checkEqual } = copipe.test;
   checkEqual(true, true, 'assert test');
   checkEqual(false, false, 'assert test');
 

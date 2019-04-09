@@ -5,7 +5,7 @@
  */
 var copipe;
 (function (copipe) {
-    copipe.VERSION = '0.3.2';
+    copipe.VERSION = '0.3.3';
 })(copipe || (copipe = {}));
 (function (copipe) {
     /**
@@ -299,25 +299,6 @@ var copipe;
     var syntax;
     (function (syntax) {
         /**
-         * a, b の2つの引数が一致するかどうかを判定する関数
-         *  テストコードに使うためのもの
-         */
-        syntax.checkEqual = function (a, b, message) {
-            if (message === void 0) { message = ''; }
-            if (!copipe.isString(message)) {
-                throw new SyntaxError('checkEqual args(message) type is not string.');
-            }
-            if (a === b) {
-                return true;
-            }
-            message = "Test: " + message + "\n" +
-                'A !== B\n' +
-                ("A = " + String(a) + "\n") +
-                ("B = " + String(b));
-            console.log(message);
-            return false;
-        };
-        /**
          * 例外や値が投げられたかどうかを判定する関数
          *  テストコードに使うためのもの
          *  compareFunc で 引数として投げられた値が渡されるのでそこで判定する
@@ -325,7 +306,7 @@ var copipe;
          */
         syntax.isThrown = function (targetFunc, compareFunc) {
             if (!copipe.isFunction(targetFunc, compareFunc)) {
-                throw new SyntaxError('checkThrow args(targetFunc or compareFunc) type is not function.');
+                throw new SyntaxError('isThrown args(targetFunc or compareFunc) type is not function.');
             }
             try {
                 targetFunc();
@@ -469,9 +450,13 @@ var copipe;
          */
         syntax.switch_ = function (expression) {
             return function (args) {
-                syntax.assert(copipe.isArray(args), 'switch_() argsType');
+                if (!copipe.isArray(args)) {
+                    throw new SyntaxError('switch_() args type is not array.');
+                }
                 for (var i = 0; i < args.length; i += 1) {
-                    syntax.assert(copipe.isArray(args[i]), 'switch_() argsType not[[]]');
+                    if (!copipe.isArray(args[i])) {
+                        throw new SyntaxError('switch_() args type is not array in array.');
+                    }
                 }
                 for (var i = 0; i < args.length; i += 1) {
                     if (args[i].length === 0) {
@@ -492,6 +477,33 @@ var copipe;
     })(syntax = copipe.syntax || (copipe.syntax = {}));
 })(copipe || (copipe = {}));
 /**
+ * テスト
+ */
+(function (copipe) {
+    var test;
+    (function (test) {
+        /**
+         * a, b の2つの引数が一致するかどうかを判定する関数
+         *  テストコードに使うためのもの
+         */
+        test.checkEqual = function (a, b, message) {
+            if (message === void 0) { message = ''; }
+            if (!copipe.isString(message)) {
+                throw new SyntaxError('checkEqual args(message) type is not string.');
+            }
+            if (a === b) {
+                return true;
+            }
+            message = "Test: " + message + "\n" +
+                'A !== B\n' +
+                ("A = " + String(a) + "\n") +
+                ("B = " + String(b));
+            console.log(message);
+            return false;
+        };
+    })(test = copipe.test || (copipe.test = {}));
+})(copipe || (copipe = {}));
+/**
  * 名前空間ルートの公開
  */
 (function (copipe) {
@@ -503,6 +515,10 @@ var copipe;
     /**
      * 文法拡張
      */
-    _b = copipe.syntax, copipe.assert = _b.assert, copipe.checkEqual = _b.checkEqual, copipe.isThrown = _b.isThrown, copipe.isThrownValue = _b.isThrownValue, copipe.isThrownException = _b.isThrownException, copipe.isNotThrown = _b.isNotThrown;
+    _b = copipe.syntax, copipe.assert = _b.assert, copipe.isThrown = _b.isThrown, copipe.isThrownValue = _b.isThrownValue, copipe.isThrownException = _b.isThrownException, copipe.isNotThrown = _b.isNotThrown;
+    /**
+     * テスト
+     */
+    copipe.checkEqual = copipe.test.checkEqual;
 })(copipe || (copipe = {}));
 module.exports = copipe;
