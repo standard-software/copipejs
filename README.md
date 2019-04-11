@@ -41,10 +41,11 @@ console.log(
 
 ## Version
 
-### 0.3.3
-### 2019/04/10(Wed)
-- Updated copipe.syntax.checkEqual >> copipe.test.checkEqual.
-- Updated error message etc.
+### 0.4.0
+### 2019/04/12(Fri)
+- Added copipe.consoleHook copipe_console.ts
+- Added copipe.type:{ isRegExp, isNotRegExp, isRegExpArray, isNotRegExpArray }
+- Added copipe.string:{ match }
 
 ### More Info
 [VERSION_EN.md](https://github.com/standard-software/copipejs/blob/master/VERSION_EN.md)

@@ -6,20 +6,39 @@ var test_copipe;
    * 各関数を変数として宣言
    */
   let {
-    or, if_, switch_, equal, sc, guard, 
-    checkEqual,
+    isUndefined, isNull,
+    isBoolean, isNumber, isInteger, isString,
+    isFunction, isObject, isArray, isDate, 
+    isRegExp, isException, 
+    
+    isNotUndefined, isNotNull,
+    isNotBoolean, isNotNumber,isNotInteger, isNotString,
+    isNotFunction, isNotObject, isNotArray, isNotDate, 
+    isNotRegExp, isNotException, 
+
+    isUndefinedArray, isNullArray,
+    isBooleanArray, isNumberArray, isIntegerArray, isStringArray,
+    isFunctionArray, isObjectArray, isArrayArray, isDateArray, 
+    isRegExpArray, isExceptionArray,
+
+    isNotUndefinedArray, isNotNullArray,
+    isNotBooleanArray, isNotNumberArray, isNotIntegerArray, isNotStringArray,
+    isNotFunctionArray, isNotObjectArray, isNotArrayArray, isNotDateArray, 
+    isNotRegExpArray, isNotExceptionArray,
+
+    isUndef, isBool, isNum, isInt, isStr,
+    isFunc, isObj, isExcept,
+
+    isNotUndef, isNotBool, isNotNum, isNotInt, isNotStr,
+    isNotFunc, isNotObj, isNotExcept,
+
+    assert, guard,
+    functionValue, sc, equal, or, if_, switch_, 
     isThrown, isThrownValue, isThrownException, isNotThrown,
-    isUndefined, isNotUndefined, isUndefinedArray, isNotUndefinedArray,
-    isNull, isNotNull, isNullArray, isNotNullArray,
-    isBoolean, isNotBoolean, isBooleanArray, isNotBooleanArray,
-    isNumber, isNotNumber, isNumberArray, isNotNumberArray,
-    isInteger, isNotInteger, isIntegerArray, isNotIntegerArray,
-    isString, isNotString, isStringArray, isNotStringArray,
-    isFunction, isNotFunction, isFunctionArray, isNotFunctionArray,
-    isObject, isNotObject, isObjectArray, isNotObjectArray,
-    isArray, isNotArray, isArrayArray, isNotArrayArray,
-    isDate, isNotDate, isDateArray, isNotDateArray,
-    isException, isNotException, isExceptionArray, isNotExceptionArray,
+
+    match,
+
+    checkEqual,
   } = {};
   
   /**
@@ -27,25 +46,40 @@ var test_copipe;
    */
   const initialize = function(copipe){
     ({
-      isUndefined, isNotUndefined, isUndefinedArray, isNotUndefinedArray,
-      isNull, isNotNull, isNullArray, isNotNullArray,
-      isBoolean, isNotBoolean, isBooleanArray, isNotBooleanArray,
-      isNumber, isNotNumber, isNumberArray, isNotNumberArray,
-      isInteger, isNotInteger, isIntegerArray, isNotIntegerArray,
-      isString, isNotString, isStringArray, isNotStringArray,
-      isFunction, isNotFunction, isFunctionArray, isNotFunctionArray,
-      isObject, isNotObject, isObjectArray, isNotObjectArray,
-      isArray, isNotArray, isArrayArray, isNotArrayArray,
-      isDate, isNotDate, isDateArray, isNotDateArray,
-      isException, isNotException, isExceptionArray, isNotExceptionArray,
-    } = copipe.type);
-    ({ 
-      or, if_, switch_, equal, sc, guard,
+      isUndefined, isNull,
+      isBoolean, isNumber, isInteger, isString,
+      isFunction, isObject, isArray, isDate, 
+      isRegExp, isException, 
+      
+      isNotUndefined, isNotNull,
+      isNotBoolean, isNotNumber,isNotInteger, isNotString,
+      isNotFunction, isNotObject, isNotArray, isNotDate, 
+      isNotRegExp, isNotException, 
+  
+      isUndefinedArray, isNullArray,
+      isBooleanArray, isNumberArray, isIntegerArray, isStringArray,
+      isFunctionArray, isObjectArray, isArrayArray, isDateArray, 
+      isRegExpArray, isExceptionArray,
+  
+      isNotUndefinedArray, isNotNullArray,
+      isNotBooleanArray, isNotNumberArray, isNotIntegerArray, isNotStringArray,
+      isNotFunctionArray, isNotObjectArray, isNotArrayArray, isNotDateArray, 
+      isNotRegExpArray, isNotExceptionArray,
+  
+      isUndef, isBool, isNum, isInt, isStr,
+      isFunc, isObj, isExcept,
+  
+      isNotUndef, isNotBool, isNotNum, isNotInt, isNotStr,
+      isNotFunc, isNotObj, isNotExcept,
+
+      assert, guard,
+      functionValue, sc, equal, or, if_, switch_, 
       isThrown, isThrownValue, isThrownException, isNotThrown,
-    } = copipe.syntax);
-    ({ 
+
+      match,
+
       checkEqual, 
-    } = copipe.test);
+    } = copipe);
   }
   test_copipe.initialize = initialize;
 
@@ -730,6 +764,8 @@ test_copipe.run = (copipe) => {
     test_guard,
     test_checkThrow,
   } = test_copipe.syntax;
+
+  console.log('test_copipe_core start.');
 
   test_isUndefined();
   test_isNull();

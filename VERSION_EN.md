@@ -2,6 +2,12 @@
 
 ## Version
 
+### 0.4.0
+### 2019/04/12(Fri)
+- Added copipe.consoleHook copipe_console.ts
+- Added copipe.type:{ isRegExp, isNotRegExp, isRegExpArray, isNotRegExpArray }
+- Added copipe.string:{ match }
+
 ### 0.3.3
 ### 2019/04/10(Wed)
 - Updated copipe.syntax.checkEqual >> copipe.test.checkEqual.

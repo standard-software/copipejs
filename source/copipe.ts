@@ -3,5 +3,5 @@
  *  file: copipe.js
  */
 
-import copipe = require('./copipe_core');
+import copipe = require('./copipe_console');
 export = copipe;

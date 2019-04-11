@@ -3,5 +3,5 @@
  * copipe.js
  *  file: copipe.js
  */
-var copipe = require("./copipe_core");
+var copipe = require("./copipe_console");
 module.exports = copipe;
