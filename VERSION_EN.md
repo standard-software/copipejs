@@ -2,6 +2,12 @@
 
 ## Version
 
+### 0.4.1
+### 2019/04/12(Fri)
+- Updated copipe.consoleHook 
+  only hookLog add hookInfo hookWarn hookError hookDebug
+- Updated test_consoleHook
+
 ### 0.4.0
 ### 2019/04/12(Fri)
 - Added copipe.consoleHook copipe_console.ts

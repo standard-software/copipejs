@@ -180,6 +180,11 @@ test_copipe.run = (copipe) => {
 
   console.log('test_copipe_console finish.');
 
+  // console.info('info');
+  // console.warn('warn');
+  // console.error('error');
+  // console.debug('debug');
+
 };
 
 module.exports = test_copipe;
