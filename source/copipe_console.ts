@@ -122,7 +122,7 @@ namespace copipe {
         ],
       ], () => { throw new TypeError(guard.message()) });
 
-      hookLog((...messageArgs: any[]) => {
+      _hook(methodName, (...messageArgs: any[]) => {
         let acceptFlag = acceptArray.length === 0;
         if (!acceptFlag) {
           acceptFlag = acceptArray.some((acceptValue) => {

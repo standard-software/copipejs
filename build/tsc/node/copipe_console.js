@@ -81,7 +81,7 @@ var copipe;
                     '_accept args3(rejectArray) type is not array.'
                 ],
             ]; }, function () { throw new TypeError(copipe.guard.message()); });
-            consoleHook.hookLog(function () {
+            consoleHook._hook(methodName, function () {
                 var messageArgs = [];
                 for (var _i = 0; _i < arguments.length; _i++) {
                     messageArgs[_i] = arguments[_i];
