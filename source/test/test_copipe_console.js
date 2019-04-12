@@ -87,10 +87,9 @@ var test_copipe;
   }
   test_copipe.initialize = initialize;
 
-  const test_consoleHook = function() {
+  const test_consoleHook_hookLog = function() {
 
     let consoleOutput = '';
-
     const consoleHookHookLog = () => {
       consoleHook.hookLog((args) => { consoleOutput += args + ';' });
     }
@@ -110,56 +109,56 @@ var test_copipe;
 
     consoleOutput = '';
     consoleHookHookLog();
-    consoleHook.accept(['debug1'], [], console.log)
+    consoleHook.acceptLog(['debug1'], [], console.log)
     testConsoleLog();
     consoleHook.unHookLog();
     checkEqual('debug1;', consoleOutput);
 
     consoleOutput = '';
     consoleHookHookLog();
-    consoleHook.accept(['debug1', 'release1'], [], console.log)
+    consoleHook.acceptLog(['debug1', 'release1'], [], console.log)
     testConsoleLog();
     consoleHook.unHookLog();
     checkEqual('debug1;release1;', consoleOutput)
 
     consoleOutput = '';
     consoleHookHookLog();
-    consoleHook.accept([/debug?/], [], console.log)
+    consoleHook.acceptLog([/debug?/], [], console.log)
     testConsoleLog();
     consoleHook.unHookLog();
     checkEqual('debug1;debug2;', consoleOutput)
 
     consoleOutput = '';
     consoleHookHookLog();
-    consoleHook.accept([/debug?/], ['debug1'], console.log)
+    consoleHook.acceptLog([/debug?/], ['debug1'], console.log)
     testConsoleLog();
     consoleHook.unHookLog();
     checkEqual('debug2;', consoleOutput)
 
     consoleOutput = '';
     consoleHookHookLog();
-    consoleHook.accept([], ['release1'], console.log)
+    consoleHook.acceptLog([], ['release1'], console.log)
     testConsoleLog();
     consoleHook.unHookLog();
     checkEqual('debug1;debug2;release2;', consoleOutput);
 
     consoleOutput = '';
     consoleHookHookLog();
-    consoleHook.accept([], [/debug?/], console.log)
+    consoleHook.acceptLog([], [/debug?/], console.log)
     testConsoleLog();
     consoleHook.unHookLog();
     checkEqual('release1;release2;', consoleOutput);
 
     consoleOutput = '';
     consoleHookHookLog();
-    consoleHook.accept(['debug1', 'debug2'], ['debug1'], console.log)
+    consoleHook.acceptLog(['debug1', 'debug2'], ['debug1'], console.log)
     testConsoleLog();
     consoleHook.unHookLog();
     checkEqual('debug2;', consoleOutput);
 
     consoleHook.unHookLog();
   }
-  test_copipe.test_consoleHook = test_consoleHook;
+  test_copipe.test_consoleHook_hookLog = test_consoleHook_hookLog;
 
 })(test_copipe || (test_copipe = {}));
 
@@ -170,10 +169,10 @@ test_copipe.run = (copipe) => {
   test_copipe.initialize(copipe);
 
   const {
-    test_consoleHook,
+    test_consoleHook_hookLog,
   } = test_copipe;
 
-  test_consoleHook();
+  test_consoleHook_hookLog();
 
   console.log('test_copipe_console finish.');
 

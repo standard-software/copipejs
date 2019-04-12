@@ -52,25 +52,73 @@ namespace copipe {
 
     export const original: any = {};
     original.log = console.log;
+    original.info = console.info;
+    original.warn = console.warn;
+    original.error = console.error;
+    original.debug = console.debug;
 
-    export const hookLog = (hookFunc: () => void) => {
-      console.log = hookFunc;
+    type consoleOutMethodName = 'log' | 'info' | 'warn' | 'error' | 'debug';
+    export const _hook = (methodName: consoleOutMethodName, hookFunc: (() => void) | undefined = () => {}) => {
+      guard(() => [
+        or(methodName, ['log', 'info', 'warn', 'error', 'debug'])
+      ], () => {
+        throw new Error('_hook args1(methodName) is not log|info|warn|error|debug.')
+      })
+      console[methodName] = hookFunc;
+    };
+    export const hookLog = (hookFunc: (() => void) | undefined) => {
+      _hook('log', hookFunc)
+    };
+    export const hookInfo = (hookFunc: (() => void) | undefined) => {
+      _hook('info', hookFunc)
+    };
+    export const hookWarn = (hookFunc: (() => void) | undefined) => {
+      _hook('warn', hookFunc)
+    };
+    export const hookError = (hookFunc: (() => void) | undefined) => {
+      _hook('error', hookFunc)
+    };
+    export const hookDebug = (hookFunc: (() => void) | undefined) => {
+      _hook('debug', hookFunc)
     };
 
+    export const _unHook = (methodName: consoleOutMethodName) => {
+      guard(() => [
+        or(methodName, ['log', 'info', 'warn', 'error', 'debug'])
+      ], () => {
+        throw new Error('_unHook args1(methodName) is not log|info|warn|error|debug.')
+      })
+      console[methodName] = original[methodName];
+    };
     export const unHookLog = () => {
-      console.log = original.log;
+      _unHook('log');
+    };
+    export const unHookInfo = () => {
+      _unHook('info');
+    };
+    export const unHookWarn = () => {
+      _unHook('warn');
+    };
+    export const unHookError = () => {
+      _unHook('error');
+    };
+    export const unHookDebug = () => {
+      _unHook('debug');
     };
 
-    export const accept = (
+    export const _accept = (
+      methodName: consoleOutMethodName,
       acceptArray: (string|RegExp)[], 
       rejectArray: (string|RegExp)[] | undefined,
       hookFunc: any = original.log,
     ) => {
       guard(() => [
-        [isArray(acceptArray), 'accept args1(acceptArray) type is not array.'],
+        [or(methodName, ['log', 'info', 'warn', 'error', 'debug']),
+          '_accept args1(methodName) is not log|info|warn|error|debug.'],
+        [isArray(acceptArray), '_accept args2(acceptArray) type is not array.'],
         [
           isUndefined(rejectArray) || isArray(rejectArray), 
-          'accept args2(rejectArray) type is not array.'
+          '_accept args3(rejectArray) type is not array.'
         ],
       ], () => { throw new TypeError(guard.message()) });
 
@@ -97,7 +145,41 @@ namespace copipe {
           hookFunc(...messageArgs);
         }
       });
-      
+    };
+    export const acceptLog = (
+      acceptArray: (string|RegExp)[], 
+      rejectArray: (string|RegExp)[] | undefined,
+      hookFunc: any = original.log,
+    ) => {
+      _accept('log', acceptArray, rejectArray, hookFunc);
+    };
+    export const acceptInfo = (
+      acceptArray: (string|RegExp)[], 
+      rejectArray: (string|RegExp)[] | undefined,
+      hookFunc: any = original.log,
+    ) => {
+      _accept('info', acceptArray, rejectArray, hookFunc);
+    };
+    export const acceptWarn = (
+      acceptArray: (string|RegExp)[], 
+      rejectArray: (string|RegExp)[] | undefined,
+      hookFunc: any = original.log,
+    ) => {
+      _accept('warn', acceptArray, rejectArray, hookFunc);
+    };
+    export const acceptError = (
+      acceptArray: (string|RegExp)[], 
+      rejectArray: (string|RegExp)[] | undefined,
+      hookFunc: any = original.log,
+    ) => {
+      _accept('error', acceptArray, rejectArray, hookFunc);
+    };
+    export const acceptDebug = (
+      acceptArray: (string|RegExp)[], 
+      rejectArray: (string|RegExp)[] | undefined,
+      hookFunc: any = original.log,
+    ) => {
+      _accept('debug', acceptArray, rejectArray, hookFunc);
     };
 
   }
