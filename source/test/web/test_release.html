@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>test_build.html</title>
+<script>
+
+  var module = {};
+
+</script>
+
+  <script src="../../../release/web/copipe.js"></script>
+
+  <script src="../test_copipe_core.js"></script>
+  <script src="../test_copipe_console.js"></script>
+
+<script>
+
+const main = function() {
+  console.log(
+    'copipe.VERSION', copipe.VERSION, 
+  );
+
+  test_copipe_core.run(copipe);
+  test_copipe_console.run(copipe);
+};
+
+</script>
+
+</head>
+<body>
+    <input type="button" value="Test Run" onclick="main()"
+    style="width:150px;">
+</body>
+</html>

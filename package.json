@@ -7,22 +7,50 @@
   "scripts": {
     "tsc_init //": "tsc初期化",
     "tsc_init": "tsc --init",
+
+    "node //": "node での処理",
+
     "tsc:node //": "tsc実行",
     "tsc:node": "tsc -p ./tsconfig.node.json",
-    "webpack:node //": "webpackでのビルド実行",
-    "webpack:node": "webpack --config webpack.config.node.js",
+
     "test:build:node //": "build版 テスト実行",
     "test:build:node": "node ./source/test/node/test_build_copipe.js",
+
+    "webpack:node //": "webpackでのビルド実行",
+    "webpack:node": "webpack --config webpack.config.node.js",
+
     "test:release:node //": "relase版 テスト実行",
     "test:release:node1": "node ./source/test/node/test_release_copipe.js",
     "test:release:node2": "node --experimental-modules ./source/test/node/test_release_copipe.mjs",
     "test:release:node": "npm run test:release:node1 && npm run test:release:node2",
+
     "start:build:node //": "build版 tsc実行 >> テスト実行",
     "start:build:node": "npm run tsc:node && npm run test:build:node",
+
     "start:release:node //": "release版 tsc実行 >> webpackビルド実行 >> テスト実行",
     "start:release:node": "npm run tsc:node && npm run webpack:node && npm run test:release:node",
-    "start:node //": "build版 tsc実行 >> テスト実行 短い名前での呼び出し",
-    "start:node": "npm run start:build:node",
+
+
+    "web //": "web での処理",
+
+    "tsc:web //": "tsc実行",
+    "tsc:web": "tsc -p ./tsconfig.web.json",
+
+    "test:build:web //": "build版 テスト実行",
+    "test:build:web": ".\\source\\test\\web\\test_build.html",
+
+    "webpack:web //": "webpackでのビルド実行",
+    "webpack:web": "webpack --config webpack.config.web.js",
+
+    "test:release:web //": "release版 テスト実行",
+    "test:release:web": ".\\source\\test\\web\\test_release.html",
+
+    "start:build:web //": "build版 tsc実行 >> テスト実行",
+    "start:build:web": "npm run tsc:web && npm run test:build:web",
+
+    "start:release:web //": "release版 tsc実行 >> webpackビルド実行 >> テスト実行",
+    "start:release:web": "npm run tsc:web && npm run webpack:web && npm run test:release:web",
+
     "test": ""
   },
   "author": "Satoshi Yamamoto",
