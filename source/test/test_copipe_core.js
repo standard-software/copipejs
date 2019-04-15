@@ -1,6 +1,6 @@
 
-var test_copipe;
-(function(test_copipe){
+var test_copipe_core;
+(function(test_copipe_core){
 
   /**
    * 各関数を変数として宣言
@@ -81,7 +81,7 @@ var test_copipe;
       checkEqual, 
     } = copipe);
   }
-  test_copipe.initialize = initialize;
+  test_copipe_core.initialize = initialize;
 
   (function(type){
     const test_isUndefined = function() {
@@ -432,7 +432,7 @@ var test_copipe;
     }
     type.test_isExcection = test_isExcection;
 
-  })(type = test_copipe.type || (test_copipe.type = {}));
+  })(type = test_copipe_core.type || (test_copipe_core.type = {}));
 
   (function(syntax){
 
@@ -730,13 +730,13 @@ var test_copipe;
       // 例外を投げない場合は isThrown は false
     };
     syntax.test_checkThrow = test_isThrown;
-  })(syntax = test_copipe.syntax || (test_copipe.syntax = {}));
+  })(syntax = test_copipe_core.syntax || (test_copipe_core.syntax = {}));
 
-})(test_copipe || (test_copipe = {}));
+})(test_copipe_core || (test_copipe_core = {}));
 
-test_copipe.run = (copipe) => {
+test_copipe_core.run = (copipe) => {
 
-  test_copipe.initialize(copipe);
+  test_copipe_core.initialize(copipe);
 
   const { checkEqual } = copipe.test;
   checkEqual(true, true, 'assert test');
@@ -754,7 +754,7 @@ test_copipe.run = (copipe) => {
     test_isArray,
     test_isDate,
     test_isExcection,
-  } = test_copipe.type;
+  } = test_copipe_core.type;
 
   const {
     test_or,
@@ -763,7 +763,7 @@ test_copipe.run = (copipe) => {
     test_sc,
     test_guard,
     test_checkThrow,
-  } = test_copipe.syntax;
+  } = test_copipe_core.syntax;
 
   console.log('test_copipe_core start.');
 
@@ -788,4 +788,4 @@ test_copipe.run = (copipe) => {
   console.log('test_copipe_core finish.');
 };
 
-module.exports = test_copipe;
+module.exports = test_copipe_core;

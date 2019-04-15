@@ -7,14 +7,16 @@
 
 var copipe = require('../../../release/node/copipe.js');
 
-var test_copipe = require('../test_copipe_core.js');
+var test_copipe_core = require('../test_copipe_core.js');
+var test_copipe_console = require('../test_copipe_console.js');
 
 const main = function() {
   console.log(
-    'copipe.VERSION', copipe.VERSION
+    'copipe.VERSION', copipe.VERSION, 
   );
 
-  test_copipe.run(copipe);
+  test_copipe_core.run(copipe);
+  test_copipe_console.run(copipe);
 };
 main();
 

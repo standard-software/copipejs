@@ -5,16 +5,32 @@
   "description": "simple code parts",
   "main": "./release/node/copipe",
   "scripts": {
-    "tsc_init": "tsc --init",
+    "//": "tsc初期化",
+    "tsc_init": "tsc --init", 
+
+    "//": "tsc実行",
     "tsc:node": "tsc -p ./tsconfig.node.json",
+
+    "//": "webpackでのビルド実行",
     "webpack:node": "webpack --config webpack.config.node.js",
+
+    "//": "build版 テスト実行",
     "test:build:node": "node ./source/test/node/test_build_copipe.js",
+
+    "//": "relase版 テスト実行",
     "test:release:node1": "node ./source/test/node/test_release_copipe.js",
     "test:release:node2": "node --experimental-modules ./source/test/node/test_release_copipe.mjs",
     "test:release:node": "npm run test:release:node1 && npm run test:release:node2",
+
+    "//": "build版 tsc実行 >> テスト実行",
     "start:build:node": "npm run tsc:node && npm run test:build:node",
+
+    "//": "release版 tsc実行 >> webpackビルド実行 >> テスト実行",
     "start:release:node": "npm run tsc:node && npm run webpack:node && npm run test:release:node",
+
+    "//": "build版 tsc実行 >> テスト実行 短い名前での呼び出し",
     "start:node": "npm run start:build:node",
+    
     "test": ""
   },
   "author": "Satoshi Yamamoto",

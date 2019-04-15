@@ -1,6 +1,6 @@
 
-var test_copipe;
-(function(test_copipe){
+var test_copipe_console;
+(function(test_copipe_console){
 
   /**
    * 各関数を変数として宣言
@@ -85,7 +85,7 @@ var test_copipe;
       consoleHook,
     } = copipe);
   }
-  test_copipe.initialize = initialize;
+  test_copipe_console.initialize = initialize;
 
   const test_consoleHook = function(methodName) {
 
@@ -158,19 +158,19 @@ var test_copipe;
 
     consoleHook._unHook(methodName);
   }
-  test_copipe.test_consoleHook = test_consoleHook;
+  test_copipe_console.test_consoleHook = test_consoleHook;
 
-})(test_copipe || (test_copipe = {}));
+})(test_copipe_console || (test_copipe_console = {}));
 
-test_copipe.run = (copipe) => {
+test_copipe_console.run = (copipe) => {
 
   console.log('test_copipe_console start.');
 
-  test_copipe.initialize(copipe);
+  test_copipe_console.initialize(copipe);
 
   const {
     test_consoleHook,
-  } = test_copipe;
+  } = test_copipe_console;
 
   test_consoleHook('log');
   test_consoleHook('info');
@@ -187,4 +187,4 @@ test_copipe.run = (copipe) => {
 
 };
 
-module.exports = test_copipe;
+module.exports = test_copipe_console;

@@ -10,13 +10,16 @@
 
 import copipe from '../../../release/node/copipe';
 
-import test_copipe from '../test_copipe_core.js';
+import test_copipe_core from '../test_copipe_core.js';
+import test_copipe_console from '../test_copipe_console.js';
 
 const main = function() {
   console.log(
-    'copipe.VERSION', copipe.VERSION
+    'copipe.VERSION', copipe.VERSION, 
   );
 
-  test_copipe.run(copipe);
+  test_copipe_core.run(copipe);
+  test_copipe_console.run(copipe);
 };
 main();
+
