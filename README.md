@@ -41,25 +41,10 @@ console.log(
 
 ## Version
 
-### 0.4.3
-### 2019/04/15(Mon)
-- Updated consoleHook._accept
-
-### 0.4.2
-### 2019/04/15(Mon)
-- Updated test code
-
-### 0.4.1
-### 2019/04/12(Fri)
-- Updated copipe.consoleHook 
-  only hookLog add hookInfo hookWarn hookError hookDebug
-- Updated test_consoleHook
-
-### 0.4.0
-### 2019/04/12(Fri)
-- Added copipe.consoleHook copipe_console.ts
-- Added copipe.type:{ isRegExp, isNotRegExp, isRegExpArray, isNotRegExpArray }
-- Added copipe.string:{ match }
+### 0.5.0
+#### 2019/04/16(Tue)
+- Added HTML web version
+  test_build.html / test_release.html
 
 ### More Info
 [VERSION_EN.md](https://github.com/standard-software/copipejs/blob/master/VERSION_EN.md)
