@@ -122,6 +122,16 @@ namespace copipe {
         ],
       ], () => { throw new TypeError(guard.message()) });
 
+      const matchTitle = (title: string, compareValue: any, errorMessage: string) => {
+        if (isString(compareValue)) {
+          return title.includes(compareValue);
+        }
+        if (isRegExp(compareValue)) {
+          return title.match(compareValue) !== null;
+        }
+        throw new TypeError(errorMessage);
+      }
+
       _hook(methodName, (...messageArgs: any[]) => {
         let acceptFlag = acceptArray.length === 0;
         if (!acceptFlag) {
@@ -129,7 +139,9 @@ namespace copipe {
             if (!isString(messageArgs[0])) {
               return false;
             }
-            return match(messageArgs[0], acceptValue);
+            return matchTitle(messageArgs[0], acceptValue, 
+              '_accept args2(acceptArray) array item type is not string|RegExp.'
+            );
           });
         }
         if (acceptFlag && isArray(rejectArray)) {
@@ -137,7 +149,9 @@ namespace copipe {
             if (!isString(messageArgs[0])) {
               return false;
             }
-            return match(messageArgs[0], rejectValue);
+            return matchTitle(messageArgs[0], rejectValue, 
+              '_accept args3(rejectArray) array item type is not string|RegExp.'
+            );
           }));
         }
 

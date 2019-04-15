@@ -116,6 +116,13 @@ var test_copipe_console;
 
     consoleOutput = '';
     consoleHook_hook();
+    consoleHook._accept(methodName, ['debug'], [], console[methodName])
+    testConsoleMethod();
+    consoleHook._unHook(methodName);
+    checkEqual('debug1;debug2;', consoleOutput);
+
+    consoleOutput = '';
+    consoleHook_hook();
     consoleHook._accept(methodName, ['debug1', 'release1'], [], console[methodName])
     testConsoleMethod();
     consoleHook._unHook(methodName);

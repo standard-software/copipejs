@@ -2,6 +2,10 @@
 
 ## Version
 
+### 0.4.3
+### 2019/04/15(Mon)
+- Updated consoleHook._accept
+
 ### 0.4.2
 ### 2019/04/15(Mon)
 - Updated test code
