@@ -2,6 +2,13 @@
 
 ## Version
 
+### 0.5.1
+#### 2019/04/16(Tue)
+- CRLF >> LF
+- package.json add command for Mac for Win
+- Added string.includes
+- Updated consoleHook
+
 ### 0.5.0
 #### 2019/04/16(Tue)
 - Added HTML web version
