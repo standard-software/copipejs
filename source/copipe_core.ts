@@ -549,7 +549,32 @@ namespace copipe.string {
     if (isRegExp(compareValue)) {
       return value.match(compareValue) !== null;
     }
-    throw new Error();
+    throw new TypeError('match args2(compareValue) type is not String or RegExp.');
+  };
+
+  /**
+   * 文字列を他の文字列か正規表現で含むかどうかを調べる関数
+   */
+  export const includes = (
+    value: String, compareValue: string | RegExp
+  ) => {
+    guard(() => [
+      [isString(value), 'includes args1(value) type is not String.'],
+      [
+        isString(compareValue) || isRegExp(compareValue),
+        'includes args2(compareValue) type is not String or RegExp.'
+      ],
+    ], () => {
+      throw new TypeError(guard.message());
+    })
+
+    if (isString(compareValue)) {
+      return value.includes(String(compareValue));
+    }
+    if (isRegExp(compareValue)) {
+      return value.match(compareValue) !== null;
+    }
+    throw new TypeError('includes args2(compareValue) type is not String or RegExp.');
   };
 }
 

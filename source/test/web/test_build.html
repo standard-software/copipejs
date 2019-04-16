@@ -5,7 +5,7 @@
 <title>test_build.html</title>
 <script>
 
-  var require = () => {
+  var require = function() {
     return copipe;
   };
   var module = {};
@@ -21,6 +21,15 @@
 <script>
 
 const main = function() {
+  var argsToArray = function(argsObj) {
+    return Array.prototype.slice.call(argsObj);
+  };
+
+  copipe.consoleHook.hookLog(function() {
+    argsArray = argsToArray(arguments);
+    document.write(argsArray.join(' ') + '<br>\n');
+  })
+
   console.log(
     'copipe.VERSION', copipe.VERSION, 
   );
@@ -28,13 +37,13 @@ const main = function() {
   test_copipe_core.run(copipe);
   test_copipe_console.run(copipe);
 };
-// main();
+main();
 
 </script>
 
 </head>
 <body>
-    <input type="button" value="Test Run" onclick="main()"
-    style="width:150px;">
+    <!-- <input type="button" value="Test Run" onclick="main()"
+    style="width:150px;"> -->
 </body>
 </html>

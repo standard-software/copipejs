@@ -5,7 +5,7 @@ var test_copipe_core;
   /**
    * 各関数を変数として宣言
    */
-  let {
+  var {
     isUndefined, isNull,
     isBoolean, isNumber, isInteger, isString,
     isFunction, isObject, isArray, isDate, 
@@ -44,7 +44,7 @@ var test_copipe_core;
   /**
    * 初期化として関数変数を代入する
    */
-  const initialize = function(copipe){
+  var initialize = function(copipe){
     ({
       isUndefined, isNull,
       isBoolean, isNumber, isInteger, isString,
@@ -84,7 +84,7 @@ var test_copipe_core;
   test_copipe_core.initialize = initialize;
 
   (function(type){
-    const test_isUndefined = function() {
+    var test_isUndefined = function() {
       var u1;
       var n1 = null;
       var v1 = 1;
@@ -134,7 +134,7 @@ var test_copipe_core;
     }
     type.test_isUndefined = test_isUndefined;
 
-    const test_isNull = function() {
+    var test_isNull = function() {
     
       var u1;
       var n1 = null;
@@ -178,7 +178,7 @@ var test_copipe_core;
     }
     type.test_isNull = test_isNull;
 
-    const test_isBoolean = function() {
+    var test_isBoolean = function() {
     
       checkEqual(true, isBoolean(true));
       checkEqual(true, isBoolean(false));
@@ -205,7 +205,7 @@ var test_copipe_core;
     };
     type.test_isBoolean = test_isBoolean;
 
-    const test_isNumber = function() {
+    var test_isNumber = function() {
     
       checkEqual(true, isNumber(123));
       checkEqual(true, isNumber(0));
@@ -268,7 +268,7 @@ var test_copipe_core;
     };
     type.test_isNumber = test_isNumber;
     
-    const test_isInteger = function() {
+    var test_isInteger = function() {
     
       checkEqual(true,  isInteger(123));
       checkEqual(true,  isInteger(0));
@@ -313,7 +313,7 @@ var test_copipe_core;
     };
     type.test_isInteger = test_isInteger;
 
-    const test_isString = function() {
+    var test_isString = function() {
 
       checkEqual(true,    isString(''));
       checkEqual(true,    isString('a'));
@@ -336,7 +336,7 @@ var test_copipe_core;
     };
     type.test_isString = test_isString;
 
-    const test_isFunction = function() {
+    var test_isFunction = function() {
     
       checkEqual(true,    isFunction( function(){} ) );
       checkEqual(false,   isFunction( {} ) );
@@ -352,7 +352,7 @@ var test_copipe_core;
     };
     type.test_isFunction = test_isFunction;
 
-    const test_isObject = function() {
+    var test_isObject = function() {
     
       checkEqual(true,    isObject({}));
       checkEqual(false,   isObject([]));
@@ -375,7 +375,7 @@ var test_copipe_core;
     };
     type.test_isObject = test_isObject;
     
-    const test_isArray = function() {
+    var test_isArray = function() {
     
       checkEqual(true,  isArray([123]));
       checkEqual(true,  isArray([]));
@@ -406,7 +406,7 @@ var test_copipe_core;
     };
     type.test_isArray = test_isArray;
     
-    const test_isDate = function() {
+    var test_isDate = function() {
       checkEqual(true,    isDate(new Date(2017,1,1)));
       checkEqual(true,    isDate(new Date('2017/01')));
       checkEqual(true,    isDate(new Date(2017,1)));
@@ -414,7 +414,7 @@ var test_copipe_core;
     };
     type.test_isDate = test_isDate;
 
-    const test_isExcection = function() {
+    var test_isExcection = function() {
       checkEqual(true,  isException({name: '', message: ''}));
       checkEqual(false, isException({name: ''}));
       checkEqual(false, isException({message: ''}));
@@ -424,7 +424,7 @@ var test_copipe_core;
       checkEqual(true,  isException(new SyntaxError()));
       checkEqual(true,  isException(new ReferenceError()));
 
-      const UserException = function(message) {
+      var UserException = function(message) {
         this.message = message;
         this.name = "UserException";
       };
@@ -436,7 +436,7 @@ var test_copipe_core;
 
   (function(syntax){
 
-    const test_or = function() {
+    var test_or = function() {
       var value;
       checkEqual(false, or(value, []));
       checkEqual(false, or(value, [null]));
@@ -468,41 +468,41 @@ var test_copipe_core;
     }
     syntax.test_or = test_or;
 
-    const test_if_ = function() {
+    var test_if_ = function() {
       
-      const ifResultValue = {
+      var ifResultValue = {
         then: 'THEN', 
         else: 'ELSE',
       };
       checkEqual('THEN', if_(true)(ifResultValue));
       checkEqual('ELSE', if_(false)(ifResultValue));
 
-      const ifResultFunc = {
+      var ifResultFunc = {
         then: () => 'THEN', 
         else: () => 'ELSE',
       };
       checkEqual('THEN', if_(true)(ifResultFunc));
       checkEqual('ELSE', if_(false)(ifResultFunc));
 
-      const ifThenValue = {
+      var ifThenValue = {
         then: 'THEN', 
       };
       checkEqual('THEN', if_(true)(ifThenValue));
       checkEqual(undefined, if_(false)(ifThenValue));
       
-      const ifElseValue = {
+      var ifElseValue = {
         else: 'ELSE', 
       };
       checkEqual(undefined, if_(true)(ifElseValue));
       checkEqual('ELSE', if_(false)(ifElseValue));
 
-      const ifThenFunc = {
+      var ifThenFunc = {
         then: () => 'THEN', 
       };
       checkEqual('THEN', if_(true)(ifThenFunc));
       checkEqual(undefined, if_(false)(ifThenFunc));
       
-      const ifElseFunc = {
+      var ifElseFunc = {
         else: () => 'ELSE', 
       };
       checkEqual(undefined, if_(true)(ifElseFunc));
@@ -533,8 +533,8 @@ var test_copipe_core;
     }
     syntax.test_if_ = test_if_;
 
-    const test_switch_ = function() {
-      const switchResultValue1 = [
+    var test_switch_ = function() {
+      var switchResultValue1 = [
         [1, 'number 1'],
         ['1', 'string 1'],
       ];
@@ -542,7 +542,7 @@ var test_copipe_core;
       checkEqual('string 1', switch_('1')(switchResultValue1));
       checkEqual(undefined, switch_(2)(switchResultValue1));
 
-      const switchResultValue2 = [
+      var switchResultValue2 = [
         [1, 'number 1'],
         ['1', 'string 1'],
         ['default'],
@@ -551,7 +551,7 @@ var test_copipe_core;
       checkEqual('string 1', switch_('1')(switchResultValue2));
       checkEqual('default',  switch_(2)(switchResultValue2));
 
-      const switchResultValue3 = [
+      var switchResultValue3 = [
         [1, 'number 1'],
         ['1', 'string 1'],
         [],
@@ -561,7 +561,7 @@ var test_copipe_core;
       checkEqual(undefined,  switch_(2)(switchResultValue3));
 
       // Error
-      const switchResultValue4 = [
+      var switchResultValue4 = [
         [1, '1'], 
         'default'
       ]
@@ -574,7 +574,7 @@ var test_copipe_core;
         'SyntaxError'
       ));
 
-      const switchResultFunc1 = [
+      var switchResultFunc1 = [
         [1, () => 'number 1'],
         ['1', () => 'string 1'],
       ];
@@ -582,7 +582,7 @@ var test_copipe_core;
       checkEqual('string 1', switch_('1')(switchResultFunc1));
       checkEqual(undefined, switch_(2)(switchResultFunc1));
 
-      const switchResultFunc2 = [
+      var switchResultFunc2 = [
         [1, () => 'number 1'],
         ['1', () => 'string 1'],
         [() => 'default'],
@@ -591,7 +591,7 @@ var test_copipe_core;
       checkEqual('string 1', switch_('1')(switchResultFunc2));
       checkEqual('default',  switch_(2)(switchResultFunc2));
 
-      const switchResultFunc3 = [
+      var switchResultFunc3 = [
         [1, 'number 1'],
         ['1', 'string 1'],
         [() => {}],
@@ -602,7 +602,7 @@ var test_copipe_core;
     }
     syntax.test_switch_ = test_switch_;
 
-    const test_sc = function() {
+    var test_sc = function() {
       checkEqual(true,  sc(1, equal, 1));
       checkEqual(false, sc(1, equal, 2));
 
@@ -611,7 +611,7 @@ var test_copipe_core;
     };
     syntax.test_sc = test_sc;
 
-    const test_guard = function() {
+    var test_guard = function() {
 
       var guardFunc = ()=>[
         isInteger(value1), [isInteger(value2), 'testmessage'] 
@@ -716,7 +716,7 @@ var test_copipe_core;
     };
     syntax.test_guard = test_guard;
 
-    const test_isThrown = () => {
+    var test_isThrown = () => {
       checkEqual(true,  isThrown(() => { throw 1 }, (throwValue) => { return throwValue === 1; } ));
       checkEqual(false, isThrown(() => { throw 1 }, (throwValue) => { return throwValue !== 1; } ));
       checkEqual(false, isThrown(() => { throw 2 }, (throwValue) => { return throwValue === 1; } ));
@@ -738,11 +738,11 @@ test_copipe_core.run = (copipe) => {
 
   test_copipe_core.initialize(copipe);
 
-  const { checkEqual } = copipe.test;
+  var { checkEqual } = copipe.test;
   checkEqual(true, true, 'assert test');
   checkEqual(false, false, 'assert test');
 
-  const {
+  var {
     test_isUndefined,
     test_isNull,
     test_isBoolean,
@@ -756,7 +756,7 @@ test_copipe_core.run = (copipe) => {
     test_isExcection,
   } = test_copipe_core.type;
 
-  const {
+  var {
     test_or,
     test_if_,
     test_switch_,

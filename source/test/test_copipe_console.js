@@ -5,7 +5,7 @@ var test_copipe_console;
   /**
    * 各関数を変数として宣言
    */
-  let {
+  var {
     isUndefined, isNull,
     isBoolean, isNumber, isInteger, isString,
     isFunction, isObject, isArray, isDate, 
@@ -46,7 +46,7 @@ var test_copipe_console;
   /**
    * 初期化として関数変数を代入する
    */
-  const initialize = function(copipe){
+  var initialize = function(copipe){
     ({
       isUndefined, isNull,
       isBoolean, isNumber, isInteger, isString,
@@ -87,20 +87,22 @@ var test_copipe_console;
   }
   test_copipe_console.initialize = initialize;
 
-  const test_consoleHook = function(methodName) {
+  var test_consoleHook = function(methodName) {
 
-    let consoleOutput = '';
-    const consoleHook_hook = () => {
+    var consoleOutput = '';
+    var consoleHook_hook = () => {
       consoleHook._hook(methodName, (args) => { consoleOutput += args + ';' });
     }
 
-    const testConsoleMethod = () => {
+    var testConsoleMethod = () => {
       console[methodName]('debug1');
       console[methodName]('debug2');
       console[methodName]('release1');
       console[methodName]('release2');
     }
   
+    var consoleMethod = console.log;
+
     consoleOutput = '';
     consoleHook_hook();
     testConsoleMethod();
@@ -163,7 +165,7 @@ var test_copipe_console;
     consoleHook._unHook(methodName);
     checkEqual('debug2;', consoleOutput);
 
-    consoleHook._unHook(methodName);
+    consoleHook._hook(methodName, consoleMethod);
   }
   test_copipe_console.test_consoleHook = test_consoleHook;
 
@@ -175,7 +177,7 @@ test_copipe_console.run = (copipe) => {
 
   test_copipe_console.initialize(copipe);
 
-  const {
+  var {
     test_consoleHook,
   } = test_copipe_console;
 
@@ -186,6 +188,8 @@ test_copipe_console.run = (copipe) => {
   test_consoleHook('debug');
 
   console.log('test_copipe_console finish.');
+
+  copipe.consoleHook.unHookLog();
 
   // console.info('info');
   // console.warn('warn');
