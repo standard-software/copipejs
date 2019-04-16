@@ -81,15 +81,6 @@ var copipe;
                     '_accept args3(rejectArray) type is not array.'
                 ],
             ]; }, function () { throw new TypeError(copipe.guard.message()); });
-            var matchTitle = function (title, compareValue, errorMessage) {
-                if (copipe.isString(compareValue)) {
-                    return title.includes(compareValue);
-                }
-                if (copipe.isRegExp(compareValue)) {
-                    return title.match(compareValue) !== null;
-                }
-                throw new TypeError(errorMessage);
-            };
             consoleHook._hook(methodName, function () {
                 var messageArgs = [];
                 for (var _i = 0; _i < arguments.length; _i++) {
@@ -101,7 +92,15 @@ var copipe;
                         if (!copipe.isString(messageArgs[0])) {
                             return false;
                         }
-                        return matchTitle(messageArgs[0], acceptValue, '_accept args2(acceptArray) array item type is not string|RegExp.');
+                        copipe.guard(function () { return [
+                            [
+                                copipe.isString(acceptValue) || copipe.isRegExp(acceptValue),
+                                '_accept args2(acceptArray) array item type is not string|RegExp.'
+                            ],
+                        ]; }, function () {
+                            throw new TypeError(copipe.guard.message());
+                        });
+                        return copipe.string.includes(messageArgs[0], acceptValue);
                     });
                 }
                 if (acceptFlag && copipe.isArray(rejectArray)) {
@@ -109,7 +108,15 @@ var copipe;
                         if (!copipe.isString(messageArgs[0])) {
                             return false;
                         }
-                        return matchTitle(messageArgs[0], rejectValue, '_accept args3(rejectArray) array item type is not string|RegExp.');
+                        copipe.guard(function () { return [
+                            [
+                                copipe.isString(rejectValue) || copipe.isRegExp(rejectValue),
+                                '_accept args3(rejectValue) array item type is not string|RegExp.'
+                            ],
+                        ]; }, function () {
+                            throw new TypeError(copipe.guard.message());
+                        });
+                        return copipe.string.includes(messageArgs[0], rejectValue);
                     }));
                 }
                 if (acceptFlag) {

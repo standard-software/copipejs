@@ -8,22 +8,22 @@ var test_copipe_core;
   var {
     isUndefined, isNull,
     isBoolean, isNumber, isInteger, isString,
-    isFunction, isObject, isArray, isDate, 
-    isRegExp, isException, 
-    
+    isFunction, isObject, isArray, isDate,
+    isRegExp, isException,
+
     isNotUndefined, isNotNull,
     isNotBoolean, isNotNumber,isNotInteger, isNotString,
-    isNotFunction, isNotObject, isNotArray, isNotDate, 
-    isNotRegExp, isNotException, 
+    isNotFunction, isNotObject, isNotArray, isNotDate,
+    isNotRegExp, isNotException,
 
     isUndefinedArray, isNullArray,
     isBooleanArray, isNumberArray, isIntegerArray, isStringArray,
-    isFunctionArray, isObjectArray, isArrayArray, isDateArray, 
+    isFunctionArray, isObjectArray, isArrayArray, isDateArray,
     isRegExpArray, isExceptionArray,
 
     isNotUndefinedArray, isNotNullArray,
     isNotBooleanArray, isNotNumberArray, isNotIntegerArray, isNotStringArray,
-    isNotFunctionArray, isNotObjectArray, isNotArrayArray, isNotDateArray, 
+    isNotFunctionArray, isNotObjectArray, isNotArrayArray, isNotDateArray,
     isNotRegExpArray, isNotExceptionArray,
 
     isUndef, isBool, isNum, isInt, isStr,
@@ -33,14 +33,14 @@ var test_copipe_core;
     isNotFunc, isNotObj, isNotExcept,
 
     assert, guard,
-    functionValue, sc, equal, or, if_, switch_, 
+    functionValue, sc, equal, or, if_, switch_,
     isThrown, isThrownValue, isThrownException, isNotThrown,
 
     match,
 
     checkEqual,
   } = {};
-  
+
   /**
    * 初期化として関数変数を代入する
    */
@@ -48,37 +48,37 @@ var test_copipe_core;
     ({
       isUndefined, isNull,
       isBoolean, isNumber, isInteger, isString,
-      isFunction, isObject, isArray, isDate, 
-      isRegExp, isException, 
-      
+      isFunction, isObject, isArray, isDate,
+      isRegExp, isException,
+
       isNotUndefined, isNotNull,
       isNotBoolean, isNotNumber,isNotInteger, isNotString,
-      isNotFunction, isNotObject, isNotArray, isNotDate, 
-      isNotRegExp, isNotException, 
-  
+      isNotFunction, isNotObject, isNotArray, isNotDate,
+      isNotRegExp, isNotException,
+
       isUndefinedArray, isNullArray,
       isBooleanArray, isNumberArray, isIntegerArray, isStringArray,
-      isFunctionArray, isObjectArray, isArrayArray, isDateArray, 
+      isFunctionArray, isObjectArray, isArrayArray, isDateArray,
       isRegExpArray, isExceptionArray,
-  
+
       isNotUndefinedArray, isNotNullArray,
       isNotBooleanArray, isNotNumberArray, isNotIntegerArray, isNotStringArray,
-      isNotFunctionArray, isNotObjectArray, isNotArrayArray, isNotDateArray, 
+      isNotFunctionArray, isNotObjectArray, isNotArrayArray, isNotDateArray,
       isNotRegExpArray, isNotExceptionArray,
-  
+
       isUndef, isBool, isNum, isInt, isStr,
       isFunc, isObj, isExcept,
-  
+
       isNotUndef, isNotBool, isNotNum, isNotInt, isNotStr,
       isNotFunc, isNotObj, isNotExcept,
 
       assert, guard,
-      functionValue, sc, equal, or, if_, switch_, 
+      functionValue, sc, equal, or, if_, switch_,
       isThrown, isThrownValue, isThrownException, isNotThrown,
 
       match,
 
-      checkEqual, 
+      checkEqual,
     } = copipe);
   }
   test_copipe_core.initialize = initialize;
@@ -88,28 +88,28 @@ var test_copipe_core;
       var u1;
       var n1 = null;
       var v1 = 1;
-    
+
       checkEqual(true, isUndefined(u1));
       checkEqual(false, isUndefined(n1));
       checkEqual(false, isUndefined(v1));
       checkEqual(true, isUndefinedArray([u1]));
       checkEqual(false, isUndefinedArray([n1]));
       checkEqual(false, isUndefinedArray([v1]));
-    
+
       checkEqual(true, isUndefined(u1, u1));
       checkEqual(false, isUndefined(u1, n1));
       checkEqual(false, isUndefined(u1, v1));
       checkEqual(true, isUndefinedArray([u1, u1]));
       checkEqual(false, isUndefinedArray([u1, n1]));
       checkEqual(false, isUndefinedArray([u1, v1]));
-    
+
       checkEqual(false, isNotUndefined(u1));
       checkEqual(true, isNotUndefined(n1));
       checkEqual(true, isNotUndefined(v1));
       checkEqual(false, isNotUndefinedArray([u1]));
       checkEqual(true, isNotUndefinedArray([n1]));
       checkEqual(true, isNotUndefinedArray([v1]));
-    
+
       checkEqual(false, isNotUndefined(u1, u1));
       checkEqual(false, isNotUndefined(u1, n1));
       checkEqual(true, isNotUndefined(n1, n1));
@@ -124,7 +124,7 @@ var test_copipe_core;
       checkEqual(true, isNotUndefinedArray([v1, v1]));
       checkEqual(true, isNotUndefinedArray([v1, n1]));
       checkEqual(false, isNotUndefinedArray([v1, u1]));
-    
+
       //配列の中身ではなく配列自体を判定する
       //配列はundefinedではない
       checkEqual(false, isUndefined([v1, v1]));
@@ -135,32 +135,32 @@ var test_copipe_core;
     type.test_isUndefined = test_isUndefined;
 
     var test_isNull = function() {
-    
+
       var u1;
       var n1 = null;
       var v1 = 1;
-    
+
       checkEqual(false, isNull(u1));
       checkEqual(true, isNull(n1));
       checkEqual(false, isNull(v1));
       checkEqual(false, isNullArray([u1]));
       checkEqual(true, isNullArray([n1]));
       checkEqual(false, isNullArray([v1]));
-    
+
       checkEqual(true, isNull(n1, n1));
       checkEqual(false, isNull(n1, u1));
       checkEqual(false, isNull(n1, v1));
       checkEqual(true, isNullArray([n1, n1]));
       checkEqual(false, isNullArray([n1, u1]));
       checkEqual(false, isNullArray([n1, v1]));
-    
+
       checkEqual(true, isNotNull(u1));
       checkEqual(false, isNotNull(n1));
       checkEqual(true, isNotNull(v1));
       checkEqual(true, isNotNullArray([u1]));
       checkEqual(false, isNotNullArray([n1]));
       checkEqual(true, isNotNullArray([v1]));
-    
+
       checkEqual(true, isNotNull(u1, u1));
       checkEqual(false, isNotNull(u1, n1));
       checkEqual(false, isNotNull(n1, n1));
@@ -179,7 +179,7 @@ var test_copipe_core;
     type.test_isNull = test_isNull;
 
     var test_isBoolean = function() {
-    
+
       checkEqual(true, isBoolean(true));
       checkEqual(true, isBoolean(false));
       checkEqual(false, isBoolean(undefined));
@@ -190,14 +190,14 @@ var test_copipe_core;
       checkEqual(false, isBoolean(123));
       checkEqual(false, isBoolean(0));
       checkEqual(false, isBoolean(-1));
-    
+
       checkEqual(true, isBoolean(true, true));
       checkEqual(true, isBoolean(true, true, true));
       checkEqual(true, isBoolean(true, false, true));
       checkEqual(false, isBoolean(true, 1, true));
-    
+
       checkEqual(false, isBoolean([true, true]));
-    
+
       checkEqual(true, isBooleanArray([true, true]));
       checkEqual(true, isBooleanArray([true, true, true]));
       checkEqual(true, isBooleanArray([true, false, true]));
@@ -206,7 +206,7 @@ var test_copipe_core;
     type.test_isBoolean = test_isBoolean;
 
     var test_isNumber = function() {
-    
+
       checkEqual(true, isNumber(123));
       checkEqual(true, isNumber(0));
       checkEqual(true, isNumber(-1));
@@ -230,7 +230,7 @@ var test_copipe_core;
       checkEqual(false,isNumber('-100'));
       checkEqual(false,isNumber([]));
       checkEqual(false,isNumber({}));
-    
+
       checkEqual(false,  isNotNumber(123));
       checkEqual(false,  isNotNumber(0));
       checkEqual(true,   isNotNumber(true));
@@ -239,26 +239,26 @@ var test_copipe_core;
       checkEqual(true,   isNotNumber(Infinity));
       checkEqual(true,   isNotNumber(NaN));
       checkEqual(true,   isNotNumber(''));
-    
+
       checkEqual(true,   isNumber(1, 2));
       checkEqual(true,   isNumber(3, 4, 5));
       checkEqual(true,   isNumber(10.5, 20.5, 30.5));
       checkEqual(false,  isNumber(1, 2, true));
-    
+
       checkEqual(false,  isNotNumber(1, 2));
       checkEqual(false,  isNotNumber(3, 4, 5));
       checkEqual(false,  isNotNumber(10.5, 20.5, 30.5));
       checkEqual(false,  isNotNumber(1, 2, true));
       checkEqual(true,   isNotNumber(false, true));
       checkEqual(true,   isNotNumber('a', 'b'));
-    
+
       checkEqual(false,  isNumber([1, 2]));
-    
+
       checkEqual(true,   isNumberArray([1, 2]));
       checkEqual(true,   isNumberArray([3, 4, 5]));
       checkEqual(true,   isNumberArray([10.5, 20.5, 30.5]));
       checkEqual(false,  isNumberArray([1, 2, true]));
-    
+
       checkEqual(false,  isNotNumberArray([1, 2]));
       checkEqual(false,  isNotNumberArray([3, 4, 5]));
       checkEqual(false,  isNotNumberArray([10.5, 20.5, 30.5]));
@@ -267,16 +267,16 @@ var test_copipe_core;
       checkEqual(true,   isNotNumberArray(['a', 'b']));
     };
     type.test_isNumber = test_isNumber;
-    
+
     var test_isInteger = function() {
-    
+
       checkEqual(true,  isInteger(123));
       checkEqual(true,  isInteger(0));
       checkEqual(true,  isInteger(-1));
       checkEqual(false, isInteger(123.4));
       checkEqual(true,  isInteger(123.0));
       //.0の場合は整数か小数かは判断できない
-    
+
       checkEqual(false, isInteger(true));
       checkEqual(false, isInteger(false));
       checkEqual(false, isInteger(null));
@@ -290,19 +290,19 @@ var test_copipe_core;
       checkEqual(false, isInteger('-100'));
       checkEqual(false, isInteger([]));
       checkEqual(false, isInteger({}));
-    
+
       checkEqual(true,    isInteger(1, 2));
       checkEqual(true,    isInteger(3, 4, 5));
       checkEqual(true,    isInteger(10, 20, 30));
       checkEqual(false,   isInteger(1, 2, 3.5));
-    
+
       checkEqual(false,   isNotInteger(1, 2));
       checkEqual(false,   isNotInteger(3, 4, 5));
       checkEqual(false,   isNotInteger(10, 20, 30));
       checkEqual(false,   isNotInteger(1, 2, 3.5));
       checkEqual(false,   isNotInteger(1, 2.1, 3.5));
       checkEqual(true,    isNotInteger(1.1, 2.2, 3.5));
-    
+
       checkEqual(false,   isIntegerArray([]));
       checkEqual(true,    isIntegerArray([1]));
       checkEqual(true,    isIntegerArray([1, 2, 3]));
@@ -323,7 +323,7 @@ var test_copipe_core;
       checkEqual(false,   isString('a', 'b', 1));
       checkEqual(false,   isString('a', 'b', null));
       checkEqual(false,   isString('a', 'b', undefined));
-    
+
       checkEqual(false,   isStringArray([]));
       checkEqual(true,    isStringArray(['']));
       checkEqual(true,    isStringArray(['a']));
@@ -337,75 +337,75 @@ var test_copipe_core;
     type.test_isString = test_isString;
 
     var test_isFunction = function() {
-    
+
       checkEqual(true,    isFunction( function(){} ) );
       checkEqual(false,   isFunction( {} ) );
-    
+
       checkEqual(true,    isFunction( function(){},  test_isFunction ) );
       checkEqual(false,   isFunction( {},  test_isFunction ) );
-    
+
       checkEqual(true,    isFunctionArray(
         [function(){},  test_isFunction] ) );
       checkEqual(false,   isFunctionArray(
         [{},  test_isFunction] ) );
-        
+
     };
     type.test_isFunction = test_isFunction;
 
     var test_isObject = function() {
-    
+
       checkEqual(true,    isObject({}));
       checkEqual(false,   isObject([]));
       checkEqual(false,   isObject(null));
       checkEqual(false,   isObject(undefined));
-    
+
       checkEqual(true,    isObject({}));
       checkEqual(true,    isObject({a:0}));
       checkEqual(true,    isObject({a:0, b:1}));
       checkEqual(true,    isObjectArray([{}, {a:0, b:1}]));
       checkEqual(false,   isObjectArray([[], {a:0, b:1}]));
       checkEqual(false,   isObjectArray([[{}], {a:0, b:1}]));
-    
+
       checkEqual(true,    isObject({a:0, b:1}, {c:0, d:1}));
-    
+
       checkEqual(false,   isObject([]));
       checkEqual(false,   isObject(null));
       checkEqual(false,   isObject(undefined));
       checkEqual(false,   isObject(function(){}));
     };
     type.test_isObject = test_isObject;
-    
+
     var test_isArray = function() {
-    
+
       checkEqual(true,  isArray([123]));
       checkEqual(true,  isArray([]));
       checkEqual(true,  isArray([1,2,3]));
       checkEqual(false, isArray(123));
       checkEqual(false, isArray('1,2,3'));
-    
+
       checkEqual(true,    isArray([1], [2]));
       checkEqual(true,    isArray([3], [4], [5]));
       checkEqual(true,    isArray([10, 20], [30]));
       checkEqual(false,   isArray([1, 2], 3));
-    
+
       checkEqual(true,    isNotArray(1, 2));
       checkEqual(false,   isNotArray([3], [4], 5));
       checkEqual(true,    isNotArray(10, 20, 30));
       checkEqual(false,   isNotArray(10, 20, [30]));
-    
-    
+
+
       checkEqual(true,    isArrayArray([[1], [2]]));
       checkEqual(true,    isArrayArray([[3], [4], [5]]));
       checkEqual(true,    isArrayArray([[10, 20], [30]]));
       checkEqual(false,   isArrayArray([[1, 2], 3]));
-    
+
       checkEqual(true,    isNotArrayArray([1, 2]));
       checkEqual(false,   isNotArrayArray([[3], [4], 5]));
       checkEqual(true,    isNotArrayArray([10, 20, 30]));
       checkEqual(false,   isNotArrayArray([10, 20, [30]]));
     };
     type.test_isArray = test_isArray;
-    
+
     var test_isDate = function() {
       checkEqual(true,    isDate(new Date(2017,1,1)));
       checkEqual(true,    isDate(new Date('2017/01')));
@@ -469,41 +469,41 @@ var test_copipe_core;
     syntax.test_or = test_or;
 
     var test_if_ = function() {
-      
+
       var ifResultValue = {
-        then: 'THEN', 
+        then: 'THEN',
         else: 'ELSE',
       };
       checkEqual('THEN', if_(true)(ifResultValue));
       checkEqual('ELSE', if_(false)(ifResultValue));
 
       var ifResultFunc = {
-        then: () => 'THEN', 
+        then: () => 'THEN',
         else: () => 'ELSE',
       };
       checkEqual('THEN', if_(true)(ifResultFunc));
       checkEqual('ELSE', if_(false)(ifResultFunc));
 
       var ifThenValue = {
-        then: 'THEN', 
+        then: 'THEN',
       };
       checkEqual('THEN', if_(true)(ifThenValue));
       checkEqual(undefined, if_(false)(ifThenValue));
-      
+
       var ifElseValue = {
-        else: 'ELSE', 
+        else: 'ELSE',
       };
       checkEqual(undefined, if_(true)(ifElseValue));
       checkEqual('ELSE', if_(false)(ifElseValue));
 
       var ifThenFunc = {
-        then: () => 'THEN', 
+        then: () => 'THEN',
       };
       checkEqual('THEN', if_(true)(ifThenFunc));
       checkEqual(undefined, if_(false)(ifThenFunc));
-      
+
       var ifElseFunc = {
-        else: () => 'ELSE', 
+        else: () => 'ELSE',
       };
       checkEqual(undefined, if_(true)(ifElseFunc));
       checkEqual('ELSE', if_(false)(ifElseFunc));
@@ -562,7 +562,7 @@ var test_copipe_core;
 
       // Error
       var switchResultValue4 = [
-        [1, '1'], 
+        [1, '1'],
         'default'
       ]
       checkEqual(true, isThrownException(
@@ -614,7 +614,7 @@ var test_copipe_core;
     var test_guard = function() {
 
       var guardFunc = ()=>[
-        isInteger(value1), [isInteger(value2), 'testmessage'] 
+        isInteger(value1), [isInteger(value2), 'testmessage']
       ];
       {
         // ガードされない処理
@@ -622,7 +622,7 @@ var test_copipe_core;
         if (guard(guardFunc)) { result1 = true }
         checkEqual(false, result1);
         checkEqual('', guard.message());
-  
+
         // ガードされる処理
         {
           var result1 = false; var value1 = '1'; var value2 = 2;
@@ -642,14 +642,14 @@ var test_copipe_core;
           var result1 = false; var value1 = '1'; var value2 = 2;
           if (guard(guardFunc)) { result1 = true }
           checkEqual(false, result1);
-          checkEqual('', guard.message());     
+          checkEqual('', guard.message());
 
           var result1 = false; var value1 = 1; var value2 = '2';
           if (guard(guardFunc)) { result1 = true }
           checkEqual(false, result1);
           checkEqual('', guard.message());
         }
-        guard.on();   
+        guard.on();
       }
 
       var guardFunc = ()=>[
@@ -659,19 +659,19 @@ var test_copipe_core;
         var result1 = false; var value1 = 1; var value2 = [1];
         if (guard(guardFunc)) { result1 = true }
         checkEqual(false, result1);
-  
+
         var result1 = false; var value1 = 1; var value2 = [];
         if (guard(guardFunc)) { result1 = true }
         checkEqual(true, result1);
-  
+
         var result1 = false; var value1 = [1]; var value2 = [1];
         if (guard(guardFunc)) { result1 = true }
         checkEqual(true, result1);
       }
 
       var guardFunc = ()=>[
-        isArray(value1), 
-        [1 <= value1.length], 
+        isArray(value1),
+        [1 <= value1.length],
         [value1[0] === 1, 'value1[0]error'],
         () => isArray(value2),
         [() => 2 <= value2.length],
@@ -682,32 +682,32 @@ var test_copipe_core;
         if (guard(guardFunc)) { result1 = true }
         checkEqual(false, result1);
         checkEqual('', guard.message());
-  
+
         var result1 = false; var value1 = 1; var value2 = [1,2];
         if (guard(guardFunc)) { result1 = true }
         checkEqual(true, result1);
         checkEqual('', guard.message());
-  
+
         var result1 = false; var value1 = []; var value2 = [1,2];
         if (guard(guardFunc)) { result1 = true }
         checkEqual(true, result1);
         checkEqual('', guard.message());
-  
+
         var result1 = false; var value1 = [2]; var value2 = [1,2];
         if (guard(guardFunc)) { result1 = true }
         checkEqual(true, result1);
         checkEqual('value1[0]error', guard.message());
-  
+
         var result1 = false; var value1 = [1]; var value2 = '[1,2]';
         if (guard(guardFunc)) { result1 = true }
         checkEqual(true, result1);
         checkEqual('', guard.message());
-  
+
         var result1 = false; var value1 = [1]; var value2 = [1];
         if (guard(guardFunc)) { result1 = true }
         checkEqual(true, result1);
         checkEqual('', guard.message());
-  
+
         var result1 = false; var value1 = [1]; var value2 = [2,2];
         if (guard(guardFunc)) { result1 = true }
         checkEqual(true, result1);

@@ -12,22 +12,22 @@ namespace copipe {
   export const {
     isUndefined, isNull,
     isBoolean, isNumber, isInteger, isString,
-    isFunction, isObject, isArray, isDate, 
-    isRegExp, isException, 
-    
+    isFunction, isObject, isArray, isDate,
+    isRegExp, isException,
+
     isNotUndefined, isNotNull,
     isNotBoolean, isNotNumber,isNotInteger, isNotString,
-    isNotFunction, isNotObject, isNotArray, isNotDate, 
-    isNotRegExp, isNotException, 
+    isNotFunction, isNotObject, isNotArray, isNotDate,
+    isNotRegExp, isNotException,
 
     isUndefinedArray, isNullArray,
     isBooleanArray, isNumberArray, isIntegerArray, isStringArray,
-    isFunctionArray, isObjectArray, isArrayArray, isDateArray, 
+    isFunctionArray, isObjectArray, isArrayArray, isDateArray,
     isRegExpArray, isExceptionArray,
 
     isNotUndefinedArray, isNotNullArray,
     isNotBooleanArray, isNotNumberArray, isNotIntegerArray, isNotStringArray,
-    isNotFunctionArray, isNotObjectArray, isNotArrayArray, isNotDateArray, 
+    isNotFunctionArray, isNotObjectArray, isNotArrayArray, isNotDateArray,
     isNotRegExpArray, isNotExceptionArray,
 
     isUndef, isBool, isNum, isInt, isStr,
@@ -38,7 +38,7 @@ namespace copipe {
   } = type;
   export const {
     assert, guard,
-    functionValue, sc, equal, or, if_, switch_, 
+    functionValue, sc, equal, or, if_, switch_,
     isThrown, isThrownValue, isThrownException, isNotThrown,
   } = copipe.syntax;
   export const {
@@ -108,7 +108,7 @@ namespace copipe {
 
     export const _accept = (
       methodName: consoleOutMethodName,
-      acceptArray: (string|RegExp)[], 
+      acceptArray: (string|RegExp)[],
       rejectArray: (string|RegExp)[] | undefined,
       hookFunc: any = original.log,
     ) => {
@@ -117,7 +117,7 @@ namespace copipe {
           '_accept args1(methodName) is not log|info|warn|error|debug.'],
         [isArray(acceptArray), '_accept args2(acceptArray) type is not array.'],
         [
-          isUndefined(rejectArray) || isArray(rejectArray), 
+          isUndefined(rejectArray) || isArray(rejectArray),
           '_accept args3(rejectArray) type is not array.'
         ],
       ], () => { throw new TypeError(guard.message()) });
@@ -163,35 +163,35 @@ namespace copipe {
       });
     };
     export const acceptLog = (
-      acceptArray: (string|RegExp)[], 
+      acceptArray: (string|RegExp)[],
       rejectArray: (string|RegExp)[] | undefined,
       hookFunc: any = original.log,
     ) => {
       _accept('log', acceptArray, rejectArray, hookFunc);
     };
     export const acceptInfo = (
-      acceptArray: (string|RegExp)[], 
+      acceptArray: (string|RegExp)[],
       rejectArray: (string|RegExp)[] | undefined,
       hookFunc: any = original.log,
     ) => {
       _accept('info', acceptArray, rejectArray, hookFunc);
     };
     export const acceptWarn = (
-      acceptArray: (string|RegExp)[], 
+      acceptArray: (string|RegExp)[],
       rejectArray: (string|RegExp)[] | undefined,
       hookFunc: any = original.log,
     ) => {
       _accept('warn', acceptArray, rejectArray, hookFunc);
     };
     export const acceptError = (
-      acceptArray: (string|RegExp)[], 
+      acceptArray: (string|RegExp)[],
       rejectArray: (string|RegExp)[] | undefined,
       hookFunc: any = original.log,
     ) => {
       _accept('error', acceptArray, rejectArray, hookFunc);
     };
     export const acceptDebug = (
-      acceptArray: (string|RegExp)[], 
+      acceptArray: (string|RegExp)[],
       rejectArray: (string|RegExp)[] | undefined,
       hookFunc: any = original.log,
     ) => {

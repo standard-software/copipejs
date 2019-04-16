@@ -507,7 +507,28 @@ var copipe;
             if (copipe.isRegExp(compareValue)) {
                 return value.match(compareValue) !== null;
             }
-            throw new Error();
+            throw new TypeError('match args2(compareValue) type is not String or RegExp.');
+        };
+        /**
+         * 文字列を他の文字列か正規表現で含むかどうかを調べる関数
+         */
+        string.includes = function (value, compareValue) {
+            copipe.guard(function () { return [
+                [copipe.isString(value), 'includes args1(value) type is not String.'],
+                [
+                    copipe.isString(compareValue) || copipe.isRegExp(compareValue),
+                    'includes args2(compareValue) type is not String or RegExp.'
+                ],
+            ]; }, function () {
+                throw new TypeError(copipe.guard.message());
+            });
+            if (copipe.isString(compareValue)) {
+                return value.includes(String(compareValue));
+            }
+            if (copipe.isRegExp(compareValue)) {
+                return value.match(compareValue) !== null;
+            }
+            throw new TypeError('includes args2(compareValue) type is not String or RegExp.');
         };
     })(string = copipe.string || (copipe.string = {}));
 })(copipe || (copipe = {}));

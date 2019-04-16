@@ -8,22 +8,22 @@ var test_copipe_console;
   var {
     isUndefined, isNull,
     isBoolean, isNumber, isInteger, isString,
-    isFunction, isObject, isArray, isDate, 
-    isRegExp, isException, 
-    
+    isFunction, isObject, isArray, isDate,
+    isRegExp, isException,
+
     isNotUndefined, isNotNull,
     isNotBoolean, isNotNumber,isNotInteger, isNotString,
-    isNotFunction, isNotObject, isNotArray, isNotDate, 
-    isNotRegExp, isNotException, 
+    isNotFunction, isNotObject, isNotArray, isNotDate,
+    isNotRegExp, isNotException,
 
     isUndefinedArray, isNullArray,
     isBooleanArray, isNumberArray, isIntegerArray, isStringArray,
-    isFunctionArray, isObjectArray, isArrayArray, isDateArray, 
+    isFunctionArray, isObjectArray, isArrayArray, isDateArray,
     isRegExpArray, isExceptionArray,
 
     isNotUndefinedArray, isNotNullArray,
     isNotBooleanArray, isNotNumberArray, isNotIntegerArray, isNotStringArray,
-    isNotFunctionArray, isNotObjectArray, isNotArrayArray, isNotDateArray, 
+    isNotFunctionArray, isNotObjectArray, isNotArrayArray, isNotDateArray,
     isNotRegExpArray, isNotExceptionArray,
 
     isUndef, isBool, isNum, isInt, isStr,
@@ -33,7 +33,7 @@ var test_copipe_console;
     isNotFunc, isNotObj, isNotExcept,
 
     assert, guard,
-    functionValue, sc, equal, or, if_, switch_, 
+    functionValue, sc, equal, or, if_, switch_,
     isThrown, isThrownValue, isThrownException, isNotThrown,
 
     match,
@@ -42,7 +42,7 @@ var test_copipe_console;
 
     consoleHook,
   } = {};
-  
+
   /**
    * 初期化として関数変数を代入する
    */
@@ -50,37 +50,37 @@ var test_copipe_console;
     ({
       isUndefined, isNull,
       isBoolean, isNumber, isInteger, isString,
-      isFunction, isObject, isArray, isDate, 
-      isRegExp, isException, 
-      
+      isFunction, isObject, isArray, isDate,
+      isRegExp, isException,
+
       isNotUndefined, isNotNull,
       isNotBoolean, isNotNumber,isNotInteger, isNotString,
-      isNotFunction, isNotObject, isNotArray, isNotDate, 
-      isNotRegExp, isNotException, 
-  
+      isNotFunction, isNotObject, isNotArray, isNotDate,
+      isNotRegExp, isNotException,
+
       isUndefinedArray, isNullArray,
       isBooleanArray, isNumberArray, isIntegerArray, isStringArray,
-      isFunctionArray, isObjectArray, isArrayArray, isDateArray, 
+      isFunctionArray, isObjectArray, isArrayArray, isDateArray,
       isRegExpArray, isExceptionArray,
-  
+
       isNotUndefinedArray, isNotNullArray,
       isNotBooleanArray, isNotNumberArray, isNotIntegerArray, isNotStringArray,
-      isNotFunctionArray, isNotObjectArray, isNotArrayArray, isNotDateArray, 
+      isNotFunctionArray, isNotObjectArray, isNotArrayArray, isNotDateArray,
       isNotRegExpArray, isNotExceptionArray,
-  
+
       isUndef, isBool, isNum, isInt, isStr,
       isFunc, isObj, isExcept,
-  
+
       isNotUndef, isNotBool, isNotNum, isNotInt, isNotStr,
       isNotFunc, isNotObj, isNotExcept,
 
       assert, guard,
-      functionValue, sc, equal, or, if_, switch_, 
+      functionValue, sc, equal, or, if_, switch_,
       isThrown, isThrownValue, isThrownException, isNotThrown,
 
       match,
 
-      checkEqual, 
+      checkEqual,
 
       consoleHook,
     } = copipe);
@@ -100,7 +100,7 @@ var test_copipe_console;
       console[methodName]('release1');
       console[methodName]('release2');
     }
-  
+
     var consoleMethod = console.log;
 
     consoleOutput = '';

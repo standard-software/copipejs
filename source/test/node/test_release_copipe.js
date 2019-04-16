@@ -12,7 +12,7 @@ var test_copipe_console = require('../test_copipe_console.js');
 
 const main = function() {
   console.log(
-    'copipe.VERSION', copipe.VERSION, 
+    'copipe.VERSION', copipe.VERSION,
   );
 
   test_copipe_core.run(copipe);

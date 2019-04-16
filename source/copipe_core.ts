@@ -77,7 +77,7 @@ namespace copipe {
      * 例外オブジェクト判定
      *  Errorオブジェクトを含む例外(Exception)オブジェクトは
      *  name と message プロパティの有無によって判定する
-     *  
+     *
      *  Errorオブジェクトの判定は下記のように実装することが可能
      *  export const _isError = _objectTypeCheckFunc('Error');
      *  だが
@@ -85,7 +85,7 @@ namespace copipe {
      *  独自エラーオブジェクトを作成する方法は記載が難しいために利用しずらい
      *  なので、単に name と message プロパティを持つオブジェクトかどうかの判定で
      *  機能として十分になる
-     * 
+     *
      *  参考：独自例外(Exception)オブジェクト作成方法
      *    https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Statements/throw
      */
@@ -442,15 +442,15 @@ namespace copipe.syntax {
    * ifを値を返す関数にしたもの。
    *  次の形式で記載する
    *  if_(true)({
-   *   then: ()=>valueA, 
+   *   then: ()=>valueA,
    *   else: ()=>valueB
-   *  }) 
+   *  })
    *  condition に指定されたBoolean値によって
    *  処理を分岐して値を返す。
-   * 
+   *
    *  thenとelse には関数でも値でも設定可能
    *  関数の場合は、条件に合致しない場合は実行されない。
-   * 
+   *
    *  then else どちらも含まないオブジェクトを指定すると
    *  例外を発生する
    */
@@ -489,14 +489,14 @@ namespace copipe.syntax {
    *   [valueD],
    *  ]);
    *  数値と文字列の厳密な比較が可能。
-   * 
+   *
    *  valueDはデフォルト値を返す
    *  デフォルト値に undefined を返す場合は
    *  [undefined] もしくは [] と記載すること
-   * 
+   *
    *  valueA-D の部分には関数でも値でも設定可能
    *  関数の場合は、条件に合致しない場合は実行されない。
-   * 
+   *
    *  switch_(value1)(args) argsの部分に配列内配列以外の値を渡すと
    *  例外を発生する
    */
@@ -614,22 +614,22 @@ namespace copipe {
   export const {
     isUndefined, isNull,
     isBoolean, isNumber, isInteger, isString,
-    isFunction, isObject, isArray, isDate, 
-    isRegExp, isException, 
-    
+    isFunction, isObject, isArray, isDate,
+    isRegExp, isException,
+
     isNotUndefined, isNotNull,
     isNotBoolean, isNotNumber,isNotInteger, isNotString,
-    isNotFunction, isNotObject, isNotArray, isNotDate, 
-    isNotRegExp, isNotException, 
+    isNotFunction, isNotObject, isNotArray, isNotDate,
+    isNotRegExp, isNotException,
 
     isUndefinedArray, isNullArray,
     isBooleanArray, isNumberArray, isIntegerArray, isStringArray,
-    isFunctionArray, isObjectArray, isArrayArray, isDateArray, 
+    isFunctionArray, isObjectArray, isArrayArray, isDateArray,
     isRegExpArray, isExceptionArray,
 
     isNotUndefinedArray, isNotNullArray,
     isNotBooleanArray, isNotNumberArray, isNotIntegerArray, isNotStringArray,
-    isNotFunctionArray, isNotObjectArray, isNotArrayArray, isNotDateArray, 
+    isNotFunctionArray, isNotObjectArray, isNotArrayArray, isNotDateArray,
     isNotRegExpArray, isNotExceptionArray,
 
     isUndef, isBool, isNum, isInt, isStr,
@@ -644,7 +644,7 @@ namespace copipe {
    */
   export const {
     assert, guard,
-    functionValue, sc, equal, or, if_, switch_, 
+    functionValue, sc, equal, or, if_, switch_,
     isThrown, isThrownValue, isThrownException, isNotThrown,
   } = copipe.syntax;
 
