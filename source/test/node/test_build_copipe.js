@@ -5,7 +5,7 @@
  *    build 後の test_copipe オブジェクトを実行するためのファイル
  */
 
-var copipe = require('../../../build/tsc/node/copipe.js');
+var copipe = require('../../../build/node/copipe.js');
 
 var test_copipe_core = require('../test_copipe_core.js');
 var test_copipe_console = require('../test_copipe_console.js');

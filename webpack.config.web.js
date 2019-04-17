@@ -1,6 +1,6 @@
 module.exports = {
   // mode: process.env.NODE_ENV || "development",
-  entry: ["./build/tsc/web/copipe.js"],
+  entry: ["./build/web/copipe.js"],
   output: {
     filename: "copipe.js",
     path: __dirname + "/release/web/",

@@ -30,6 +30,7 @@
       "start:release:node //": "release版 tsc実行 >> webpackビルド実行 >> テスト実行",
       "start:release:node": "npm run tsc:node && npm run webpack:node && npm run test:release:node",
 
+      "start:node": "npm run start:build:node && npm run start:release:node",
 
     "web //": "web での処理",
 
@@ -54,6 +55,10 @@
       "start:release:web //": "release版 tsc実行 >> webpackビルド実行 >> テスト実行",
       "start:release:web:win": "npm run tsc:web && npm run webpack:web && npm run test:release:web:win",
       "start:release:web:mac": "npm run tsc:web && npm run webpack:web && npm run test:release:web:mac",
+
+      "start:web:win": "npm run start:build:web:win && npm run start:release:web:win",
+
+    "start:all": "npm run start:node && npm run start:web:win",
 
     "test": ""
   },
