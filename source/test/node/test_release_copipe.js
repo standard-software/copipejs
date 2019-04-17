@@ -1,14 +1,14 @@
 /**
  * copipe.js
- *  file: ./source/test/node/test_release_copipe.js
+ *  file: test_release_copipe.js
  *  description:
  *    release ビルド後の test_copipe オブジェクトを実行するためのファイル
  */
 
-var copipe = require('../../../release/node/copipe.js');
+var copipe = require('./copipe.js');
 
-var test_copipe_core = require('../test_copipe_core.js');
-var test_copipe_console = require('../test_copipe_console.js');
+var test_copipe_core = require('./test_copipe_core.js');
+var test_copipe_console = require('./test_copipe_console.js');
 
 const main = function() {
   console.log(

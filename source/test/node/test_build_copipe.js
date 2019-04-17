@@ -1,14 +1,14 @@
 /**
  * copipe.js
- *  file: ./source/test/node/test_build_copipe.js
+ *  file: test_build_copipe.js
  *  description:
  *    build 後の test_copipe オブジェクトを実行するためのファイル
  */
 
-var copipe = require('../../../build/node/copipe.js');
+var copipe = require('./copipe.js');
 
-var test_copipe_core = require('../test_copipe_core.js');
-var test_copipe_console = require('../test_copipe_console.js');
+var test_copipe_core = require('./test_copipe_core.js');
+var test_copipe_console = require('./test_copipe_console.js');
 
 const main = function() {
   console.log(
