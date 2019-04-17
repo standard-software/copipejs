@@ -2,10 +2,16 @@
 
 ## Version
 
+### 0.5.3
+#### 2019/04/18(Thu)
+- Updated npm run script for integration win mac
+- Installed package.json cli-tool cpx opener
+- Changed Folder Structure
+
 ### 0.5.2
 #### 2019/04/17(Wed)
 - Added copipe_polyfill.ts
-- for IE11 test OK
+- for IE11 test OK for Windows
 
 ### 0.5.1
 #### 2019/04/16(Tue)
