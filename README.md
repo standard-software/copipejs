@@ -41,6 +41,11 @@ console.log(
 
 ## Version
 
+### 0.5.2
+#### 2019/04/17(Wed)
+- Added copipe_polyfill.ts
+- for IE11 test OK
+
 ### 0.5.1
 #### 2019/04/16(Tue)
 - CRLF >> LF
