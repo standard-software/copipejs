@@ -42,9 +42,6 @@ namespace copipe {
     isThrown, isThrownValue, isThrownException, isNotThrown,
   } = copipe.syntax;
   export const {
-    match,
-  } = string;
-  export const {
     checkEqual,
   } = test;
 

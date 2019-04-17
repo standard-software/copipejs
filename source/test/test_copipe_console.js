@@ -5,96 +5,195 @@ var test_copipe_console;
   /**
    * 各関数を変数として宣言
    */
-  var {
-    isUndefined, isNull,
-    isBoolean, isNumber, isInteger, isString,
-    isFunction, isObject, isArray, isDate,
-    isRegExp, isException,
+  var
+    isUndefined,
+    isNull,
+    isBoolean,
+    isNumber,
+    isInteger,
+    isString,
+    isFunction,
+    isObject,
+    isArray,
+    isDate,
+    isRegExp,
+    isException,
 
-    isNotUndefined, isNotNull,
-    isNotBoolean, isNotNumber,isNotInteger, isNotString,
-    isNotFunction, isNotObject, isNotArray, isNotDate,
-    isNotRegExp, isNotException,
+    isNotUndefined,
+    isNotNull,
+    isNotBoolean,
+    isNotNumber,
+    isNotInteger,
+    isNotString,
+    isNotFunction,
+    isNotObject,
+    isNotArray,
+    isNotDate,
+    isNotRegExp,
+    isNotException,
 
-    isUndefinedArray, isNullArray,
-    isBooleanArray, isNumberArray, isIntegerArray, isStringArray,
-    isFunctionArray, isObjectArray, isArrayArray, isDateArray,
-    isRegExpArray, isExceptionArray,
+    isUndefinedArray,
+    isNullArray,
+    isBooleanArray,
+    isNumberArray,
+    isIntegerArray,
+    isStringArray,
+    isFunctionArray,
+    isObjectArray,
+    isArrayArray,
+    isDateArray,
+    isRegExpArray,
+    isExceptionArray,
 
-    isNotUndefinedArray, isNotNullArray,
-    isNotBooleanArray, isNotNumberArray, isNotIntegerArray, isNotStringArray,
-    isNotFunctionArray, isNotObjectArray, isNotArrayArray, isNotDateArray,
-    isNotRegExpArray, isNotExceptionArray,
+    isNotUndefinedArray,
+    isNotNullArray,
+    isNotBooleanArray,
+    isNotNumberArray,
+    isNotIntegerArray,
+    isNotStringArray,
+    isNotFunctionArray,
+    isNotObjectArray,
+    isNotArrayArray,
+    isNotDateArray,
+    isNotRegExpArray,
+    isNotExceptionArray,
 
-    isUndef, isBool, isNum, isInt, isStr,
-    isFunc, isObj, isExcept,
+    isUndef,
+    isBool,
+    isNum,
+    isInt,
+    isStr,
+    isFunc,
+    isObj,
+    isExcept,
 
-    isNotUndef, isNotBool, isNotNum, isNotInt, isNotStr,
-    isNotFunc, isNotObj, isNotExcept,
+    isNotUndef,
+    isNotBool,
+    isNotNum,
+    isNotInt,
+    isNotStr,
+    isNotFunc,
+    isNotObj,
+    isNotExcept,
 
-    assert, guard,
-    functionValue, sc, equal, or, if_, switch_,
-    isThrown, isThrownValue, isThrownException, isNotThrown,
-
-    match,
+    assert,
+    guard,
+    functionValue,
+    sc,
+    equal,
+    or,
+    if_,
+    switch_,
+    isThrown,
+    isThrownValue,
+    isThrownException,
+    isNotThrown,
 
     checkEqual,
 
-    consoleHook,
-  } = {};
+    consoleHook;
 
   /**
    * 初期化として関数変数を代入する
    */
-  var initialize = function(copipe){
-    ({
-      isUndefined, isNull,
-      isBoolean, isNumber, isInteger, isString,
-      isFunction, isObject, isArray, isDate,
-      isRegExp, isException,
+  var initialize = function (copipe) {
+    isUndefined = copipe.isUndefined;
+    isNull = copipe.isNull;
+    isBoolean = copipe.isBoolean;
+    isNumber = copipe.isNumber;
+    isInteger = copipe.isInteger;
+    isString = copipe.isString;
+    isFunction = copipe.isFunction;
+    isObject = copipe.isObject;
+    isArray = copipe.isArray;
+    isDate = copipe.isDate;
+    isRegExp = copipe.isRegExp;
+    isException = copipe.isException;
 
-      isNotUndefined, isNotNull,
-      isNotBoolean, isNotNumber,isNotInteger, isNotString,
-      isNotFunction, isNotObject, isNotArray, isNotDate,
-      isNotRegExp, isNotException,
+    isNotUndefined = copipe.isNotUndefined;
+    isNotNull = copipe.isNotNull;
+    isNotBoolean = copipe.isNotBoolean;
+    isNotNumber = copipe.isNotNumber;
+    isNotInteger = copipe.isNotInteger;
+    isNotString = copipe.isNotString;
+    isNotFunction = copipe.isNotFunction;
+    isNotObject = copipe.isNotObject;
+    isNotArray = copipe.isNotArray;
+    isNotDate = copipe.isNotDate;
+    isNotRegExp = copipe.isNotRegExp;
+    isNotException = copipe.isNotException;
 
-      isUndefinedArray, isNullArray,
-      isBooleanArray, isNumberArray, isIntegerArray, isStringArray,
-      isFunctionArray, isObjectArray, isArrayArray, isDateArray,
-      isRegExpArray, isExceptionArray,
+    isUndefinedArray = copipe.isUndefinedArray;
+    isNullArray = copipe.isNullArray;
+    isBooleanArray = copipe.isBooleanArray;
+    isNumberArray = copipe.isNumberArray;
+    isIntegerArray = copipe.isIntegerArray;
+    isStringArray = copipe.isStringArray;
+    isFunctionArray = copipe.isFunctionArray;
+    isObjectArray = copipe.isObjectArray;
+    isArrayArray = copipe.isArrayArray;
+    isDateArray = copipe.isDateArray;
+    isRegExpArray = copipe.isRegExpArray;
+    isExceptionArray = copipe.isExceptionArray;
 
-      isNotUndefinedArray, isNotNullArray,
-      isNotBooleanArray, isNotNumberArray, isNotIntegerArray, isNotStringArray,
-      isNotFunctionArray, isNotObjectArray, isNotArrayArray, isNotDateArray,
-      isNotRegExpArray, isNotExceptionArray,
+    isNotUndefinedArray = copipe.isNotUndefinedArray;
+    isNotNullArray = copipe.isNotNullArray;
+    isNotBooleanArray = copipe.isNotBooleanArray;
+    isNotNumberArray = copipe.isNotNumberArray;
+    isNotIntegerArray = copipe.isNotIntegerArray;
+    isNotStringArray = copipe.isNotStringArray;
+    isNotFunctionArray = copipe.isNotFunctionArray;
+    isNotObjectArray = copipe.isNotObjectArray;
+    isNotArrayArray = copipe.isNotArrayArray;
+    isNotDateArray = copipe.isNotDateArray;
+    isNotRegExpArray = copipe.isNotRegExpArray;
+    isNotExceptionArray = copipe.isNotExceptionArray;
 
-      isUndef, isBool, isNum, isInt, isStr,
-      isFunc, isObj, isExcept,
+    isUndef = copipe.isUndef;
+    isBool = copipe.isBool;
+    isNum = copipe.isNum;
+    isInt = copipe.isInt;
+    isStr = copipe.isStr;
+    isFunc = copipe.isFunc;
+    isObj = copipe.isObj;
+    isExcept = copipe.isExcept;
 
-      isNotUndef, isNotBool, isNotNum, isNotInt, isNotStr,
-      isNotFunc, isNotObj, isNotExcept,
+    isNotUndef = copipe.isNotUndef;
+    isNotBool = copipe.isNotBool;
+    isNotNum = copipe.isNotNum;
+    isNotInt = copipe.isNotInt;
+    isNotStr = copipe.isNotStr;
+    isNotFunc = copipe.isNotFunc;
+    isNotObj = copipe.isNotObj;
+    isNotExcept = copipe.isNotExcept;
 
-      assert, guard,
-      functionValue, sc, equal, or, if_, switch_,
-      isThrown, isThrownValue, isThrownException, isNotThrown,
+    assert = copipe.assert;
+    guard = copipe.guard;
+    functionValue = copipe.functionValue;
+    sc = copipe.sc;
+    equal = copipe.equal;
+    or = copipe.or;
+    if_ = copipe.if_;
+    switch_ = copipe.switch_;
+    isThrown = copipe.isThrown;
+    isThrownValue = copipe.isThrownValue;
+    isThrownException = copipe.isThrownException;
+    isNotThrown = copipe.isNotThrown;
 
-      match,
+    checkEqual = copipe.checkEqual;
 
-      checkEqual,
-
-      consoleHook,
-    } = copipe);
+    consoleHook = copipe.consoleHook;
   }
   test_copipe_console.initialize = initialize;
 
   var test_consoleHook = function(methodName) {
 
     var consoleOutput = '';
-    var consoleHook_hook = () => {
-      consoleHook._hook(methodName, (args) => { consoleOutput += args + ';' });
+    var consoleHook_hook = function() {
+      consoleHook._hook(methodName, function(args) { consoleOutput += args + ';' });
     }
 
-    var testConsoleMethod = () => {
+    var testConsoleMethod = function() {
       console[methodName]('debug1');
       console[methodName]('debug2');
       console[methodName]('release1');
@@ -171,15 +270,14 @@ var test_copipe_console;
 
 })(test_copipe_console || (test_copipe_console = {}));
 
-test_copipe_console.run = (copipe) => {
+test_copipe_console.run = function(copipe) {
 
   console.log('test_copipe_console start.');
 
   test_copipe_console.initialize(copipe);
 
-  var {
-    test_consoleHook,
-  } = test_copipe_console;
+  var
+    test_consoleHook = test_copipe_console.test_consoleHook;
 
   test_consoleHook('log');
   test_consoleHook('info');

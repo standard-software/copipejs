@@ -416,7 +416,7 @@ var copipe;
                 if (!copipe.isObject(args)) {
                     throw new SyntaxError('if_() args type is not object.');
                 }
-                if (copipe.isUndefined(args.then) && copipe.isUndefined(args.else)) {
+                if (copipe.isUndefined(args.then) && copipe.isUndefined(args["else"])) {
                     throw new SyntaxError('if_() args .then .else both nothing.');
                 }
             };
@@ -429,7 +429,7 @@ var copipe;
             else {
                 return function (args) {
                     checkSyntax(args);
-                    return syntax.functionValue(args.else);
+                    return syntax.functionValue(args["else"]);
                 };
             }
         };
@@ -523,6 +523,7 @@ var copipe;
                 throw new TypeError(copipe.guard.message());
             });
             if (copipe.isString(compareValue)) {
+                // console.info('copipe_core value.incluedes', isString(value), value);
                 return value.includes(String(compareValue));
             }
             if (copipe.isRegExp(compareValue)) {
@@ -572,10 +573,6 @@ var copipe;
      * 文法拡張
      */
     _b = copipe.syntax, copipe.assert = _b.assert, copipe.guard = _b.guard, copipe.functionValue = _b.functionValue, copipe.sc = _b.sc, copipe.equal = _b.equal, copipe.or = _b.or, copipe.if_ = _b.if_, copipe.switch_ = _b.switch_, copipe.isThrown = _b.isThrown, copipe.isThrownValue = _b.isThrownValue, copipe.isThrownException = _b.isThrownException, copipe.isNotThrown = _b.isNotThrown;
-    /**
-     * 文字列処理
-     */
-    copipe.match = copipe.string.match;
     /**
      * テスト
      */

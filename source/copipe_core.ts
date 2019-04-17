@@ -569,6 +569,7 @@ namespace copipe.string {
     })
 
     if (isString(compareValue)) {
+      // console.info('copipe_core value.incluedes', isString(value), value);
       return value.includes(String(compareValue));
     }
     if (isRegExp(compareValue)) {
@@ -647,13 +648,6 @@ namespace copipe {
     functionValue, sc, equal, or, if_, switch_,
     isThrown, isThrownValue, isThrownException, isNotThrown,
   } = copipe.syntax;
-
-  /**
-   * 文字列処理
-   */
-  export const {
-    match,
-  } = copipe.string;
 
   /**
    * テスト
