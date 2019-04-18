@@ -8,7 +8,7 @@
  *    node --experimental-modules test_release_copipe.mjs
  */
 
-import copipe from './copipe';
+import copipe from '../copipe';
 
 import test_copipe_core from './test_copipe_core.js';
 import test_copipe_console from './test_copipe_console.js';
