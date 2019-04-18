@@ -5,7 +5,7 @@
  */
 var copipe;
 (function (copipe) {
-    copipe.VERSION = '0.5.3';
+    copipe.VERSION = '0.5.4';
 })(copipe || (copipe = {}));
 (function (copipe) {
     /**

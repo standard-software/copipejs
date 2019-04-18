@@ -2,6 +2,11 @@
 
 ## Version
 
+### 0.5.4
+#### 2019/04/18(Thu)
+- Chaged structure folder
+  test file folder, test html file
+
 ### 0.5.3
 #### 2019/04/18(Thu)
 - Updated npm run script for integration win mac
