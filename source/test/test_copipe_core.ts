@@ -1,100 +1,100 @@
 
-var test_copipe_core: any;
+var test_copipe_core;
 (function (test_copipe_core) {
 
   /**
    * 各関数を変数として宣言
    */
   var
-    isUndefined: any,
-    isNull: any,
-    isBoolean: any,
-    isNumber: any,
-    isInteger: any,
-    isString: any,
-    isFunction: any,
-    isObject: any,
-    isArray: any,
-    isDate: any,
-    isRegExp: any,
-    isException: any,
+    isUndefined,
+    isNull,
+    isBoolean,
+    isNumber,
+    isInteger,
+    isString,
+    isFunction,
+    isObject,
+    isArray,
+    isDate,
+    isRegExp,
+    isException,
 
-    isNotUndefined: any,
-    isNotNull: any,
-    isNotBoolean: any,
-    isNotNumber: any,
-    isNotInteger: any,
-    isNotString: any,
-    isNotFunction: any,
-    isNotObject: any,
-    isNotArray: any,
-    isNotDate: any,
-    isNotRegExp: any,
-    isNotException: any,
+    isNotUndefined,
+    isNotNull,
+    isNotBoolean,
+    isNotNumber,
+    isNotInteger,
+    isNotString,
+    isNotFunction,
+    isNotObject,
+    isNotArray,
+    isNotDate,
+    isNotRegExp,
+    isNotException,
 
-    isUndefinedArray: any,
-    isNullArray: any,
-    isBooleanArray: any,
-    isNumberArray: any,
-    isIntegerArray: any,
-    isStringArray: any,
-    isFunctionArray: any,
-    isObjectArray: any,
-    isArrayArray: any,
-    isDateArray: any,
-    isRegExpArray: any,
-    isExceptionArray: any,
+    isUndefinedArray,
+    isNullArray,
+    isBooleanArray,
+    isNumberArray,
+    isIntegerArray,
+    isStringArray,
+    isFunctionArray,
+    isObjectArray,
+    isArrayArray,
+    isDateArray,
+    isRegExpArray,
+    isExceptionArray,
 
-    isNotUndefinedArray: any,
-    isNotNullArray: any,
-    isNotBooleanArray: any,
-    isNotNumberArray: any,
-    isNotIntegerArray: any,
-    isNotStringArray: any,
-    isNotFunctionArray: any,
-    isNotObjectArray: any,
-    isNotArrayArray: any,
-    isNotDateArray: any,
-    isNotRegExpArray: any,
-    isNotExceptionArray: any,
+    isNotUndefinedArray,
+    isNotNullArray,
+    isNotBooleanArray,
+    isNotNumberArray,
+    isNotIntegerArray,
+    isNotStringArray,
+    isNotFunctionArray,
+    isNotObjectArray,
+    isNotArrayArray,
+    isNotDateArray,
+    isNotRegExpArray,
+    isNotExceptionArray,
 
-    isUndef: any,
-    isBool: any,
-    isNum: any,
-    isInt: any,
-    isStr: any,
-    isFunc: any,
-    isObj: any,
-    isExcept: any,
+    isUndef,
+    isBool,
+    isNum,
+    isInt,
+    isStr,
+    isFunc,
+    isObj,
+    isExcept,
 
-    isNotUndef: any,
-    isNotBool: any,
-    isNotNum: any,
-    isNotInt: any,
-    isNotStr: any,
-    isNotFunc: any,
-    isNotObj: any,
-    isNotExcept: any,
+    isNotUndef,
+    isNotBool,
+    isNotNum,
+    isNotInt,
+    isNotStr,
+    isNotFunc,
+    isNotObj,
+    isNotExcept,
 
-    assert: any,
-    guard: any,
-    functionValue: any,
-    sc: any,
-    equal: any,
-    or: any,
-    if_: any,
-    switch_: any,
-    isThrown: any,
-    isThrownValue: any,
-    isThrownException: any,
-    isNotThrown: any,
+    assert,
+    guard,
+    functionValue,
+    sc,
+    equal,
+    or,
+    if_,
+    switch_,
+    isThrown,
+    isThrownValue,
+    isThrownException,
+    isNotThrown,
 
-    checkEqual: any;
+    checkEqual;
 
   /**
    * 初期化として関数変数を代入する
    */
-  var initialize = function (copipe: any) {
+  var initialize = function (copipe) {
     isUndefined = copipe.isUndefined;
     isNull = copipe.isNull;
     isBoolean = copipe.isBoolean;
@@ -182,12 +182,12 @@ var test_copipe_core: any;
   }
   test_copipe_core.initialize = initialize;
 
-  var type: any;
+  var type;
   (function (type) {
     var test_isUndefined = function () {
       var u1: undefined;
       var n1: null = null;
-      var v1: any = 1;
+      var v1 = 1;
 
       checkEqual(true, isUndefined(u1));
       checkEqual(false, isUndefined(n1));
@@ -238,7 +238,7 @@ var test_copipe_core: any;
 
       var u1: undefined;
       var n1: null = null;
-      var v1: any = 1;
+      var v1 = 1;
 
       checkEqual(false, isNull(u1));
       checkEqual(true, isNull(n1));
@@ -538,11 +538,11 @@ var test_copipe_core: any;
 
   })(type = test_copipe_core.type || (test_copipe_core.type = {}));
 
-  var syntax: any
-  (function (syntax: any) {
+  var syntax
+  (function (syntax) {
 
     var test_or = function () {
-      var value;
+      var value: any;
       checkEqual(false, or(value, []));
       checkEqual(false, or(value, [null]));
       checkEqual(false, or(value, [null, null]));
@@ -553,7 +553,7 @@ var test_copipe_core: any;
       checkEqual(true, or(value, [null, undefined]));
       checkEqual(true, or(value, [undefined, undefined]));
       checkEqual(true, or(value, [undefined, 0]));
-      var value: any = null;
+      value = null;
       checkEqual(false, or(value, []));
       checkEqual(false, or(value, [undefined]));
       checkEqual(false, or(value, [undefined, undefined]));
@@ -564,7 +564,7 @@ var test_copipe_core: any;
       checkEqual(true, or(value, [undefined, null]));
       checkEqual(true, or(value, [null, null]));
       checkEqual(true, or(value, [null, 0]));
-      var value: any = 1;
+      value = 1;
       checkEqual(true, or(value, [1]));
       checkEqual(true, or(value, [1, 2]));
       checkEqual(true, or(value, [1, 2, 3]));
@@ -822,14 +822,14 @@ var test_copipe_core: any;
     syntax.test_guard = test_guard;
 
     var test_isThrown = function() {
-      checkEqual(true, isThrown(function() { throw 1 }, function(throwValue: any) { return throwValue === 1; }));
-      checkEqual(false, isThrown(function() { throw 1 }, function(throwValue: any) { return throwValue !== 1; }));
-      checkEqual(false, isThrown(function() { throw 2 }, function(throwValue: any) { return throwValue === 1; }));
-      checkEqual(false, isThrown(function() { throw 1 }, function(throwValue: any) { return throwValue === '1'; }));
-      checkEqual(true, isThrown(function() { throw '1' }, function(throwValue: any) { return throwValue === '1'; }));
-      checkEqual(true, isThrown(function() { throw '' }, function(throwValue: any) { return throwValue === ''; }));
-      checkEqual(true, isThrown(function() { throw { test: 'TEST' } }, function(throwValue: any) { return throwValue.test === 'TEST'; }));
-      checkEqual(false, isThrown(function() { throw { test: 'TEST' } }, function(throwValue: any) { return throwValue.test === 'test'; }));
+      checkEqual(true, isThrown(function() { throw 1 }, function(throwValue) { return throwValue === 1; }));
+      checkEqual(false, isThrown(function() { throw 1 }, function(throwValue) { return throwValue !== 1; }));
+      checkEqual(false, isThrown(function() { throw 2 }, function(throwValue) { return throwValue === 1; }));
+      checkEqual(false, isThrown(function() { throw 1 }, function(throwValue) { return throwValue === '1'; }));
+      checkEqual(true, isThrown(function() { throw '1' }, function(throwValue) { return throwValue === '1'; }));
+      checkEqual(true, isThrown(function() { throw '' }, function(throwValue) { return throwValue === ''; }));
+      checkEqual(true, isThrown(function() { throw { test: 'TEST' } }, function(throwValue) { return throwValue.test === 'TEST'; }));
+      checkEqual(false, isThrown(function() { throw { test: 'TEST' } }, function(throwValue) { return throwValue.test === 'test'; }));
 
       checkEqual(false, isThrown(function() { }, function() { }));
       // 例外を投げない場合は isThrown は false
@@ -839,7 +839,7 @@ var test_copipe_core: any;
 
 })(test_copipe_core || (test_copipe_core = {}));
 
-test_copipe_core.run = function(copipe: any) {
+test_copipe_core.run = function(copipe) {
 
   test_copipe_core.initialize(copipe);
 
