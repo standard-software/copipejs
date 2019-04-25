@@ -1,102 +1,102 @@
 
-var test_copipe_console;
+var test_copipe_console: any;
 (function(test_copipe_console){
 
   /**
    * 各関数を変数として宣言
    */
   var
-    isUndefined,
-    isNull,
-    isBoolean,
-    isNumber,
-    isInteger,
-    isString,
-    isFunction,
-    isObject,
-    isArray,
-    isDate,
-    isRegExp,
-    isException,
+    isUndefined: any,
+    isNull: any,
+    isBoolean: any,
+    isNumber: any,
+    isInteger: any,
+    isString: any,
+    isFunction: any,
+    isObject: any,
+    isArray: any,
+    isDate: any,
+    isRegExp: any,
+    isException: any,
 
-    isNotUndefined,
-    isNotNull,
-    isNotBoolean,
-    isNotNumber,
-    isNotInteger,
-    isNotString,
-    isNotFunction,
-    isNotObject,
-    isNotArray,
-    isNotDate,
-    isNotRegExp,
-    isNotException,
+    isNotUndefined: any,
+    isNotNull: any,
+    isNotBoolean: any,
+    isNotNumber: any,
+    isNotInteger: any,
+    isNotString: any,
+    isNotFunction: any,
+    isNotObject: any,
+    isNotArray: any,
+    isNotDate: any,
+    isNotRegExp: any,
+    isNotException: any,
 
-    isUndefinedArray,
-    isNullArray,
-    isBooleanArray,
-    isNumberArray,
-    isIntegerArray,
-    isStringArray,
-    isFunctionArray,
-    isObjectArray,
-    isArrayArray,
-    isDateArray,
-    isRegExpArray,
-    isExceptionArray,
+    isUndefinedArray: any,
+    isNullArray: any,
+    isBooleanArray: any,
+    isNumberArray: any,
+    isIntegerArray: any,
+    isStringArray: any,
+    isFunctionArray: any,
+    isObjectArray: any,
+    isArrayArray: any,
+    isDateArray: any,
+    isRegExpArray: any,
+    isExceptionArray: any,
 
-    isNotUndefinedArray,
-    isNotNullArray,
-    isNotBooleanArray,
-    isNotNumberArray,
-    isNotIntegerArray,
-    isNotStringArray,
-    isNotFunctionArray,
-    isNotObjectArray,
-    isNotArrayArray,
-    isNotDateArray,
-    isNotRegExpArray,
-    isNotExceptionArray,
+    isNotUndefinedArray: any,
+    isNotNullArray: any,
+    isNotBooleanArray: any,
+    isNotNumberArray: any,
+    isNotIntegerArray: any,
+    isNotStringArray: any,
+    isNotFunctionArray: any,
+    isNotObjectArray: any,
+    isNotArrayArray: any,
+    isNotDateArray: any,
+    isNotRegExpArray: any,
+    isNotExceptionArray: any,
 
-    isUndef,
-    isBool,
-    isNum,
-    isInt,
-    isStr,
-    isFunc,
-    isObj,
-    isExcept,
+    isUndef: any,
+    isBool: any,
+    isNum: any,
+    isInt: any,
+    isStr: any,
+    isFunc: any,
+    isObj: any,
+    isExcept: any,
 
-    isNotUndef,
-    isNotBool,
-    isNotNum,
-    isNotInt,
-    isNotStr,
-    isNotFunc,
-    isNotObj,
-    isNotExcept,
+    isNotUndef: any,
+    isNotBool: any,
+    isNotNum: any,
+    isNotInt: any,
+    isNotStr: any,
+    isNotFunc: any,
+    isNotObj: any,
+    isNotExcept: any,
 
-    assert,
-    guard,
-    functionValue,
-    sc,
-    equal,
-    or,
-    if_,
-    switch_,
-    isThrown,
-    isThrownValue,
-    isThrownException,
-    isNotThrown,
+    assert: any,
+    guard: any,
+    functionValue: any,
+    sc: any,
+    equal: any,
+    or: any,
+    if_: any,
+    switch_: any,
+    isThrown: any,
+    isThrownValue: any,
+    isThrownException: any,
+    isNotThrown: any,
 
-    checkEqual,
+    checkEqual: any,
 
-    consoleHook;
+    consoleHook: any;
 
   /**
    * 初期化として関数変数を代入する
    */
-  var initialize = function (copipe) {
+  var initialize = function (copipe: any) {
     isUndefined = copipe.isUndefined;
     isNull = copipe.isNull;
     isBoolean = copipe.isBoolean;
@@ -186,11 +186,11 @@ var test_copipe_console;
   }
   test_copipe_console.initialize = initialize;
 
-  var test_consoleHook = function(methodName) {
+  var test_consoleHook = function(methodName: string) {
 
     var consoleOutput = '';
     var consoleHook_hook = function() {
-      consoleHook._hook(methodName, function(args) { consoleOutput += args + ';' });
+      consoleHook._hook(methodName, function(args: string) { consoleOutput += args + ';' });
     }
 
     var testConsoleMethod = function() {
@@ -270,7 +270,7 @@ var test_copipe_console;
 
 })(test_copipe_console || (test_copipe_console = {}));
 
-test_copipe_console.run = function(copipe) {
+test_copipe_console.run = function(copipe: any) {
 
   console.log('test_copipe_console start.');
 

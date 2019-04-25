@@ -1,100 +1,100 @@
 
-var test_copipe_core;
+var test_copipe_core: any;
 (function (test_copipe_core) {
 
   /**
    * 各関数を変数として宣言
    */
   var
-    isUndefined,
-    isNull,
-    isBoolean,
-    isNumber,
-    isInteger,
-    isString,
-    isFunction,
-    isObject,
-    isArray,
-    isDate,
-    isRegExp,
-    isException,
+    isUndefined: any,
+    isNull: any,
+    isBoolean: any,
+    isNumber: any,
+    isInteger: any,
+    isString: any,
+    isFunction: any,
+    isObject: any,
+    isArray: any,
+    isDate: any,
+    isRegExp: any,
+    isException: any,
 
-    isNotUndefined,
-    isNotNull,
-    isNotBoolean,
-    isNotNumber,
-    isNotInteger,
-    isNotString,
-    isNotFunction,
-    isNotObject,
-    isNotArray,
-    isNotDate,
-    isNotRegExp,
-    isNotException,
+    isNotUndefined: any,
+    isNotNull: any,
+    isNotBoolean: any,
+    isNotNumber: any,
+    isNotInteger: any,
+    isNotString: any,
+    isNotFunction: any,
+    isNotObject: any,
+    isNotArray: any,
+    isNotDate: any,
+    isNotRegExp: any,
+    isNotException: any,
 
-    isUndefinedArray,
-    isNullArray,
-    isBooleanArray,
-    isNumberArray,
-    isIntegerArray,
-    isStringArray,
-    isFunctionArray,
-    isObjectArray,
-    isArrayArray,
-    isDateArray,
-    isRegExpArray,
-    isExceptionArray,
+    isUndefinedArray: any,
+    isNullArray: any,
+    isBooleanArray: any,
+    isNumberArray: any,
+    isIntegerArray: any,
+    isStringArray: any,
+    isFunctionArray: any,
+    isObjectArray: any,
+    isArrayArray: any,
+    isDateArray: any,
+    isRegExpArray: any,
+    isExceptionArray: any,
 
-    isNotUndefinedArray,
-    isNotNullArray,
-    isNotBooleanArray,
-    isNotNumberArray,
-    isNotIntegerArray,
-    isNotStringArray,
-    isNotFunctionArray,
-    isNotObjectArray,
-    isNotArrayArray,
-    isNotDateArray,
-    isNotRegExpArray,
-    isNotExceptionArray,
+    isNotUndefinedArray: any,
+    isNotNullArray: any,
+    isNotBooleanArray: any,
+    isNotNumberArray: any,
+    isNotIntegerArray: any,
+    isNotStringArray: any,
+    isNotFunctionArray: any,
+    isNotObjectArray: any,
+    isNotArrayArray: any,
+    isNotDateArray: any,
+    isNotRegExpArray: any,
+    isNotExceptionArray: any,
 
-    isUndef,
-    isBool,
-    isNum,
-    isInt,
-    isStr,
-    isFunc,
-    isObj,
-    isExcept,
+    isUndef: any,
+    isBool: any,
+    isNum: any,
+    isInt: any,
+    isStr: any,
+    isFunc: any,
+    isObj: any,
+    isExcept: any,
 
-    isNotUndef,
-    isNotBool,
-    isNotNum,
-    isNotInt,
-    isNotStr,
-    isNotFunc,
-    isNotObj,
-    isNotExcept,
+    isNotUndef: any,
+    isNotBool: any,
+    isNotNum: any,
+    isNotInt: any,
+    isNotStr: any,
+    isNotFunc: any,
+    isNotObj: any,
+    isNotExcept: any,
 
-    assert,
-    guard,
-    functionValue,
-    sc,
-    equal,
-    or,
-    if_,
-    switch_,
-    isThrown,
-    isThrownValue,
-    isThrownException,
-    isNotThrown,
+    assert: any,
+    guard: any,
+    functionValue: any,
+    sc: any,
+    equal: any,
+    or: any,
+    if_: any,
+    switch_: any,
+    isThrown: any,
+    isThrownValue: any,
+    isThrownException: any,
+    isNotThrown: any,
 
-    checkEqual;
+    checkEqual: any;
 
   /**
    * 初期化として関数変数を代入する
    */
-  var initialize = function (copipe) {
+  var initialize = function (copipe: any) {
     isUndefined = copipe.isUndefined;
     isNull = copipe.isNull;
     isBoolean = copipe.isBoolean;
@@ -182,11 +182,12 @@ var test_copipe_core;
   }
   test_copipe_core.initialize = initialize;
 
+  var type: any;
   (function (type) {
     var test_isUndefined = function () {
-      var u1;
-      var n1 = null;
-      var v1 = 1;
+      var u1: undefined;
+      var n1: null = null;
+      var v1: any = 1;
 
       checkEqual(true, isUndefined(u1));
       checkEqual(false, isUndefined(n1));
@@ -235,9 +236,9 @@ var test_copipe_core;
 
     var test_isNull = function () {
 
-      var u1;
-      var n1 = null;
-      var v1 = 1;
+      var u1: undefined;
+      var n1: null = null;
+      var v1: any = 1;
 
       checkEqual(false, isNull(u1));
       checkEqual(true, isNull(n1));
@@ -523,17 +524,22 @@ var test_copipe_core;
       checkEqual(true, isException(new SyntaxError()));
       checkEqual(true, isException(new ReferenceError()));
 
-      var UserException = function (message) {
-        this.message = message;
-        this.name = "UserException";
-      };
+      class UserException {
+        message: string;
+        name: string;
+        constructor(message: string) {
+          this.message = message;
+          this.name = "UserException";
+        };
+      }
       checkEqual(true, isException(new UserException('message')));
     }
     type.test_isExcection = test_isExcection;
 
   })(type = test_copipe_core.type || (test_copipe_core.type = {}));
 
-  (function (syntax) {
+  var syntax: any
+  (function (syntax: any) {
 
     var test_or = function () {
       var value;
@@ -547,7 +553,7 @@ var test_copipe_core;
       checkEqual(true, or(value, [null, undefined]));
       checkEqual(true, or(value, [undefined, undefined]));
       checkEqual(true, or(value, [undefined, 0]));
-      var value = null;
+      var value: any = null;
       checkEqual(false, or(value, []));
       checkEqual(false, or(value, [undefined]));
       checkEqual(false, or(value, [undefined, undefined]));
@@ -558,7 +564,7 @@ var test_copipe_core;
       checkEqual(true, or(value, [undefined, null]));
       checkEqual(true, or(value, [null, null]));
       checkEqual(true, or(value, [null, 0]));
-      var value = 1;
+      var value: any = 1;
       checkEqual(true, or(value, [1]));
       checkEqual(true, or(value, [1, 2]));
       checkEqual(true, or(value, [1, 2, 3]));
@@ -717,19 +723,19 @@ var test_copipe_core;
       ]; };
       {
         // ガードされない処理
-        var result1 = false; var value1 = 1; var value2 = 2;
+        var result1 = false; var value1: any = 1; var value2: any = 2;
         if (guard(guardFunc)) { result1 = true }
         checkEqual(false, result1);
         checkEqual('', guard.message());
 
         // ガードされる処理
         {
-          var result1 = false; var value1 = '1'; var value2 = 2;
+          var result1 = false; var value1: any = '1'; var value2: any = 2;
           if (guard(guardFunc)) { result1 = true }
           checkEqual(true, result1);
           checkEqual('', guard.message());
 
-          var result1 = false; var value1 = 1; var value2 = '2';
+          var result1 = false; var value1: any = 1; var value2: any = '2';
           if (guard(guardFunc)) { result1 = true }
           checkEqual(true, result1);
           checkEqual('testmessage', guard.message());
@@ -738,12 +744,12 @@ var test_copipe_core;
         // ガードされる処理だがガードOFFされているので実行されない
         guard.off();
         {
-          var result1 = false; var value1 = '1'; var value2 = 2;
+          var result1 = false; var value1: any = '1'; var value2: any = 2;
           if (guard(guardFunc)) { result1 = true }
           checkEqual(false, result1);
           checkEqual('', guard.message());
 
-          var result1 = false; var value1 = 1; var value2 = '2';
+          var result1 = false; var value1: any = 1; var value2: any = '2';
           if (guard(guardFunc)) { result1 = true }
           checkEqual(false, result1);
           checkEqual('', guard.message());
@@ -755,15 +761,15 @@ var test_copipe_core;
         isInteger(value1), isArray(value2), 1 <= value2.length
       ]; };
       {
-        var result1 = false; var value1 = 1; var value2 = [1];
+        var result1 = false; var value1: any = 1; var value2: any = [1];
         if (guard(guardFunc)) { result1 = true }
         checkEqual(false, result1);
 
-        var result1 = false; var value1 = 1; var value2 = [];
+        var result1 = false; var value1: any = 1; var value2: any = [];
         if (guard(guardFunc)) { result1 = true }
         checkEqual(true, result1);
 
-        var result1 = false; var value1 = [1]; var value2 = [1];
+        var result1 = false; var value1: any = [1]; var value2: any = [1];
         if (guard(guardFunc)) { result1 = true }
         checkEqual(true, result1);
       }
@@ -777,37 +783,37 @@ var test_copipe_core;
         [function() { return value2[0] === 1; }, 'value2[0]error'],
       ]; };
       {
-        var result1 = false; var value1 = [1]; var value2 = [1, 2];
+        var result1 = false; var value1: any = [1]; var value2: any = [1, 2];
         if (guard(guardFunc)) { result1 = true }
         checkEqual(false, result1);
         checkEqual('', guard.message());
 
-        var result1 = false; var value1 = 1; var value2 = [1, 2];
+        var result1 = false; var value1: any = 1; var value2: any = [1, 2];
         if (guard(guardFunc)) { result1 = true }
         checkEqual(true, result1);
         checkEqual('', guard.message());
 
-        var result1 = false; var value1 = []; var value2 = [1, 2];
+        var result1 = false; var value1: any = []; var value2: any = [1, 2];
         if (guard(guardFunc)) { result1 = true }
         checkEqual(true, result1);
         checkEqual('', guard.message());
 
-        var result1 = false; var value1 = [2]; var value2 = [1, 2];
+        var result1 = false; var value1: any = [2]; var value2: any = [1, 2];
         if (guard(guardFunc)) { result1 = true }
         checkEqual(true, result1);
         checkEqual('value1[0]error', guard.message());
 
-        var result1 = false; var value1 = [1]; var value2 = '[1,2]';
+        var result1 = false; var value1: any = [1]; var value2: any = '[1,2]';
         if (guard(guardFunc)) { result1 = true }
         checkEqual(true, result1);
         checkEqual('', guard.message());
 
-        var result1 = false; var value1 = [1]; var value2 = [1];
+        var result1 = false; var value1: any = [1]; var value2: any = [1];
         if (guard(guardFunc)) { result1 = true }
         checkEqual(true, result1);
         checkEqual('', guard.message());
 
-        var result1 = false; var value1 = [1]; var value2 = [2, 2];
+        var result1 = false; var value1: any = [1]; var value2 :any = [2, 2];
         if (guard(guardFunc)) { result1 = true }
         checkEqual(true, result1);
         checkEqual('value2[0]error', guard.message());
@@ -816,14 +822,14 @@ var test_copipe_core;
     syntax.test_guard = test_guard;
 
     var test_isThrown = function() {
-      checkEqual(true, isThrown(function() { throw 1 }, function(throwValue) { return throwValue === 1; }));
-      checkEqual(false, isThrown(function() { throw 1 }, function(throwValue) { return throwValue !== 1; }));
-      checkEqual(false, isThrown(function() { throw 2 }, function(throwValue) { return throwValue === 1; }));
-      checkEqual(false, isThrown(function() { throw 1 }, function(throwValue) { return throwValue === '1'; }));
-      checkEqual(true, isThrown(function() { throw '1' }, function(throwValue) { return throwValue === '1'; }));
-      checkEqual(true, isThrown(function() { throw '' }, function(throwValue) { return throwValue === ''; }));
-      checkEqual(true, isThrown(function() { throw { test: 'TEST' } }, function(throwValue) { return throwValue.test === 'TEST'; }));
-      checkEqual(false, isThrown(function() { throw { test: 'TEST' } }, function(throwValue) { return throwValue.test === 'test'; }));
+      checkEqual(true, isThrown(function() { throw 1 }, function(throwValue: any) { return throwValue === 1; }));
+      checkEqual(false, isThrown(function() { throw 1 }, function(throwValue: any) { return throwValue !== 1; }));
+      checkEqual(false, isThrown(function() { throw 2 }, function(throwValue: any) { return throwValue === 1; }));
+      checkEqual(false, isThrown(function() { throw 1 }, function(throwValue: any) { return throwValue === '1'; }));
+      checkEqual(true, isThrown(function() { throw '1' }, function(throwValue: any) { return throwValue === '1'; }));
+      checkEqual(true, isThrown(function() { throw '' }, function(throwValue: any) { return throwValue === ''; }));
+      checkEqual(true, isThrown(function() { throw { test: 'TEST' } }, function(throwValue: any) { return throwValue.test === 'TEST'; }));
+      checkEqual(false, isThrown(function() { throw { test: 'TEST' } }, function(throwValue: any) { return throwValue.test === 'test'; }));
 
       checkEqual(false, isThrown(function() { }, function() { }));
       // 例外を投げない場合は isThrown は false
@@ -833,7 +839,7 @@ var test_copipe_core;
 
 })(test_copipe_core || (test_copipe_core = {}));
 
-test_copipe_core.run = function(copipe) {
+test_copipe_core.run = function(copipe: any) {
 
   test_copipe_core.initialize(copipe);
 
