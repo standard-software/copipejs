@@ -41,6 +41,10 @@ console.log(
 
 ## Version
 
+### 0.6.1
+#### 2019/04/25(Thu)
+- Updated package.json main setting
+
 ### 0.6.0
 #### 2019/04/25(Thu)
 - Changed testcode js >> ts

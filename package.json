@@ -1,9 +1,9 @@
 {
   "private": false,
   "name": "@standard-software/copipe",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "simple code parts",
-  "main": "./release/node/test/copipe",
+  "main": "./release/node/copipe",
   "scripts": {
     "tsc_init //": "tsc初期化",
     "tsc_init": "tsc --init",
