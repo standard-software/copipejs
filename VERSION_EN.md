@@ -2,9 +2,15 @@
 
 ## Version
 
+### 0.6.0
+#### 2019/04/25(Thu)
+- Changed testcode js >> ts
+  test_copipe_core.ts, test_copipe_console.ts
+- Changed compileoption "noImplicitAny": true >> false
+
 ### 0.5.4
 #### 2019/04/18(Thu)
-- Chaged structure folder
+- Changed structure folder
   test file folder, test html file
 
 ### 0.5.3

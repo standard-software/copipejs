@@ -41,33 +41,12 @@ console.log(
 
 ## Version
 
-### 0.5.4
-#### 2019/04/18(Thu)
-- Chaged structure folder
-  test file folder, test html file
-
-### 0.5.3
-#### 2019/04/18(Thu)
-- Updated npm run script for integration win mac
-- Installed package.json cli-tool cpx opener
-- Changed Folder Structure
-
-### 0.5.2
-#### 2019/04/17(Wed)
-- Added copipe_polyfill.ts
-- for IE11 test OK for Windows
-
-### 0.5.1
-#### 2019/04/16(Tue)
-- CRLF >> LF
-- package.json add command for Mac for Win
-- Added string.includes
-- Updated consoleHook
-
-### 0.5.0
-#### 2019/04/16(Tue)
-- Added HTML web version
-  test_build.html / test_release.html
+### 0.6.0
+#### 2019/04/25(Thu)
+- Changed testcode js >> ts
+  test_copipe_core.ts, test_copipe_console.ts
+- Changed compileoption "noImplicitAny": true >> false
+- Updated npm script setting
 
 ### More Info
 [VERSION_EN.md](https://github.com/standard-software/copipejs/blob/master/VERSION_EN.md)
