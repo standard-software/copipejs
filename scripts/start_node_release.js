@@ -7,7 +7,7 @@ const execSync = require('child_process').execSync;
 // console.log('start_node_release.js')
 
 // run tsc
-execSync('tsc -p ./tsconfig.node.json');
+execSync('npm run tsc:node');
 
 // run webpack
 execSync('webpack --config webpack.config.node.js');

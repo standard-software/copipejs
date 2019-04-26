@@ -7,7 +7,7 @@ const execSync = require('child_process').execSync;
 // console.log('start_web_build.js')
 
 // run tsc
-execSync('tsc -p ./tsconfig.web.json');
+execSync('npm run tsc:web');
 
 // copy test code
 execSync('cpx ./source/test/web/test_build.html ./build/web/test/');

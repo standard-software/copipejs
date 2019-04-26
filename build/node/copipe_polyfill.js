@@ -14,7 +14,7 @@ var copipe;
     copipe.assert = copipe.syntax.assert, copipe.guard = copipe.syntax.guard, copipe.functionValue = copipe.syntax.functionValue, copipe.sc = copipe.syntax.sc, copipe.equal = copipe.syntax.equal, copipe.or = copipe.syntax.or, copipe.if_ = copipe.syntax.if_, copipe.switch_ = copipe.syntax.switch_, copipe.isThrown = copipe.syntax.isThrown, copipe.isThrownValue = copipe.syntax.isThrownValue, copipe.isThrownException = copipe.syntax.isThrownException, copipe.isNotThrown = copipe.syntax.isNotThrown;
     copipe.checkEqual = copipe.test.checkEqual;
     copipe.polyfillDefine = function () {
-        console.info('polyfill String.prototype.includes');
+        // console.info('polyfill String.prototype.includes');
         if (!String.prototype.includes) {
             String.prototype.includes = function (search, start) {
                 'use strict';

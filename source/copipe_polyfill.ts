@@ -46,7 +46,7 @@ namespace copipe {
   } = test;
 
   export const polyfillDefine = () => {
-    console.info('polyfill String.prototype.includes');
+    // console.info('polyfill String.prototype.includes');
 
     if (!String.prototype.includes) {
       String.prototype.includes = function(search, start) {

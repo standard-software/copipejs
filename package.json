@@ -6,10 +6,12 @@
   "main": "./release/node/copipe",
   "scripts": {
 
+    "tsc:node": "tsc -p ./tsconfig.node.json",
     "start:node:build": "node ./scripts/start_node_build.js",
     "start:node:release": "node ./scripts/start_node_release.js",
     "start:node": "npm run start:node:build && npm run start:node:release",
 
+    "tsc:web": "tsc -p ./tsconfig.web.json",
     "start:web:build": "node ./scripts/start_web_build.js",
     "start:web:release": "node ./scripts/start_web_release.js",
     "start:web": "npm run start:web:build && npm run start:web:release",

@@ -3,8 +3,7 @@
  *  file: test_copipe_console.ts
  */
 
-var test_copipe_console;
-(function(test_copipe_console){
+namespace test_copipe_console {
 
   /**
    * 各関数を変数として宣言
@@ -16,15 +15,14 @@ var test_copipe_console;
   /**
    * 初期化として関数変数を代入する
    */
-  var initialize = function (copipe) {
+  export const initialize = function (copipe) {
     ({
       checkEqual,
       consoleHook,
     } = copipe);
   }
-  test_copipe_console.initialize = initialize;
 
-  var test_consoleHook = function(methodName: string) {
+  export const test_consoleHook = function(methodName: string) {
 
     var consoleOutput = '';
     var consoleHook_hook = function() {
@@ -104,33 +102,32 @@ var test_copipe_console;
 
     consoleHook._hook(methodName, consoleMethod);
   }
-  test_copipe_console.test_consoleHook = test_consoleHook;
 
-})(test_copipe_console || (test_copipe_console = {}));
+  export const run = function(copipe) {
 
-test_copipe_console.run = function(copipe) {
+    console.log('test_copipe_console start.');
 
-  console.log('test_copipe_console start.');
+    initialize(copipe);
 
-  test_copipe_console.initialize(copipe);
+    var
+      test_consoleHook = test_copipe_console.test_consoleHook;
 
-  var
-    test_consoleHook = test_copipe_console.test_consoleHook;
+    test_consoleHook('log');
+    test_consoleHook('info');
+    test_consoleHook('warn');
+    test_consoleHook('error');
+    test_consoleHook('debug');
 
-  test_consoleHook('log');
-  test_consoleHook('info');
-  test_consoleHook('warn');
-  test_consoleHook('error');
-  test_consoleHook('debug');
+    console.log('test_copipe_console finish.');
 
-  console.log('test_copipe_console finish.');
+    copipe.consoleHook.unHookLog();
 
-  copipe.consoleHook.unHookLog();
+    // console.info('info');
+    // console.warn('warn');
+    // console.error('error');
+    // console.debug('debug');
 
-  // console.info('info');
-  // console.warn('warn');
-  // console.error('error');
-  // console.debug('debug');
+  };
 
 };
 

@@ -15,10 +15,9 @@ var test_copipe_core;
     var initialize = function (copipe) {
         (isUndefined = copipe.isUndefined, isNull = copipe.isNull, isBoolean = copipe.isBoolean, isNumber = copipe.isNumber, isInteger = copipe.isInteger, isString = copipe.isString, isFunction = copipe.isFunction, isObject = copipe.isObject, isArray = copipe.isArray, isDate = copipe.isDate, isRegExp = copipe.isRegExp, isException = copipe.isException, isNotUndefined = copipe.isNotUndefined, isNotNull = copipe.isNotNull, isNotBoolean = copipe.isNotBoolean, isNotNumber = copipe.isNotNumber, isNotInteger = copipe.isNotInteger, isNotString = copipe.isNotString, isNotFunction = copipe.isNotFunction, isNotObject = copipe.isNotObject, isNotArray = copipe.isNotArray, isNotDate = copipe.isNotDate, isNotRegExp = copipe.isNotRegExp, isNotException = copipe.isNotException, isUndefinedArray = copipe.isUndefinedArray, isNullArray = copipe.isNullArray, isBooleanArray = copipe.isBooleanArray, isNumberArray = copipe.isNumberArray, isIntegerArray = copipe.isIntegerArray, isStringArray = copipe.isStringArray, isFunctionArray = copipe.isFunctionArray, isObjectArray = copipe.isObjectArray, isArrayArray = copipe.isArrayArray, isDateArray = copipe.isDateArray, isRegExpArray = copipe.isRegExpArray, isExceptionArray = copipe.isExceptionArray, isNotUndefinedArray = copipe.isNotUndefinedArray, isNotNullArray = copipe.isNotNullArray, isNotBooleanArray = copipe.isNotBooleanArray, isNotNumberArray = copipe.isNotNumberArray, isNotIntegerArray = copipe.isNotIntegerArray, isNotStringArray = copipe.isNotStringArray, isNotFunctionArray = copipe.isNotFunctionArray, isNotObjectArray = copipe.isNotObjectArray, isNotArrayArray = copipe.isNotArrayArray, isNotDateArray = copipe.isNotDateArray, isNotRegExpArray = copipe.isNotRegExpArray, isNotExceptionArray = copipe.isNotExceptionArray, isUndef = copipe.isUndef, isBool = copipe.isBool, isNum = copipe.isNum, isInt = copipe.isInt, isStr = copipe.isStr, isFunc = copipe.isFunc, isObj = copipe.isObj, isExcept = copipe.isExcept, isNotUndef = copipe.isNotUndef, isNotBool = copipe.isNotBool, isNotNum = copipe.isNotNum, isNotInt = copipe.isNotInt, isNotStr = copipe.isNotStr, isNotFunc = copipe.isNotFunc, isNotObj = copipe.isNotObj, isNotExcept = copipe.isNotExcept, assert = copipe.assert, guard = copipe.guard, functionValue = copipe.functionValue, sc = copipe.sc, equal = copipe.equal, or = copipe.or, if_ = copipe.if_, switch_ = copipe.switch_, isThrown = copipe.isThrown, isThrownValue = copipe.isThrownValue, isThrownException = copipe.isThrownException, isNotThrown = copipe.isNotThrown, checkEqual = copipe.checkEqual);
     };
-    test_copipe_core.initialize = initialize;
     var type;
     (function (type) {
-        var test_isUndefined = function () {
+        type.test_isUndefined = function () {
             var u1;
             var n1 = null;
             var v1 = 1;
@@ -61,8 +60,7 @@ var test_copipe_core;
             checkEqual(true, isNotUndefined([v1, v1]));
             checkEqual(true, isNotUndefined([u1, u1]));
         };
-        type.test_isUndefined = test_isUndefined;
-        var test_isNull = function () {
+        type.test_isNull = function () {
             var u1;
             var n1 = null;
             var v1 = 1;
@@ -99,8 +97,7 @@ var test_copipe_core;
             checkEqual(false, isNotNullArray([v1, n1]));
             checkEqual(true, isNotNullArray([v1, u1]));
         };
-        type.test_isNull = test_isNull;
-        var test_isBoolean = function () {
+        type.test_isBoolean = function () {
             checkEqual(true, isBoolean(true));
             checkEqual(true, isBoolean(false));
             checkEqual(false, isBoolean(undefined));
@@ -121,8 +118,7 @@ var test_copipe_core;
             checkEqual(true, isBooleanArray([true, false, true]));
             checkEqual(false, isBooleanArray([true, 1, true]));
         };
-        type.test_isBoolean = test_isBoolean;
-        var test_isNumber = function () {
+        type.test_isNumber = function () {
             checkEqual(true, isNumber(123));
             checkEqual(true, isNumber(0));
             checkEqual(true, isNumber(-1));
@@ -176,8 +172,7 @@ var test_copipe_core;
             checkEqual(true, isNotNumberArray([false, true]));
             checkEqual(true, isNotNumberArray(['a', 'b']));
         };
-        type.test_isNumber = test_isNumber;
-        var test_isInteger = function () {
+        type.test_isInteger = function () {
             checkEqual(true, isInteger(123));
             checkEqual(true, isInteger(0));
             checkEqual(true, isInteger(-1));
@@ -215,8 +210,7 @@ var test_copipe_core;
             checkEqual(false, isIntegerArray([1, 2, null]));
             checkEqual(false, isIntegerArray(['a', 'b', 1]));
         };
-        type.test_isInteger = test_isInteger;
-        var test_isString = function () {
+        type.test_isString = function () {
             checkEqual(true, isString(''));
             checkEqual(true, isString('a'));
             checkEqual(true, isString('a', 'b', 'c'));
@@ -235,17 +229,15 @@ var test_copipe_core;
             checkEqual(false, isStringArray(['a', 'b', null]));
             checkEqual(false, isStringArray(['a', 'b', undefined]));
         };
-        type.test_isString = test_isString;
-        var test_isFunction = function () {
+        type.test_isFunction = function () {
             checkEqual(true, isFunction(function () { }));
             checkEqual(false, isFunction({}));
-            checkEqual(true, isFunction(function () { }, test_isFunction));
-            checkEqual(false, isFunction({}, test_isFunction));
-            checkEqual(true, isFunctionArray([function () { }, test_isFunction]));
-            checkEqual(false, isFunctionArray([{}, test_isFunction]));
+            checkEqual(true, isFunction(function () { }, type.test_isFunction));
+            checkEqual(false, isFunction({}, type.test_isFunction));
+            checkEqual(true, isFunctionArray([function () { }, type.test_isFunction]));
+            checkEqual(false, isFunctionArray([{}, type.test_isFunction]));
         };
-        type.test_isFunction = test_isFunction;
-        var test_isObject = function () {
+        type.test_isObject = function () {
             checkEqual(true, isObject({}));
             checkEqual(false, isObject([]));
             checkEqual(false, isObject(null));
@@ -262,8 +254,7 @@ var test_copipe_core;
             checkEqual(false, isObject(undefined));
             checkEqual(false, isObject(function () { }));
         };
-        type.test_isObject = test_isObject;
-        var test_isArray = function () {
+        type.test_isArray = function () {
             checkEqual(true, isArray([123]));
             checkEqual(true, isArray([]));
             checkEqual(true, isArray([1, 2, 3]));
@@ -286,15 +277,13 @@ var test_copipe_core;
             checkEqual(true, isNotArrayArray([10, 20, 30]));
             checkEqual(false, isNotArrayArray([10, 20, [30]]));
         };
-        type.test_isArray = test_isArray;
-        var test_isDate = function () {
+        type.test_isDate = function () {
             checkEqual(true, isDate(new Date(2017, 1, 1)));
             checkEqual(true, isDate(new Date('2017/01')));
             checkEqual(true, isDate(new Date(2017, 1)));
             checkEqual(true, isDate(new Date(2017, 1)));
         };
-        type.test_isDate = test_isDate;
-        var test_isExcection = function () {
+        type.test_isExcection = function () {
             checkEqual(true, isException({ name: '', message: '' }));
             checkEqual(false, isException({ name: '' }));
             checkEqual(false, isException({ message: '' }));
@@ -312,11 +301,11 @@ var test_copipe_core;
             }());
             checkEqual(true, isException(new UserException('message')));
         };
-        type.test_isExcection = test_isExcection;
-    })(type = test_copipe_core.type || (test_copipe_core.type = {}));
+    })(type || (type = {}));
+    ;
     var syntax;
     (function (syntax) {
-        var test_or = function () {
+        syntax.test_or = function () {
             var value;
             checkEqual(false, or(value, []));
             checkEqual(false, or(value, [null]));
@@ -346,8 +335,7 @@ var test_copipe_core;
             checkEqual(false, or(value, [2]));
             checkEqual(false, or(value, [2, 3]));
         };
-        syntax.test_or = test_or;
-        var test_if_ = function () {
+        syntax.test_if_ = function () {
             var ifResultValue = {
                 then: 'THEN',
                 else: 'ELSE',
@@ -387,8 +375,7 @@ var test_copipe_core;
             checkEqual(false, isNotThrown(function () { if_(true)(); }));
             checkEqual(true, isNotThrown(function () { if_(true)({ then: '' }); }));
         };
-        syntax.test_if_ = test_if_;
-        var test_switch_ = function () {
+        syntax.test_switch_ = function () {
             var switchResultValue1 = [
                 [1, 'number 1'],
                 ['1', 'string 1'],
@@ -443,15 +430,13 @@ var test_copipe_core;
             checkEqual('string 1', switch_('1')(switchResultFunc3));
             checkEqual(undefined, switch_(2)(switchResultFunc3));
         };
-        syntax.test_switch_ = test_switch_;
-        var test_sc = function () {
+        syntax.test_sc = function () {
             checkEqual(true, sc(1, equal, 1));
             checkEqual(false, sc(1, equal, 2));
             checkEqual(true, sc(1, or, [1, 2]));
             checkEqual(false, sc(0, or, [1, 2]));
         };
-        syntax.test_sc = test_sc;
-        var test_guard = function () {
+        syntax.test_guard = function () {
             var guardFunc = function () {
                 return [
                     isInteger(value1), [isInteger(value2), 'testmessage']
@@ -605,8 +590,7 @@ var test_copipe_core;
                 checkEqual('value2[0]error', guard.message());
             }
         };
-        syntax.test_guard = test_guard;
-        var test_isThrown = function () {
+        syntax.test_isThrown = function () {
             checkEqual(true, isThrown(function () { throw 1; }, function (throwValue) { return throwValue === 1; }));
             checkEqual(false, isThrown(function () { throw 1; }, function (throwValue) { return throwValue !== 1; }));
             checkEqual(false, isThrown(function () { throw 2; }, function (throwValue) { return throwValue === 1; }));
@@ -618,49 +602,48 @@ var test_copipe_core;
             checkEqual(false, isThrown(function () { }, function () { }));
             // 例外を投げない場合は isThrown は false
         };
-        syntax.test_checkThrow = test_isThrown;
-    })(syntax = test_copipe_core.syntax || (test_copipe_core.syntax = {}));
+    })(syntax || (syntax = {}));
+    ;
+    test_copipe_core.run = function (copipe) {
+        initialize(copipe);
+        var checkEqual = copipe.test.checkEqual;
+        checkEqual(true, true, 'assert test');
+        checkEqual(false, false, 'assert test');
+        var test_isUndefined = type.test_isUndefined;
+        var test_isNull = type.test_isNull;
+        var test_isBoolean = type.test_isBoolean;
+        var test_isNumber = type.test_isNumber;
+        var test_isInteger = type.test_isInteger;
+        var test_isString = type.test_isString;
+        var test_isFunction = type.test_isFunction;
+        var test_isObject = type.test_isObject;
+        var test_isArray = type.test_isArray;
+        var test_isDate = type.test_isDate;
+        var test_isExcection = type.test_isExcection;
+        var test_or = syntax.test_or;
+        var test_if_ = syntax.test_if_;
+        var test_switch_ = syntax.test_switch_;
+        var test_sc = syntax.test_sc;
+        var test_guard = syntax.test_guard;
+        console.log('test_copipe_core start.');
+        test_isUndefined();
+        test_isNull();
+        test_isBoolean();
+        test_isNumber();
+        test_isInteger();
+        test_isString();
+        test_isFunction();
+        test_isObject();
+        test_isArray();
+        test_isDate();
+        test_isExcection(),
+            test_or();
+        test_if_();
+        test_switch_();
+        test_sc();
+        test_guard();
+        console.log('test_copipe_core finish.');
+    };
 })(test_copipe_core || (test_copipe_core = {}));
-test_copipe_core.run = function (copipe) {
-    test_copipe_core.initialize(copipe);
-    var checkEqual = copipe.test.checkEqual;
-    checkEqual(true, true, 'assert test');
-    checkEqual(false, false, 'assert test');
-    var test_isUndefined = test_copipe_core.type.test_isUndefined;
-    var test_isNull = test_copipe_core.type.test_isNull;
-    var test_isBoolean = test_copipe_core.type.test_isBoolean;
-    var test_isNumber = test_copipe_core.type.test_isNumber;
-    var test_isInteger = test_copipe_core.type.test_isInteger;
-    var test_isString = test_copipe_core.type.test_isString;
-    var test_isFunction = test_copipe_core.type.test_isFunction;
-    var test_isObject = test_copipe_core.type.test_isObject;
-    var test_isArray = test_copipe_core.type.test_isArray;
-    var test_isDate = test_copipe_core.type.test_isDate;
-    var test_isExcection = test_copipe_core.type.test_isExcection;
-    var test_or = test_copipe_core.syntax.test_or;
-    var test_if_ = test_copipe_core.syntax.test_if_;
-    var test_switch_ = test_copipe_core.syntax.test_switch_;
-    var test_sc = test_copipe_core.syntax.test_sc;
-    var test_guard = test_copipe_core.syntax.test_guard;
-    var test_checkThrow = test_copipe_core.syntax.test_checkThrow;
-    console.log('test_copipe_core start.');
-    test_isUndefined();
-    test_isNull();
-    test_isBoolean();
-    test_isNumber();
-    test_isInteger();
-    test_isString();
-    test_isFunction();
-    test_isObject();
-    test_isArray();
-    test_isDate();
-    test_isExcection(),
-        test_or();
-    test_if_();
-    test_switch_();
-    test_sc();
-    test_guard();
-    test_checkThrow();
-    console.log('test_copipe_core finish.');
-};
+;
 module.exports = test_copipe_core;

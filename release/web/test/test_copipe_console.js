@@ -12,11 +12,10 @@ var test_copipe_console;
     /**
      * 初期化として関数変数を代入する
      */
-    var initialize = function (copipe) {
+    test_copipe_console.initialize = function (copipe) {
         (checkEqual = copipe.checkEqual, consoleHook = copipe.consoleHook);
     };
-    test_copipe_console.initialize = initialize;
-    var test_consoleHook = function (methodName) {
+    test_copipe_console.test_consoleHook = function (methodName) {
         var consoleOutput = '';
         var consoleHook_hook = function () {
             consoleHook._hook(methodName, function (args) { consoleOutput += args + ';'; });
@@ -83,22 +82,22 @@ var test_copipe_console;
         checkEqual('debug2;', consoleOutput);
         consoleHook._hook(methodName, consoleMethod);
     };
-    test_copipe_console.test_consoleHook = test_consoleHook;
+    test_copipe_console.run = function (copipe) {
+        console.log('test_copipe_console start.');
+        test_copipe_console.initialize(copipe);
+        var test_consoleHook = test_copipe_console.test_consoleHook;
+        test_consoleHook('log');
+        test_consoleHook('info');
+        test_consoleHook('warn');
+        test_consoleHook('error');
+        test_consoleHook('debug');
+        console.log('test_copipe_console finish.');
+        copipe.consoleHook.unHookLog();
+        // console.info('info');
+        // console.warn('warn');
+        // console.error('error');
+        // console.debug('debug');
+    };
 })(test_copipe_console || (test_copipe_console = {}));
-test_copipe_console.run = function (copipe) {
-    console.log('test_copipe_console start.');
-    test_copipe_console.initialize(copipe);
-    var test_consoleHook = test_copipe_console.test_consoleHook;
-    test_consoleHook('log');
-    test_consoleHook('info');
-    test_consoleHook('warn');
-    test_consoleHook('error');
-    test_consoleHook('debug');
-    console.log('test_copipe_console finish.');
-    copipe.consoleHook.unHookLog();
-    // console.info('info');
-    // console.warn('warn');
-    // console.error('error');
-    // console.debug('debug');
-};
+;
 module.exports = test_copipe_console;
