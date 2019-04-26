@@ -1,4 +1,8 @@
 "use strict";
+/**
+ * copipe.js
+ *  file: test_copipe_core.ts
+ */
 var test_copipe_core;
 (function (test_copipe_core) {
     /**

@@ -1,7 +1,7 @@
 "use strict";
 /**
  * copipe.js
- *  file: copipe_console.js
+ *  file: copipe_console.ts
  */
 var copipe_core = require("./copipe_core");
 var copipe;

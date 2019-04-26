@@ -1,7 +1,7 @@
 "use strict";
 /**
  * copipe.js
- *  file: copipe_core.js
+ *  file: copipe_core.ts
  */
 var copipe;
 (function (copipe) {

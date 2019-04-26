@@ -1,0 +1,22 @@
+/**
+ * copipe.js
+ *  file: start_web_release.js
+ */
+
+const execSync = require('child_process').execSync;
+// console.log('start_web_release.js')
+
+// run tsc
+execSync('tsc -p ./tsconfig.web.json');
+
+// run webpack
+execSync('webpack --config webpack.config.web.js');
+
+// copy test code
+execSync('cpx ./build/web/test/test_copipe_core.js ./release/web/test/');
+execSync('cpx ./build/web/test/test_copipe_console.js ./release/web/test/');
+execSync('cpx ./source/test/web/test_release.html ./release/web/test/');
+
+// run test code
+execSync('opener ./release/web/test/test_release.html')
+

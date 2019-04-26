@@ -5,44 +5,14 @@
   "description": "simple code parts",
   "main": "./release/node/copipe",
   "scripts": {
-    "tsc_init //": "tsc初期化",
-    "tsc_init": "tsc --init",
 
-    "node //": "node での処理",
+    "start:node:build": "node ./scripts/start_node_build.js",
+    "start:node:release": "node ./scripts/start_node_release.js",
+    "start:node": "npm run start:node:build && npm run start:node:release",
 
-      "start:node:build": "node ./scripts/start_node_build.js",
-      "start:node:release": "node ./scripts/start_node_release.js",
-      "start:node": "npm run start:node:build && npm run start:node:release",
-
-    "web //": "web での処理",
-
-      "tsc:web //": "tsc実行",
-      "tsc:web": "tsc -p ./tsconfig.web.json",
-
-      "test:web:build //": "build版 テスト実行",
-      "_test:web:build:copy:1": "cpx ./source/test/web/test_build.html ./build/web/test/",
-      "_test:web:build:copy:all": "npm run _test:web:build:copy:1",
-      "test:web:build": "npm run _test:web:build:copy:all && opener ./build/web/test/test_build.html",
-
-      "webpack:web //": "webpackでのビルド実行",
-      "webpack:web": "webpack --config webpack.config.web.js",
-
-      "//test:web:build:ie //": "NG opener iexplore relative path. OK full path.",
-      "//test:web:build:ie": "opener iexplore ./source/test/web/test_build.html",
-
-      "test:web:release //": "release版 テスト実行",
-      "_test:web:release:copy1": "cpx ./build/web/test/test_copipe_core.js ./release/web/test/",
-      "_test:web:release:copy2": "cpx ./build/web/test/test_copipe_console.js ./release/web/test/",
-      "_test:web:release:copy3": "cpx ./source/test/web/test_release.html ./release/web/test/",
-      "_test:web:release:copy:all": "npm run _test:web:release:copy1 && npm run _test:web:release:copy2 && npm run _test:web:release:copy3",
-      "test:web:release": "npm run _test:web:release:copy:all && opener ./release/web/test/test_release.html",
-
-      "start:web:build //": "build版 tsc実行 >> テスト実行",
-      "start:web:build": "npm run tsc:web && npm run test:web:build",
-
-      "start:web:release //": "release版 tsc実行 >> webpackビルド実行 >> テスト実行",
-      "start:web:release": "npm run tsc:web && npm run webpack:web && npm run test:web:release",
-      "start:web": "npm run tsc:web && npm run test:web:build && npm run webpack:web && npm run test:web:release",
+    "start:web:build": "node ./scripts/start_web_build.js",
+    "start:web:release": "node ./scripts/start_web_release.js",
+    "start:web": "npm run start:web:build && npm run start:web:release",
 
     "start:all": "npm run start:node && npm run start:web",
 
