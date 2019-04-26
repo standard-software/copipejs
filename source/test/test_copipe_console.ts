@@ -1,3 +1,7 @@
+/**
+ * copipe.js
+ *  file: test_copipe_console.ts
+ */
 
 var test_copipe_console;
 (function(test_copipe_console){

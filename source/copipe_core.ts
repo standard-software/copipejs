@@ -1,6 +1,6 @@
 /**
  * copipe.js
- *  file: copipe_core.js
+ *  file: copipe_core.ts
  */
 
 namespace copipe {

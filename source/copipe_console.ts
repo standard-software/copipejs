@@ -1,6 +1,6 @@
 /**
  * copipe.js
- *  file: copipe_console.js
+ *  file: copipe_console.ts
  */
 import copipe_core = require('./copipe_core');
 

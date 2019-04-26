@@ -10,34 +10,9 @@
 
     "node //": "node での処理",
 
-      "tsc:node //": "tsc実行",
-      "tsc:node": "tsc -p ./tsconfig.node.json",
-
-      "test:node:build //": "build版 テスト実行",
-      "_test:node:build:copy:1": "cpx ./source/test/node/test_build_copipe.js ./build/node/test/",
-      "_test:node:build:copy:all": "npm run _test:node:build:copy:1",
-      "test:node:build": "npm run _test:node:build:copy:all && node ./build/node/test/test_build_copipe.js",
-
-      "webpack:node //": "webpackでのビルド実行",
-      "webpack:node": "webpack --config webpack.config.node.js",
-
-      "test:node:release //": "relase版 テスト実行",
-      "_test:node:release:copy:1": "cpx ./build/node/test/test_copipe_core.js ./release/node/test/",
-      "_test:node:release:copy:2": "cpx ./build/node/test/test_copipe_console.js ./release/node/test/",
-      "_test:node:release:copy:3": "cpx ./source/test/node/test_release_copipe.js ./release/node/test/",
-      "_test:node:release:copy:4": "cpx ./source/test/node/test_release_copipe.mjs ./release/node/test/",
-      "_test:node:release:copy:all": "npm run _test:node:release:copy:1 && npm run _test:node:release:copy:2 && npm run _test:node:release:copy:3 && npm run _test:node:release:copy:4",
-      "_test:node:release1": "node ./release/node/test/test_release_copipe.js",
-      "_test:node:release2": "node --experimental-modules ./release/node/test/test_release_copipe.mjs",
-      "test:node:release": "npm run _test:node:release:copy:all && npm run _test:node:release1 && npm run _test:node:release2",
-
-      "start:node:build //": "build版 tsc実行 >> テスト実行",
-      "start:node:build": "npm run tsc:node && npm run test:node:build",
-
-      "start:node:release //": "release版 tsc実行 >> webpackビルド実行 >> テスト実行",
-      "start:node:release": "npm run tsc:node && npm run webpack:node && npm run test:node:release",
-
-      "start:node": "npm run tsc:node && npm run test:node:build && npm run webpack:node && npm run test:node:release",
+      "start:node:build": "node ./scripts/start_node_build.js",
+      "start:node:release": "node ./scripts/start_node_release.js",
+      "start:node": "npm run start:node:build && npm run start:node:release",
 
     "web //": "web での処理",
 
