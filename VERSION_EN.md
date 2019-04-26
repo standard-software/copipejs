@@ -2,6 +2,11 @@
 
 ## Version
 
+### 0.6.3
+#### 2019/04/27(Sat)
+- Updated test code
+- Updated npm script code
+
 ### 0.6.2
 #### 2019/04/26(Fri)
 - Updated package.json npm scripts
