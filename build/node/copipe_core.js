@@ -5,7 +5,7 @@
  */
 var copipe;
 (function (copipe) {
-    copipe.VERSION = '0.6.3';
+    copipe.VERSION = "0.7.0 beta";
 })(copipe || (copipe = {}));
 (function (copipe) {
     /**
@@ -22,16 +22,18 @@ var copipe;
     (function (_type) {
         var objectToString = type.objectToString;
         var _primitiveTypeCheckFunc = function (typeName) {
-            return (function (value) { return typeof value === typeName; });
+            return function (value) { return typeof value === typeName; };
         };
         var _objectTypeCheckFunc = function (typeName) {
-            return (function (value) { return objectToString(value) === "[object " + typeName + "]"; });
+            return function (value) {
+                return objectToString(value) === "[object " + typeName + "]";
+            };
         };
-        _type._isUndefined = _primitiveTypeCheckFunc('undefined');
-        _type._isNull = function (value) { return (value === null); };
-        _type._isBoolean = _primitiveTypeCheckFunc('boolean');
+        _type._isUndefined = _primitiveTypeCheckFunc("undefined");
+        _type._isNull = function (value) { return value === null; };
+        _type._isBoolean = _primitiveTypeCheckFunc("boolean");
         _type._isNumber = function (value) {
-            return (_primitiveTypeCheckFunc('number')(value) && (isFinite(value)));
+            return _primitiveTypeCheckFunc("number")(value) && isFinite(value);
         };
         _type._isInteger = function (value) {
             if (!_type._isNumber(value)) {
@@ -39,20 +41,20 @@ var copipe;
             }
             return Math.round(value) === value;
         };
-        _type._isString = _primitiveTypeCheckFunc('string');
-        _type._isFunction = _primitiveTypeCheckFunc('function');
+        _type._isString = _primitiveTypeCheckFunc("string");
+        _type._isFunction = _primitiveTypeCheckFunc("function");
         _type._isObject = function (value) {
-            if ((_objectTypeCheckFunc('Object')(value))
-                && (_type._isNotNull(value))
-                && (_type._isNotUndefined(value))) {
+            if (_objectTypeCheckFunc("Object")(value) &&
+                _type._isNotNull(value) &&
+                _type._isNotUndefined(value)) {
                 return true;
             }
             return false;
         };
-        _type._isArray = _objectTypeCheckFunc('Array');
-        _type._isDate = _objectTypeCheckFunc('Date');
-        _type._isRegExp = _objectTypeCheckFunc('RegExp');
-        _type._isError = _objectTypeCheckFunc('Error');
+        _type._isArray = _objectTypeCheckFunc("Array");
+        _type._isDate = _objectTypeCheckFunc("Date");
+        _type._isRegExp = _objectTypeCheckFunc("RegExp");
+        _type._isError = _objectTypeCheckFunc("Error");
         /**
          * 例外オブジェクト判定
          *  Errorオブジェクトを含む例外(Exception)オブジェクトは
@@ -71,8 +73,8 @@ var copipe;
          */
         _type._isException = function (value) {
             if (_type._isObject(value)) {
-                if ('name' in value) {
-                    if ('message' in value) {
+                if ("name" in value) {
+                    if ("message" in value) {
                         return true;
                     }
                 }
@@ -85,7 +87,9 @@ var copipe;
         /**
          * 単独引数の場合の型判定関数の否定形
          */
-        _type._isNotUndefined = function (value) { return !_type._isUndefined(value); };
+        _type._isNotUndefined = function (value) {
+            return !_type._isUndefined(value);
+        };
         _type._isNotNull = function (value) { return !_type._isNull(value); };
         _type._isNotBoolean = function (value) { return !_type._isBoolean(value); };
         _type._isNotNumber = function (value) { return !_type._isNumber(value); };
@@ -96,7 +100,9 @@ var copipe;
         _type._isNotArray = function (value) { return !_type._isArray(value); };
         _type._isNotDate = function (value) { return !_type._isDate(value); };
         _type._isNotRegExp = function (value) { return !_type._isRegExp(value); };
-        _type._isNotException = function (value) { return !_type._isException(value); };
+        _type._isNotException = function (value) {
+            return !_type._isException(value);
+        };
     })(_type || (_type = {}));
     /**
      * 文法拡張
@@ -112,15 +118,15 @@ var copipe;
     (function (syntax) {
         var _isBoolean = _type._isBoolean, _isString = _type._isString;
         syntax.assert = function (value, message) {
-            if (message === void 0) { message = ''; }
+            if (message === void 0) { message = ""; }
             if (!_isBoolean(value)) {
-                throw new TypeError('assert args1(value) type is not boolean. message:' + message);
+                throw new TypeError("assert args1(value) type is not boolean. message:" + message);
             }
             if (!_isString(message)) {
-                throw new TypeError('assert args2(message) type is not string. message:' + message);
+                throw new TypeError("assert args2(message) type is not string. message:" + message);
             }
             if (!value) {
-                throw new Error('assert error. message:' + message);
+                throw new Error("assert error. message:" + message);
             }
         };
         /**
@@ -132,24 +138,23 @@ var copipe;
         var guard_status = true;
         var guard_message;
         syntax.guard = function (guardFunc, runFunc) {
-            guard_message = '';
+            guard_message = "";
             if (guard_status === false) {
                 return false;
             }
-            ;
             if (!copipe.isFunction(guardFunc)) {
-                throw new SyntaxError('guard args1(guardFunc) type is not function.');
+                throw new SyntaxError("guard args1(guardFunc) type is not function.");
             }
             var result = guardFunc();
             if (!copipe.isArray(result)) {
-                throw new SyntaxError('guard args1(guardFunc) result type is not array.');
+                throw new SyntaxError("guard args1(guardFunc) result type is not array.");
             }
             for (var i = 0; i < result.length; i += 1) {
                 var resultValue = void 0;
-                var message = '';
+                var message = "";
                 if (copipe.isArray(result[i])) {
                     if (!(1 <= result[i].length)) {
-                        throw new SyntaxError('guard args1(guardFunc) result item is not array.length >= 1.');
+                        throw new SyntaxError("guard args1(guardFunc) result item is not array.length >= 1.");
                     }
                     resultValue = result[i][0];
                     if (2 <= result[i].length) {
@@ -161,13 +166,13 @@ var copipe;
                 }
                 resultValue = syntax.functionValue(resultValue);
                 if (!copipe.isBoolean(resultValue)) {
-                    throw new SyntaxError('guard args1(guardFunc) result item value type is not boolean.');
+                    throw new SyntaxError("guard args1(guardFunc) result item value type is not boolean.");
                 }
                 if (resultValue === false) {
                     guard_message = message;
                     if (!copipe.isUndefined(runFunc)) {
                         if (!copipe.isFunction(runFunc)) {
-                            throw new SyntaxError('guard args2(runFunc) type is not function');
+                            throw new SyntaxError("guard args2(runFunc) type is not function");
                         }
                         runFunc();
                     }
@@ -178,7 +183,7 @@ var copipe;
         };
         syntax.guard.message = function () { return guard_message; };
         syntax.guard.status = function (value) {
-            return guard_status = value;
+            return (guard_status = value);
         };
         syntax.guard.on = function () {
             guard_status = true;
@@ -312,7 +317,7 @@ var copipe;
          */
         syntax.isThrown = function (targetFunc, compareFunc) {
             if (!copipe.isFunction(targetFunc, compareFunc)) {
-                throw new SyntaxError('isThrown args(targetFunc or compareFunc) type is not function.');
+                throw new SyntaxError("isThrown args(targetFunc or compareFunc) type is not function.");
             }
             try {
                 targetFunc();
@@ -335,7 +340,7 @@ var copipe;
          */
         syntax.isThrownException = function (targetFunc, exceptionName) {
             if (!copipe.isString(exceptionName)) {
-                throw new SyntaxError('isThrownException args2(exceptionName) type is not string.');
+                throw new SyntaxError("isThrownException args2(exceptionName) type is not string.");
             }
             return syntax.isThrown(targetFunc, function (thrown) {
                 if (copipe.isException(thrown)) {
@@ -410,14 +415,14 @@ var copipe;
          */
         syntax.if_ = function (condition) {
             if (!copipe.isBoolean(condition)) {
-                throw new TypeError('if_ args(condition) type is not boolean.');
+                throw new TypeError("if_ args(condition) type is not boolean.");
             }
             var checkSyntax = function (args) {
                 if (!copipe.isObject(args)) {
-                    throw new SyntaxError('if_() args type is not object.');
+                    throw new SyntaxError("if_() args type is not object.");
                 }
                 if (copipe.isUndefined(args.then) && copipe.isUndefined(args.else)) {
-                    throw new SyntaxError('if_() args .then .else both nothing.');
+                    throw new SyntaxError("if_() args .then .else both nothing.");
                 }
             };
             if (condition) {
@@ -457,22 +462,20 @@ var copipe;
         syntax.switch_ = function (expression) {
             return function (args) {
                 if (!copipe.isArray(args)) {
-                    throw new SyntaxError('switch_() args type is not array.');
+                    throw new SyntaxError("switch_() args type is not array.");
                 }
                 for (var i = 0; i < args.length; i += 1) {
                     if (!copipe.isArray(args[i])) {
-                        throw new SyntaxError('switch_() args type is not array in array.');
+                        throw new SyntaxError("switch_() args type is not array in array.");
                     }
                 }
                 for (var i = 0; i < args.length; i += 1) {
                     if (args[i].length === 0) {
                         return undefined;
                     }
-                    ;
                     if (args[i].length === 1) {
                         return syntax.functionValue(args[i][0]);
                     }
-                    ;
                     if (args[i][0] === expression) {
                         return syntax.functionValue(args[i][1]);
                     }
@@ -493,11 +496,11 @@ var copipe;
          */
         string.match = function (value, compareValue) {
             copipe.guard(function () { return [
-                [copipe.isString(value), 'match args1(value) type is not String.'],
+                [copipe.isString(value), "match args1(value) type is not String."],
                 [
                     copipe.isString(compareValue) || copipe.isRegExp(compareValue),
-                    'match args2(compareValue) type is not String or RegExp.'
-                ],
+                    "match args2(compareValue) type is not String or RegExp."
+                ]
             ]; }, function () {
                 throw new TypeError(copipe.guard.message());
             });
@@ -507,29 +510,28 @@ var copipe;
             if (copipe.isRegExp(compareValue)) {
                 return value.match(compareValue) !== null;
             }
-            throw new TypeError('match args2(compareValue) type is not String or RegExp.');
+            throw new TypeError("match args2(compareValue) type is not String or RegExp.");
         };
         /**
          * 文字列を他の文字列か正規表現で含むかどうかを調べる関数
          */
         string.includes = function (value, compareValue) {
             copipe.guard(function () { return [
-                [copipe.isString(value), 'includes args1(value) type is not String.'],
+                [copipe.isString(value), "includes args1(value) type is not String."],
                 [
                     copipe.isString(compareValue) || copipe.isRegExp(compareValue),
-                    'includes args2(compareValue) type is not String or RegExp.'
-                ],
+                    "includes args2(compareValue) type is not String or RegExp."
+                ]
             ]; }, function () {
                 throw new TypeError(copipe.guard.message());
             });
             if (copipe.isString(compareValue)) {
-                // console.info('copipe_core value.incluedes', isString(value), value);
                 return value.includes(String(compareValue));
             }
             if (copipe.isRegExp(compareValue)) {
                 return value.match(compareValue) !== null;
             }
-            throw new TypeError('includes args2(compareValue) type is not String or RegExp.');
+            throw new TypeError("includes args2(compareValue) type is not String or RegExp.");
         };
     })(string = copipe.string || (copipe.string = {}));
 })(copipe || (copipe = {}));
@@ -544,17 +546,18 @@ var copipe;
          *  テストコードに使うためのもの
          */
         test.checkEqual = function (a, b, message) {
-            if (message === void 0) { message = ''; }
+            if (message === void 0) { message = ""; }
             if (!copipe.isString(message)) {
-                throw new SyntaxError('checkEqual args(message) type is not string.');
+                throw new SyntaxError("checkEqual args(message) type is not string.");
             }
             if (a === b) {
                 return true;
             }
-            message = "Test: " + message + "\n" +
-                'A !== B\n' +
-                ("A = " + String(a) + "\n") +
-                ("B = " + String(b));
+            message =
+                "Test: " + message + "\n" +
+                    "A !== B\n" +
+                    ("A = " + String(a) + "\n") +
+                    ("B = " + String(b));
             console.log(message);
             return false;
         };

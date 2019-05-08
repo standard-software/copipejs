@@ -5,26 +5,28 @@
   "description": "simple code parts",
   "main": "./release/node/copipe",
   "scripts": {
-
     "tsc:node": "tsc -p ./tsconfig.node.json",
     "start:node:build": "node ./scripts/start_node_build.js",
     "start:node:release": "node ./scripts/start_node_release.js",
     "start:node": "npm run start:node:build && npm run start:node:release",
-
     "tsc:web": "tsc -p ./tsconfig.web.json",
     "start:web:build": "node ./scripts/start_web_build.js",
     "start:web:release": "node ./scripts/start_web_release.js",
     "start:web": "npm run start:web:build && npm run start:web:release",
-
     "start:all": "npm run start:node && npm run start:web",
-
     "test": ""
   },
   "author": "Satoshi Yamamoto",
   "devDependencies": {
     "@types/node": "^11.10.4",
+    "@typescript-eslint/eslint-plugin": "^1.7.0",
+    "@typescript-eslint/parser": "^1.7.0",
     "cpx": "^1.5.0",
+    "eslint": "^5.16.0",
+    "eslint-config-prettier": "^4.2.0",
+    "eslint-plugin-prettier": "^3.0.1",
     "opener": "^1.5.1",
+    "prettier": "^1.17.0",
     "typescript": "^3.3.3333",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.2.3"

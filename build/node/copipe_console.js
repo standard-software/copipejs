@@ -25,61 +25,68 @@ var copipe;
         consoleHook._hook = function (methodName, hookFunc) {
             if (hookFunc === void 0) { hookFunc = function () { }; }
             copipe.guard(function () { return [
-                copipe.or(methodName, ['log', 'info', 'warn', 'error', 'debug'])
+                copipe.or(methodName, ["log", "info", "warn", "error", "debug"])
             ]; }, function () {
-                throw new Error('_hook args1(methodName) is not log|info|warn|error|debug.');
+                throw new Error("_hook args1(methodName) is not log|info|warn|error|debug.");
             });
             console[methodName] = hookFunc;
         };
         consoleHook.hookLog = function (hookFunc) {
-            consoleHook._hook('log', hookFunc);
+            consoleHook._hook("log", hookFunc);
         };
         consoleHook.hookInfo = function (hookFunc) {
-            consoleHook._hook('info', hookFunc);
+            consoleHook._hook("info", hookFunc);
         };
         consoleHook.hookWarn = function (hookFunc) {
-            consoleHook._hook('warn', hookFunc);
+            consoleHook._hook("warn", hookFunc);
         };
         consoleHook.hookError = function (hookFunc) {
-            consoleHook._hook('error', hookFunc);
+            consoleHook._hook("error", hookFunc);
         };
         consoleHook.hookDebug = function (hookFunc) {
-            consoleHook._hook('debug', hookFunc);
+            consoleHook._hook("debug", hookFunc);
         };
         consoleHook._unHook = function (methodName) {
             copipe.guard(function () { return [
-                copipe.or(methodName, ['log', 'info', 'warn', 'error', 'debug'])
+                copipe.or(methodName, ["log", "info", "warn", "error", "debug"])
             ]; }, function () {
-                throw new Error('_unHook args1(methodName) is not log|info|warn|error|debug.');
+                throw new Error("_unHook args1(methodName) is not log|info|warn|error|debug.");
             });
             console[methodName] = consoleHook.original[methodName];
         };
         consoleHook.unHookLog = function () {
-            consoleHook._unHook('log');
+            consoleHook._unHook("log");
         };
         consoleHook.unHookInfo = function () {
-            consoleHook._unHook('info');
+            consoleHook._unHook("info");
         };
         consoleHook.unHookWarn = function () {
-            consoleHook._unHook('warn');
+            consoleHook._unHook("warn");
         };
         consoleHook.unHookError = function () {
-            consoleHook._unHook('error');
+            consoleHook._unHook("error");
         };
         consoleHook.unHookDebug = function () {
-            consoleHook._unHook('debug');
+            consoleHook._unHook("debug");
         };
         consoleHook._accept = function (methodName, acceptArray, rejectArray, hookFunc) {
             if (hookFunc === void 0) { hookFunc = consoleHook.original.log; }
             copipe.guard(function () { return [
-                [copipe.or(methodName, ['log', 'info', 'warn', 'error', 'debug']),
-                    '_accept args1(methodName) is not log|info|warn|error|debug.'],
-                [copipe.isArray(acceptArray), '_accept args2(acceptArray) type is not array.'],
+                [
+                    copipe.or(methodName, ["log", "info", "warn", "error", "debug"]),
+                    "_accept args1(methodName) is not log|info|warn|error|debug."
+                ],
+                [
+                    copipe.isArray(acceptArray),
+                    "_accept args2(acceptArray) type is not array."
+                ],
                 [
                     copipe.isUndefined(rejectArray) || copipe.isArray(rejectArray),
-                    '_accept args3(rejectArray) type is not array.'
-                ],
-            ]; }, function () { throw new TypeError(copipe.guard.message()); });
+                    "_accept args3(rejectArray) type is not array."
+                ]
+            ]; }, function () {
+                throw new TypeError(copipe.guard.message());
+            });
             consoleHook._hook(methodName, function () {
                 var messageArgs = [];
                 for (var _i = 0; _i < arguments.length; _i++) {
@@ -94,8 +101,8 @@ var copipe;
                         copipe.guard(function () { return [
                             [
                                 copipe.isString(acceptValue) || copipe.isRegExp(acceptValue),
-                                '_accept args2(acceptArray) array item type is not string|RegExp.'
-                            ],
+                                "_accept args2(acceptArray) array item type is not string|RegExp."
+                            ]
                         ]; }, function () {
                             throw new TypeError(copipe.guard.message());
                         });
@@ -103,20 +110,20 @@ var copipe;
                     });
                 }
                 if (acceptFlag && copipe.isArray(rejectArray)) {
-                    acceptFlag = !(rejectArray.some(function (rejectValue) {
+                    acceptFlag = !rejectArray.some(function (rejectValue) {
                         if (!copipe.isString(messageArgs[0])) {
                             return false;
                         }
                         copipe.guard(function () { return [
                             [
                                 copipe.isString(rejectValue) || copipe.isRegExp(rejectValue),
-                                '_accept args3(rejectValue) array item type is not string|RegExp.'
-                            ],
+                                "_accept args3(rejectValue) array item type is not string|RegExp."
+                            ]
                         ]; }, function () {
                             throw new TypeError(copipe.guard.message());
                         });
                         return copipe.string.includes(messageArgs[0], rejectValue);
-                    }));
+                    });
                 }
                 if (acceptFlag) {
                     hookFunc.apply(void 0, messageArgs);
@@ -125,25 +132,24 @@ var copipe;
         };
         consoleHook.acceptLog = function (acceptArray, rejectArray, hookFunc) {
             if (hookFunc === void 0) { hookFunc = consoleHook.original.log; }
-            consoleHook._accept('log', acceptArray, rejectArray, hookFunc);
+            consoleHook._accept("log", acceptArray, rejectArray, hookFunc);
         };
         consoleHook.acceptInfo = function (acceptArray, rejectArray, hookFunc) {
             if (hookFunc === void 0) { hookFunc = consoleHook.original.log; }
-            consoleHook._accept('info', acceptArray, rejectArray, hookFunc);
+            consoleHook._accept("info", acceptArray, rejectArray, hookFunc);
         };
         consoleHook.acceptWarn = function (acceptArray, rejectArray, hookFunc) {
             if (hookFunc === void 0) { hookFunc = consoleHook.original.log; }
-            consoleHook._accept('warn', acceptArray, rejectArray, hookFunc);
+            consoleHook._accept("warn", acceptArray, rejectArray, hookFunc);
         };
         consoleHook.acceptError = function (acceptArray, rejectArray, hookFunc) {
             if (hookFunc === void 0) { hookFunc = consoleHook.original.log; }
-            consoleHook._accept('error', acceptArray, rejectArray, hookFunc);
+            consoleHook._accept("error", acceptArray, rejectArray, hookFunc);
         };
         consoleHook.acceptDebug = function (acceptArray, rejectArray, hookFunc) {
             if (hookFunc === void 0) { hookFunc = consoleHook.original.log; }
-            consoleHook._accept('debug', acceptArray, rejectArray, hookFunc);
+            consoleHook._accept("debug", acceptArray, rejectArray, hookFunc);
         };
     })(consoleHook = copipe.consoleHook || (copipe.consoleHook = {}));
 })(copipe || (copipe = {}));
-;
 module.exports = copipe;
