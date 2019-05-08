@@ -2,6 +2,10 @@
 
 ## Version
 
+### 0.7.0
+#### 2019/05/08(Wed)
+- Introduction eslint
+
 ### 0.6.3
 #### 2019/04/27(Sat)
 - Updated test code
