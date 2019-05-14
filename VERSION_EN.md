@@ -2,6 +2,10 @@
 
 ## Version
 
+### 0.7.1
+#### 2019/05/14(Tue)
+- Uninstall prettier with eslint
+
 ### 0.7.0
 #### 2019/05/08(Wed)
 - Introduction eslint
