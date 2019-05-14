@@ -32,5 +32,4 @@ var copipe;
     };
     copipe.polyfillDefine();
 })(copipe || (copipe = {}));
-;
 module.exports = copipe;

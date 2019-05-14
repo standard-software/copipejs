@@ -4,10 +4,11 @@
  */
 
 namespace copipe {
-  export const VERSION = "0.7.0";
+  export const VERSION = '0.7.1 beta';
 }
 
 namespace copipe {
+
   /**
    * 単独引数の場合の型判定関数
    *  assert などの防御はなし。
@@ -21,34 +22,26 @@ namespace copipe {
   namespace _type {
     const { objectToString } = type;
 
-    type PrimitiveTypeName =
-      | "undefined"
-      | "boolean"
-      | "number"
-      | "string"
-      | "function";
-    const _primitiveTypeCheckFunc = (
-      typeName: PrimitiveTypeName
-    ): ((args1: any) => boolean) => {
-      return (value: any): boolean => typeof value === typeName;
-    };
+    type PrimitiveTypeName = 'undefined' | 'boolean' | 'number' | 'string' | 'function';
+    const _primitiveTypeCheckFunc =
+      (typeName: PrimitiveTypeName): (args1: any) => boolean => {
+        return ((value: any): boolean => typeof value === typeName);
+      };
 
-    type ObjectTypeName = "Object" | "Array" | "Date" | "Error" | "RegExp";
-    const _objectTypeCheckFunc = (
-      typeName: ObjectTypeName
-    ): ((args1: any) => boolean) => {
-      return (value: any): boolean =>
-        objectToString(value) === `[object ${typeName}]`;
-    };
+    type ObjectTypeName = 'Object' | 'Array' | 'Date' | 'Error' | 'RegExp';
+    const _objectTypeCheckFunc =
+      (typeName: ObjectTypeName): (args1: any) => boolean => {
+        return ((value: any): boolean => objectToString(value) === `[object ${typeName}]`);
+      };
 
-    export const _isUndefined = _primitiveTypeCheckFunc("undefined");
+    export const _isUndefined = _primitiveTypeCheckFunc('undefined');
 
-    export const _isNull = (value: any): boolean => value === null;
+    export const _isNull = (value: any): boolean => (value === null);
 
-    export const _isBoolean = _primitiveTypeCheckFunc("boolean");
+    export const _isBoolean = _primitiveTypeCheckFunc('boolean');
 
     export const _isNumber = (value: any): boolean => {
-      return _primitiveTypeCheckFunc("number")(value) && isFinite(value);
+      return (_primitiveTypeCheckFunc('number')(value) && (isFinite(value)));
     };
 
     export const _isInteger = (value: any): boolean => {
@@ -57,28 +50,28 @@ namespace copipe {
       }
       return Math.round(value) === value;
     };
-    export const _isString = _primitiveTypeCheckFunc("string");
+    export const _isString = _primitiveTypeCheckFunc('string');
 
-    export const _isFunction = _primitiveTypeCheckFunc("function");
+    export const _isFunction = _primitiveTypeCheckFunc('function');
 
     export const _isObject = (value: any): boolean => {
       if (
-        _objectTypeCheckFunc("Object")(value) &&
-        _isNotNull(value) &&
-        _isNotUndefined(value)
+        (_objectTypeCheckFunc('Object')(value))
+        && (_isNotNull(value))
+        && (_isNotUndefined(value))
       ) {
         return true;
       }
       return false;
     };
 
-    export const _isArray = _objectTypeCheckFunc("Array");
+    export const _isArray = _objectTypeCheckFunc('Array');
 
-    export const _isDate = _objectTypeCheckFunc("Date");
+    export const _isDate = _objectTypeCheckFunc('Date');
 
-    export const _isRegExp = _objectTypeCheckFunc("RegExp");
+    export const _isRegExp = _objectTypeCheckFunc('RegExp');
 
-    export const _isError = _objectTypeCheckFunc("Error");
+    export const _isError = _objectTypeCheckFunc('Error');
 
     /**
      * 例外オブジェクト判定
@@ -96,10 +89,10 @@ namespace copipe {
      *  参考：独自例外(Exception)オブジェクト作成方法
      *    https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Statements/throw
      */
-    export const _isException = (value: any): boolean => {
+    export const _isException = (value: any) => {
       if (_isObject(value)) {
-        if ("name" in value) {
-          if ("message" in value) {
+        if ('name' in value) {
+          if ('message' in value) {
             return true;
           }
         }
@@ -112,20 +105,18 @@ namespace copipe {
     /**
      * 単独引数の場合の型判定関数の否定形
      */
-    export const _isNotUndefined = (value: any): boolean =>
-      !_isUndefined(value);
-    export const _isNotNull = (value: any): boolean => !_isNull(value);
-    export const _isNotBoolean = (value: any): boolean => !_isBoolean(value);
-    export const _isNotNumber = (value: any): boolean => !_isNumber(value);
-    export const _isNotInteger = (value: any): boolean => !_isInteger(value);
-    export const _isNotString = (value: any): boolean => !_isString(value);
-    export const _isNotFunction = (value: any): boolean => !_isFunction(value);
-    export const _isNotObject = (value: any): boolean => !_isObject(value);
-    export const _isNotArray = (value: any): boolean => !_isArray(value);
-    export const _isNotDate = (value: any): boolean => !_isDate(value);
-    export const _isNotRegExp = (value: any): boolean => !_isRegExp(value);
-    export const _isNotException = (value: any): boolean =>
-      !_isException(value);
+    export const _isNotUndefined = (value: any) => !_isUndefined(value);
+    export const _isNotNull = (value: any) => !_isNull(value);
+    export const _isNotBoolean = (value: any) => !_isBoolean(value);
+    export const _isNotNumber = (value: any) => !_isNumber(value);
+    export const _isNotInteger = (value: any) => !_isInteger(value);
+    export const _isNotString = (value: any) => !_isString(value);
+    export const _isNotFunction = (value: any) => !_isFunction(value);
+    export const _isNotObject = (value: any) => !_isObject(value);
+    export const _isNotArray = (value: any) => !_isArray(value);
+    export const _isNotDate = (value: any) => !_isDate(value);
+    export const _isNotRegExp = (value: any) => !_isRegExp(value);
+    export const _isNotException = (value: any) => !_isException(value);
   }
 
   /**
@@ -142,19 +133,15 @@ namespace copipe {
   export namespace syntax {
     const { _isBoolean, _isString } = _type;
 
-    export const assert = (value: boolean, message: string = ""): void => {
+    export const assert = (value: boolean, message: string = '') => {
       if (!_isBoolean(value)) {
-        throw new TypeError(
-          "assert args1(value) type is not boolean. message:" + message
-        );
+        throw new TypeError('assert args1(value) type is not boolean. message:' + message);
       }
       if (!_isString(message)) {
-        throw new TypeError(
-          "assert args2(message) type is not string. message:" + message
-        );
+        throw new TypeError('assert args2(message) type is not string. message:' + message);
       }
       if (!value) {
-        throw new Error("assert error. message:" + message);
+        throw new Error('assert error. message:' + message);
       }
     };
 
@@ -167,28 +154,22 @@ namespace copipe {
     let guard_status = true;
     let guard_message: any;
     export const guard = (guardFunc: () => any[], runFunc: any): boolean => {
-      guard_message = "";
-      if (guard_status === false) {
-        return false;
-      }
+      guard_message = '';
+      if (guard_status === false) { return false; }
 
       if (!isFunction(guardFunc)) {
-        throw new SyntaxError("guard args1(guardFunc) type is not function.");
+        throw new SyntaxError('guard args1(guardFunc) type is not function.');
       }
       const result = guardFunc();
       if (!isArray(result)) {
-        throw new SyntaxError(
-          "guard args1(guardFunc) result type is not array."
-        );
+        throw new SyntaxError('guard args1(guardFunc) result type is not array.');
       }
       for (let i = 0; i < result.length; i += 1) {
         let resultValue;
-        let message = "";
+        let message = '';
         if (isArray(result[i])) {
           if (!(1 <= result[i].length)) {
-            throw new SyntaxError(
-              "guard args1(guardFunc) result item is not array.length >= 1."
-            );
+            throw new SyntaxError('guard args1(guardFunc) result item is not array.length >= 1.');
           }
           resultValue = result[i][0];
           if (2 <= result[i].length) {
@@ -199,17 +180,13 @@ namespace copipe {
         }
         resultValue = functionValue(resultValue);
         if (!isBoolean(resultValue)) {
-          throw new SyntaxError(
-            "guard args1(guardFunc) result item value type is not boolean."
-          );
+          throw new SyntaxError('guard args1(guardFunc) result item value type is not boolean.');
         }
         if (resultValue === false) {
           guard_message = message;
           if (!isUndefined(runFunc)) {
             if (!isFunction(runFunc)) {
-              throw new SyntaxError(
-                "guard args2(runFunc) type is not function"
-              );
+              throw new SyntaxError('guard args2(runFunc) type is not function');
             }
             runFunc();
           }
@@ -218,10 +195,10 @@ namespace copipe {
       }
       return false;
     };
-    guard.message = (): string => guard_message;
+    guard.message = () => guard_message;
 
     guard.status = (value: boolean): boolean => {
-      return (guard_status = value);
+      return guard_status = value;
     };
     guard.on = (): void => {
       guard_status = true;
@@ -238,37 +215,21 @@ namespace copipe {
     const { assert } = syntax;
 
     const {
-      _isUndefined,
-      _isNull,
-      _isBoolean,
-      _isNumber,
-      _isInteger,
-      _isString,
-      _isFunction,
-      _isObject,
-      _isArray,
-      _isDate,
-      _isRegExp,
-      _isException,
+      _isUndefined, _isNull,
+      _isBoolean, _isNumber, _isInteger, _isString,
+      _isFunction, _isObject, _isArray, _isDate,
+      _isRegExp, _isException,
 
-      _isNotUndefined,
-      _isNotNull,
-      _isNotBoolean,
-      _isNotNumber,
-      _isNotInteger,
-      _isNotString,
-      _isNotFunction,
-      _isNotObject,
-      _isNotArray,
-      _isNotDate,
-      _isNotRegExp,
-      _isNotException
+      _isNotUndefined, _isNotNull,
+      _isNotBoolean, _isNotNumber, _isNotInteger, _isNotString,
+      _isNotFunction, _isNotObject, _isNotArray, _isNotDate,
+      _isNotRegExp, _isNotException,
     } = _type;
 
     const _isTypeCheck = (
       checkFunc: (args1: any) => boolean,
-      argsArray: any[]
-    ): boolean => {
+      argsArray: any[],
+    ) => {
       assert(_isFunction(checkFunc));
       assert(_isArray(argsArray));
 
@@ -295,7 +256,7 @@ namespace copipe {
 
     const _isTypeCheckArrayFunc = (
       checkFunc: (args1: any) => boolean
-    ): ((args1: any[]) => boolean) => {
+    ): (args1: any[]) => boolean => {
       return (value: any[]): boolean => _isTypeCheck(checkFunc, value);
     };
 
@@ -380,6 +341,7 @@ namespace copipe.type {
  * 文法拡張
  */
 namespace copipe.syntax {
+
   /**
    * 例外や値が投げられたかどうかを判定する関数
    *  テストコードに使うためのもの
@@ -392,7 +354,7 @@ namespace copipe.syntax {
   ): boolean => {
     if (!isFunction(targetFunc, compareFunc)) {
       throw new SyntaxError(
-        "isThrown args(targetFunc or compareFunc) type is not function."
+        'isThrown args(targetFunc or compareFunc) type is not function.'
       );
     }
     try {
@@ -410,12 +372,9 @@ namespace copipe.syntax {
     targetFunc: Function,
     thrownValue: any
   ): boolean => {
-    return isThrown(
-      targetFunc,
-      (thrown: any): boolean => {
-        return thrown === thrownValue;
-      }
-    );
+    return isThrown(targetFunc, (thrown: any): boolean => {
+      return thrown === thrownValue;
+    });
   };
 
   /**
@@ -426,9 +385,7 @@ namespace copipe.syntax {
     exceptionName: string
   ): boolean => {
     if (!isString(exceptionName)) {
-      throw new SyntaxError(
-        "isThrownException args2(exceptionName) type is not string."
-      );
+      throw new SyntaxError('isThrownException args2(exceptionName) type is not string.');
     }
 
     return isThrown(
@@ -446,7 +403,7 @@ namespace copipe.syntax {
    * 例外や値が投げられていないことを判定する関数
    */
   export const isNotThrown = (targetFunc: Function): boolean => {
-    return !isThrown(targetFunc, (): boolean => true);
+    return !isThrown(targetFunc, () => true);
   };
 
   /**
@@ -476,14 +433,14 @@ namespace copipe.syntax {
   /**
    * 比較する関数
    */
-  export const equal = (valueA: any, valueB: any): boolean => {
+  export const equal = (valueA: any, valueB: any) => {
     return valueA === valueB;
   };
 
   /**
    * 配列内に value と一致する値があるかどうかを判定する関数
    */
-  export const or = (value: any, compareArray: any[]): boolean => {
+  export const or = (value: any, compareArray: any[]) => {
     assert(isArray(compareArray));
     for (let i = 0; i < compareArray.length; i += 1) {
       if (value === compareArray[i]) {
@@ -511,23 +468,23 @@ namespace copipe.syntax {
    */
   export const if_ = (condition: boolean): any => {
     if (!isBoolean(condition)) {
-      throw new TypeError("if_ args(condition) type is not boolean.");
+      throw new TypeError('if_ args(condition) type is not boolean.');
     }
-    const checkSyntax = (args: any): void => {
+    const checkSyntax = (args: any) => {
       if (!isObject(args)) {
-        throw new SyntaxError("if_() args type is not object.");
+        throw new SyntaxError('if_() args type is not object.');
       }
       if (isUndefined(args.then) && isUndefined(args.else)) {
-        throw new SyntaxError("if_() args .then .else both nothing.");
+        throw new SyntaxError('if_() args .then .else both nothing.');
       }
     };
     if (condition) {
-      return (args: any): any => {
+      return (args: any) => {
         checkSyntax(args);
         return functionValue(args.then);
       };
     } else {
-      return (args: any): any => {
+      return (args: any) => {
         checkSyntax(args);
         return functionValue(args.else);
       };
@@ -556,22 +513,18 @@ namespace copipe.syntax {
    *  例外を発生する
    */
   export const switch_ = (expression: any): any => {
-    return (args: any[]): any => {
+    return (args: any[]) => {
       if (!isArray(args)) {
-        throw new SyntaxError("switch_() args type is not array.");
+        throw new SyntaxError('switch_() args type is not array.');
       }
       for (let i = 0; i < args.length; i += 1) {
         if (!isArray(args[i])) {
-          throw new SyntaxError("switch_() args type is not array in array.");
+          throw new SyntaxError('switch_() args type is not array in array.');
         }
       }
       for (let i = 0; i < args.length; i += 1) {
-        if (args[i].length === 0) {
-          return undefined;
-        }
-        if (args[i].length === 1) {
-          return functionValue(args[i][0]);
-        }
+        if (args[i].length === 0) { return undefined; }
+        if (args[i].length === 1) { return functionValue(args[i][0]); }
         if (args[i][0] === expression) {
           return functionValue(args[i][1]);
         }
@@ -585,25 +538,22 @@ namespace copipe.syntax {
  * 文字列処理
  */
 namespace copipe.string {
+
   /**
    * 文字列を他の文字列か正規表現で一致を調べる関数
    */
   export const match = (
-    value: string,
-    compareValue: string | RegExp
-  ): boolean => {
-    guard(
-      (): any[] => [
-        [isString(value), "match args1(value) type is not String."],
-        [
-          isString(compareValue) || isRegExp(compareValue),
-          "match args2(compareValue) type is not String or RegExp."
-        ]
+    value: string, compareValue: string | RegExp
+  ) => {
+    guard(() => [
+      [isString(value), 'match args1(value) type is not String.'],
+      [
+        isString(compareValue) || isRegExp(compareValue),
+        'match args2(compareValue) type is not String or RegExp.'
       ],
-      (): any[] => {
-        throw new TypeError(guard.message());
-      }
-    );
+    ], () => {
+      throw new TypeError(guard.message());
+    });
 
     if (isString(compareValue)) {
       return value === compareValue;
@@ -611,40 +561,33 @@ namespace copipe.string {
     if (isRegExp(compareValue)) {
       return value.match(compareValue) !== null;
     }
-    throw new TypeError(
-      "match args2(compareValue) type is not String or RegExp."
-    );
+    throw new TypeError('match args2(compareValue) type is not String or RegExp.');
   };
 
   /**
    * 文字列を他の文字列か正規表現で含むかどうかを調べる関数
    */
   export const includes = (
-    value: string,
-    compareValue: string | RegExp
-  ): boolean => {
-    guard(
-      (): any[] => [
-        [isString(value), "includes args1(value) type is not String."],
-        [
-          isString(compareValue) || isRegExp(compareValue),
-          "includes args2(compareValue) type is not String or RegExp."
-        ]
+    value: string, compareValue: string | RegExp
+  ) => {
+    guard(() => [
+      [isString(value), 'includes args1(value) type is not String.'],
+      [
+        isString(compareValue) || isRegExp(compareValue),
+        'includes args2(compareValue) type is not String or RegExp.'
       ],
-      (): any[] => {
-        throw new TypeError(guard.message());
-      }
-    );
+    ], () => {
+      throw new TypeError(guard.message());
+    });
 
     if (isString(compareValue)) {
+      // console.info('copipe_core value.incluedes', isString(value), value);
       return value.includes(String(compareValue));
     }
     if (isRegExp(compareValue)) {
       return value.match(compareValue) !== null;
     }
-    throw new TypeError(
-      "includes args2(compareValue) type is not String or RegExp."
-    );
+    throw new TypeError('includes args2(compareValue) type is not String or RegExp.');
   };
 }
 
@@ -652,129 +595,78 @@ namespace copipe.string {
  * テスト
  */
 namespace copipe.test {
+
   /**
    * a, b の2つの引数が一致するかどうかを判定する関数
    *  テストコードに使うためのもの
    */
-  export const checkEqual = (a: any, b: any, message: string = ""): boolean => {
-    if (!isString(message)) {
-      throw new SyntaxError("checkEqual args(message) type is not string.");
-    }
+  export const checkEqual =
+    (a: any, b: any, message: string = ''): boolean => {
+      if (!isString(message)) {
+        throw new SyntaxError('checkEqual args(message) type is not string.');
+      }
 
-    if (a === b) {
-      return true;
-    }
-    message =
-      `Test: ${message}\n` +
-      "A !== B\n" +
-      `A = ${String(a)}\n` +
-      `B = ${String(b)}`;
-    console.log(message);
-    return false;
-  };
+      if (a === b) { return true; }
+      message = `Test: ${message}\n` +
+        'A !== B\n' +
+        `A = ${String(a)}\n` +
+        `B = ${String(b)}`;
+      console.log(message);
+      return false;
+    };
 }
 
 /**
  * 名前空間ルートの公開
  */
 namespace copipe {
+
   /**
    * 型判定
    */
   export const {
-    isUndefined,
-    isNull,
-    isBoolean,
-    isNumber,
-    isInteger,
-    isString,
-    isFunction,
-    isObject,
-    isArray,
-    isDate,
-    isRegExp,
-    isException,
+    isUndefined, isNull,
+    isBoolean, isNumber, isInteger, isString,
+    isFunction, isObject, isArray, isDate,
+    isRegExp, isException,
 
-    isNotUndefined,
-    isNotNull,
-    isNotBoolean,
-    isNotNumber,
-    isNotInteger,
-    isNotString,
-    isNotFunction,
-    isNotObject,
-    isNotArray,
-    isNotDate,
-    isNotRegExp,
-    isNotException,
+    isNotUndefined, isNotNull,
+    isNotBoolean, isNotNumber,isNotInteger, isNotString,
+    isNotFunction, isNotObject, isNotArray, isNotDate,
+    isNotRegExp, isNotException,
 
-    isUndefinedArray,
-    isNullArray,
-    isBooleanArray,
-    isNumberArray,
-    isIntegerArray,
-    isStringArray,
-    isFunctionArray,
-    isObjectArray,
-    isArrayArray,
-    isDateArray,
-    isRegExpArray,
-    isExceptionArray,
+    isUndefinedArray, isNullArray,
+    isBooleanArray, isNumberArray, isIntegerArray, isStringArray,
+    isFunctionArray, isObjectArray, isArrayArray, isDateArray,
+    isRegExpArray, isExceptionArray,
 
-    isNotUndefinedArray,
-    isNotNullArray,
-    isNotBooleanArray,
-    isNotNumberArray,
-    isNotIntegerArray,
-    isNotStringArray,
-    isNotFunctionArray,
-    isNotObjectArray,
-    isNotArrayArray,
-    isNotDateArray,
-    isNotRegExpArray,
-    isNotExceptionArray,
+    isNotUndefinedArray, isNotNullArray,
+    isNotBooleanArray, isNotNumberArray, isNotIntegerArray, isNotStringArray,
+    isNotFunctionArray, isNotObjectArray, isNotArrayArray, isNotDateArray,
+    isNotRegExpArray, isNotExceptionArray,
 
-    isUndef,
-    isBool,
-    isNum,
-    isInt,
-    isStr,
-    isFunc,
-    isObj,
-    isExcept,
+    isUndef, isBool, isNum, isInt, isStr,
+    isFunc, isObj, isExcept,
 
-    isNotUndef,
-    isNotBool,
-    isNotNum,
-    isNotInt,
-    isNotStr,
-    isNotFunc,
-    isNotObj,
-    isNotExcept
+    isNotUndef, isNotBool, isNotNum, isNotInt, isNotStr,
+    isNotFunc, isNotObj, isNotExcept,
   } = copipe.type;
 
   /**
    * 文法拡張
    */
   export const {
-    assert,
-    guard,
-    functionValue,
-    sc,
-    equal,
-    or,
-    if_,
-    switch_,
-    isThrown,
-    isThrownValue,
-    isThrownException,
-    isNotThrown
+    assert, guard,
+    functionValue, sc, equal, or, if_, switch_,
+    isThrown, isThrownValue, isThrownException, isNotThrown,
   } = copipe.syntax;
 
   /**
    * テスト
    */
-  export const { checkEqual } = copipe.test;
+  export const {
+    checkEqual,
+  } = copipe.test;
 }
 
 export = copipe;

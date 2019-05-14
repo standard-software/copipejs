@@ -99,5 +99,4 @@ var test_copipe_console;
         // console.debug('debug');
     };
 })(test_copipe_console || (test_copipe_console = {}));
-;
 module.exports = test_copipe_console;

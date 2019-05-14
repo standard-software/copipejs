@@ -5,28 +5,32 @@
     "project": "./tsconfig.node.json",
     "tsconfigRootDir": "."
   },
-  "env": { "browser": true, "node": true, "es6": true },
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
   "plugins": [
-    "@typescript-eslint",
-    "prettier"
+    "@typescript-eslint"
   ],
   "extends": [
     "eslint:recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended",
-    "prettier/@typescript-eslint"
+    "plugin:@typescript-eslint/recommended"
   ],
   "rules": {
-
+    "semi": "error",
+    "no-tabs": "error",
+    "quotes": ["error", "single"],
+    "no-extra-boolean-cast": "error",
+    "@typescript-eslint/indent": ["warn", 2],
     "@typescript-eslint/no-namespace": "off",
     "@typescript-eslint/no-use-before-define": "off",
     "@typescript-eslint/camelcase": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-unused-vars": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
     "no-undef": "off",
     "no-redeclare": "off",
-    "no-console": "off",
-
-    "prettier/prettier": "error"
+    "no-console": "off"
   }
 }

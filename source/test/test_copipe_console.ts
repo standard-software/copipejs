@@ -20,21 +20,21 @@ namespace test_copipe_console {
       checkEqual,
       consoleHook,
     } = copipe);
-  }
+  };
 
   export const test_consoleHook = function(methodName: string) {
 
     var consoleOutput = '';
     var consoleHook_hook = function() {
-      consoleHook._hook(methodName, function(args: string) { consoleOutput += args + ';' });
-    }
+      consoleHook._hook(methodName, function(args: string) { consoleOutput += args + ';'; });
+    };
 
     var testConsoleMethod = function() {
       console[methodName]('debug1');
       console[methodName]('debug2');
       console[methodName]('release1');
       console[methodName]('release2');
-    }
+    };
 
     var consoleMethod = console.log;
 
@@ -42,66 +42,66 @@ namespace test_copipe_console {
     consoleHook_hook();
     testConsoleMethod();
     consoleHook._unHook(methodName);
-    checkEqual('debug1;debug2;release1;release2;', consoleOutput)
+    checkEqual('debug1;debug2;release1;release2;', consoleOutput);
 
     consoleOutput = '';
     consoleHook_hook();
-    consoleHook._accept(methodName, ['debug1'], [], console[methodName])
+    consoleHook._accept(methodName, ['debug1'], [], console[methodName]);
     testConsoleMethod();
     consoleHook._unHook(methodName);
     checkEqual('debug1;', consoleOutput);
 
     consoleOutput = '';
     consoleHook_hook();
-    consoleHook._accept(methodName, ['debug'], [], console[methodName])
+    consoleHook._accept(methodName, ['debug'], [], console[methodName]);
     testConsoleMethod();
     consoleHook._unHook(methodName);
     checkEqual('debug1;debug2;', consoleOutput);
 
     consoleOutput = '';
     consoleHook_hook();
-    consoleHook._accept(methodName, ['debug1', 'release1'], [], console[methodName])
+    consoleHook._accept(methodName, ['debug1', 'release1'], [], console[methodName]);
     testConsoleMethod();
     consoleHook._unHook(methodName);
-    checkEqual('debug1;release1;', consoleOutput)
+    checkEqual('debug1;release1;', consoleOutput);
 
     consoleOutput = '';
     consoleHook_hook();
-    consoleHook._accept(methodName, [/debug?/], [], console[methodName])
+    consoleHook._accept(methodName, [/debug?/], [], console[methodName]);
     testConsoleMethod();
     consoleHook._unHook(methodName);
-    checkEqual('debug1;debug2;', consoleOutput)
+    checkEqual('debug1;debug2;', consoleOutput);
 
     consoleOutput = '';
     consoleHook_hook();
-    consoleHook._accept(methodName, [/debug?/], ['debug1'], console[methodName])
+    consoleHook._accept(methodName, [/debug?/], ['debug1'], console[methodName]);
     testConsoleMethod();
     consoleHook._unHook(methodName);
-    checkEqual('debug2;', consoleOutput)
+    checkEqual('debug2;', consoleOutput);
 
     consoleOutput = '';
     consoleHook_hook();
-    consoleHook._accept(methodName, [], ['release1'], console[methodName])
+    consoleHook._accept(methodName, [], ['release1'], console[methodName]);
     testConsoleMethod();
     consoleHook._unHook(methodName);
     checkEqual('debug1;debug2;release2;', consoleOutput);
 
     consoleOutput = '';
     consoleHook_hook();
-    consoleHook._accept(methodName, [], [/debug?/], console[methodName])
+    consoleHook._accept(methodName, [], [/debug?/], console[methodName]);
     testConsoleMethod();
     consoleHook._unHook(methodName);
     checkEqual('release1;release2;', consoleOutput);
 
     consoleOutput = '';
     consoleHook_hook();
-    consoleHook._accept(methodName, ['debug1', 'debug2'], ['debug1'], console[methodName])
+    consoleHook._accept(methodName, ['debug1', 'debug2'], ['debug1'], console[methodName]);
     testConsoleMethod();
     consoleHook._unHook(methodName);
     checkEqual('debug2;', consoleOutput);
 
     consoleHook._hook(methodName, consoleMethod);
-  }
+  };
 
   export const run = function(copipe) {
 
@@ -129,6 +129,6 @@ namespace test_copipe_console {
 
   };
 
-};
+}
 
 module.exports = test_copipe_console;

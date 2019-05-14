@@ -2,6 +2,7 @@
  * copipe.js
  *  file: copipe_console.js
  */
+
 import copipe_console = require('./copipe_console');
 
 namespace copipe {
@@ -66,7 +67,7 @@ namespace copipe {
 
   polyfillDefine();
 
-};
+}
 export = copipe;
 
 

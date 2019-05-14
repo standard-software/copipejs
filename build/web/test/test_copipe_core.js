@@ -294,15 +294,13 @@ var test_copipe_core;
             var UserException = /** @class */ (function () {
                 function UserException(message) {
                     this.message = message;
-                    this.name = "UserException";
+                    this.name = 'UserException';
                 }
-                ;
                 return UserException;
             }());
             checkEqual(true, isException(new UserException('message')));
         };
     })(type || (type = {}));
-    ;
     var syntax;
     (function (syntax) {
         syntax.test_or = function () {
@@ -603,7 +601,6 @@ var test_copipe_core;
             // 例外を投げない場合は isThrown は false
         };
     })(syntax || (syntax = {}));
-    ;
     test_copipe_core.run = function (copipe) {
         initialize(copipe);
         var checkEqual = copipe.test.checkEqual;
@@ -645,5 +642,4 @@ var test_copipe_core;
         console.log('test_copipe_core finish.');
     };
 })(test_copipe_core || (test_copipe_core = {}));
-;
 module.exports = test_copipe_core;
