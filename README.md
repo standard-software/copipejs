@@ -41,6 +41,10 @@ console.log(
 
 ## Version
 
+### 0.7.2
+#### 2019/05/14(Tue)
+- Update miss README.md and VERSION_EN.md
+
 ### 0.7.1
 #### 2019/05/14(Tue)
 - Uninstall prettier with eslint
