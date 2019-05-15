@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>test_release.html</title>
+<script>
+
+  var module = {};
+
+</script>
+
+  <script src="../copipe.js"></script>
+
+  <script src="./test_copipe_core.js"></script>
+  <script src="./test_copipe_console.js"></script>
+
+<script>
+
+const main = function() {
+  var argsToArray = function(argsObj) {
+    return Array.prototype.slice.call(argsObj);
+  };
+
+  copipe.consoleHook.hookLog(function() {
+    argsArray = argsToArray(arguments);
+    document.write(argsArray.join(' ') + '<br>\n');
+  })
+
+  console.log(
+    'copipe.VERSION', copipe.VERSION 
+  );
+
+  test_copipe_core.run(copipe);
+  test_copipe_console.run(copipe);
+};
+main();
+  
+</script>
+
+</head>
+<body>
+    <!-- <input type="button" value="Test Run" onclick="main()"
+    style="width:150px;"> -->
+</body>
+</html>
