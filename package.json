@@ -6,13 +6,13 @@
   "main": "./release/node/copipe",
   "scripts": {
     "tsc:node": "tsc -p ./tsconfig.node.json",
-    "start:node:build": "node ./scripts/start_node_build.js",
+    "start:node:debug": "node ./scripts/start_node_debug.js",
     "start:node:release": "node ./scripts/start_node_release.js",
-    "start:node": "npm run start:node:build && npm run start:node:release",
+    "start:node": "npm run start:node:debug && npm run start:node:release",
     "tsc:web": "tsc -p ./tsconfig.web.json",
-    "start:web:build": "node ./scripts/start_web_build.js",
+    "start:web:debug": "node ./scripts/start_web_debug.js",
     "start:web:release": "node ./scripts/start_web_release.js",
-    "start:web": "npm run start:web:build && npm run start:web:release",
+    "start:web": "npm run start:web:debug && npm run start:web:release",
     "start:all": "npm run start:node && npm run start:web",
     "test": ""
   },
