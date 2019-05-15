@@ -10,9 +10,9 @@ const execSync = require('child_process').execSync;
 execSync('npm run tsc:node');
 
 // copy test code
-execSync('cpx ./source/test/node/test_build_copipe.js ./build/node/test/');
+execSync('cpx ./source/test/node/test_debug_copipe.js ./debug/node/test/');
 
 // run test code
 let result;
-result = execSync('node ./build/node/test/test_build_copipe.js').toString();
+result = execSync('node ./debug/node/test/test_debug_copipe.js').toString();
 console.log(result);

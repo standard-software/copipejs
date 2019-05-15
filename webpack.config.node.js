@@ -1,5 +1,5 @@
 module.exports = {
-  // mode: process.env.NODE_ENV || "development",
+  mode: 'none',
   entry: ['./build/node/copipe.js'],
   output: {
     filename: 'copipe.js',
