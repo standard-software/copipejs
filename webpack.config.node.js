@@ -1,6 +1,6 @@
 module.exports = {
   mode: 'none',
-  entry: ['./build/node/copipe.js'],
+  entry: ['./debug/node/copipe.js'],
   output: {
     filename: 'copipe.js',
     path: __dirname + '/release/node/',

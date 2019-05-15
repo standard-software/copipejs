@@ -13,8 +13,8 @@ execSync('npm run tsc:node');
 execSync('webpack --config webpack.config.node.js');
 
 // copy test code
-execSync('cpx ./build/node/test/test_copipe_core.js ./release/node/test/');
-execSync('cpx ./build/node/test/test_copipe_console.js ./release/node/test/');
+execSync('cpx ./debug/node/test/test_copipe_core.js ./release/node/test/');
+execSync('cpx ./debug/node/test/test_copipe_console.js ./release/node/test/');
 execSync('cpx ./source/test/node/test_release_copipe.js ./release/node/test/');
 execSync('cpx ./source/test/node/test_release_copipe.mjs ./release/node/test/');
 
