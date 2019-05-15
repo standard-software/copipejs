@@ -1,19 +1,19 @@
 /**
  * copipe.js
- *  file: start_web_build.js
+ *  file: start_web_debug.js
  */
 
 const execSync = require('child_process').execSync;
-// console.log('start_web_build.js')
+// console.log('start_web_debug.js')
 
 // run tsc
 execSync('npm run tsc:web');
 
 // copy test code
-execSync('cpx ./source/test/web/test_build.html ./build/web/test/');
+execSync('cpx ./source/test/web/test_debug_copipe.html ./debug/web/test/');
 
 // run test code
-execSync('opener ./build/web/test/test_build.html')
+execSync('opener ./debug/web/test/test_debug_copipe.html');
 
 // NG opener iexplore relative path. OK full path.
-// opener iexplore ./source/test/web/test_build.html
+// opener iexplore ./source/test/web/test_debug.html

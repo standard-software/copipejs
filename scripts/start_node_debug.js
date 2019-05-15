@@ -1,10 +1,10 @@
 /**
  * copipe.js
- *  file: start_node_build.js
+ *  file: start_node_debug.js
  */
 
 const execSync = require('child_process').execSync;
-// console.log('start_node_build.js')
+// console.log('start_node_debug.js')
 
 // run tsc
 execSync('npm run tsc:node');

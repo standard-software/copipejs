@@ -1,6 +1,6 @@
 /**
  * copipe.js
- *  file: test_build_copipe.js
+ *  file: test_debug_copipe.js
  *  description:
  *    build 後の test_copipe オブジェクトを実行するためのファイル
  */
