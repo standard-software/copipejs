@@ -315,7 +315,7 @@ module.exports = copipe;
  */
 var copipe;
 (function (copipe) {
-    copipe.VERSION = '0.7.3';
+    copipe.VERSION = '0.7.4 beta';
 })(copipe || (copipe = {}));
 (function (copipe) {
     /**
