@@ -4,7 +4,7 @@
  */
 
 namespace copipe {
-  export const VERSION = '0.7.4 beta';
+  export const VERSION = '0.7.4';
 }
 
 namespace copipe {

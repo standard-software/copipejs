@@ -41,6 +41,12 @@ console.log(
 
 ## Version
 
+### 0.7.4
+#### 2019/05/17(Fri)
+- Update npm script 
+- Created copipe_node.js function forceMkDirSync
+- Uninstalled cpx
+
 ### 0.7.3
 #### 2019/05/16(Thu)
 - Created copipe.min.js and copipe.js for node and web
