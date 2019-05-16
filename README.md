@@ -41,6 +41,13 @@ console.log(
 
 ## Version
 
+### 0.7.3
+#### 2019/05/16(Thu)
+- Created copipe.min.js and copipe.js for node and web
+- Changed folder structure build >> debug
+  same npm script name
+  same debug file name
+
 ### 0.7.2
 #### 2019/05/14(Tue)
 - Update miss README.md and VERSION_EN.md
