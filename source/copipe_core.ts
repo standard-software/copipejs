@@ -165,6 +165,10 @@ namespace copipe {
         throw new SyntaxError('guard args1(guardFunc) result type is not array.');
       }
       for (let i = 0; i < result.length; i += 1) {
+        // 配列の [a,b,] の最終カンマ対策
+        if ((i === result.length - 1) && copipe.isUndefined(result[i])) {
+          continue;
+        }
         let resultValue;
         let message = '';
         if (isArray(result[i])) {
@@ -518,11 +522,19 @@ namespace copipe.syntax {
         throw new SyntaxError('switch_() args type is not array.');
       }
       for (let i = 0; i < args.length; i += 1) {
+        // 配列の [a,b,] の最終カンマ対策
+        if ((i === args.length - 1) && copipe.isUndefined(args[i])) {
+          continue;
+        }
         if (!isArray(args[i])) {
           throw new SyntaxError('switch_() args type is not array in array.');
         }
       }
       for (let i = 0; i < args.length; i += 1) {
+        // 配列の [a,b,] の最終カンマ対策
+        if ((i === args.length - 1) && copipe.isUndefined(args[i])) {
+          continue;
+        }
         if (args[i].length === 0) { return undefined; }
         if (args[i].length === 1) { return functionValue(args[i][0]); }
         if (args[i][0] === expression) {
