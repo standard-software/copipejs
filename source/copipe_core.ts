@@ -386,9 +386,9 @@ namespace copipe.syntax {
    */
   export const isThrownException = (
     targetFunc: Function,
-    exceptionName: string
+    exceptionName: string | undefined,
   ): boolean => {
-    if (!isString(exceptionName)) {
+    if (!(isUndefined(exceptionName) || isString(exceptionName))) {
       throw new SyntaxError('isThrownException args2(exceptionName) type is not string.');
     }
 
@@ -396,6 +396,9 @@ namespace copipe.syntax {
       targetFunc,
       (thrown: any): boolean => {
         if (isException(thrown)) {
+          if (isUndefined(exceptionName)) {
+            return true;
+          }
           return thrown.name === exceptionName;
         }
         return false;

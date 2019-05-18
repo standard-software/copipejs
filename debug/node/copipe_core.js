@@ -5,7 +5,7 @@
  */
 var copipe;
 (function (copipe) {
-    copipe.VERSION = '0.7.4';
+    copipe.VERSION = '1.0.0 beta';
 })(copipe || (copipe = {}));
 (function (copipe) {
     /**
@@ -144,6 +144,10 @@ var copipe;
                 throw new SyntaxError('guard args1(guardFunc) result type is not array.');
             }
             for (var i = 0; i < result.length; i += 1) {
+                // 配列の [a,b,] の最終カンマ対策
+                if ((i === result.length - 1) && copipe.isUndefined(result[i])) {
+                    continue;
+                }
                 var resultValue = void 0;
                 var message = '';
                 if (copipe.isArray(result[i])) {
@@ -333,11 +337,14 @@ var copipe;
          * 例外が投げられたかどうか判定する関数
          */
         syntax.isThrownException = function (targetFunc, exceptionName) {
-            if (!copipe.isString(exceptionName)) {
+            if (!(copipe.isUndefined(exceptionName) || copipe.isString(exceptionName))) {
                 throw new SyntaxError('isThrownException args2(exceptionName) type is not string.');
             }
             return syntax.isThrown(targetFunc, function (thrown) {
                 if (copipe.isException(thrown)) {
+                    if (copipe.isUndefined(exceptionName)) {
+                        return true;
+                    }
                     return thrown.name === exceptionName;
                 }
                 return false;
@@ -459,11 +466,19 @@ var copipe;
                     throw new SyntaxError('switch_() args type is not array.');
                 }
                 for (var i = 0; i < args.length; i += 1) {
+                    // 配列の [a,b,] の最終カンマ対策
+                    if ((i === args.length - 1) && copipe.isUndefined(args[i])) {
+                        continue;
+                    }
                     if (!copipe.isArray(args[i])) {
                         throw new SyntaxError('switch_() args type is not array in array.');
                     }
                 }
                 for (var i = 0; i < args.length; i += 1) {
+                    // 配列の [a,b,] の最終カンマ対策
+                    if ((i === args.length - 1) && copipe.isUndefined(args[i])) {
+                        continue;
+                    }
                     if (args[i].length === 0) {
                         return undefined;
                     }
