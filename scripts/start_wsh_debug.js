@@ -6,10 +6,9 @@
 const { execSync } = require('child_process');
 const { copyFileSync } = require('fs');
 const { forceMkDirSync } = require('./copipe_node.js');
-// console.log('start_wsh_debug.js')
 
 // run tsc
-execSync('npm run tsc:wsh');
+execSync('tsc -p ./tsconfig.wsh.json');
 
 // copy test code
 forceMkDirSync('./debug/wsh/test/');

@@ -6,10 +6,9 @@
 const { execSync } = require('child_process');
 const { copyFileSync } = require('fs');
 const { forceMkDirSync } = require('./copipe_node.js');
-// console.log('start_web_debug.js')
 
 // run tsc
-execSync('npm run tsc:web');
+execSync('tsc -p ./tsconfig.web.json');
 
 // copy test code
 forceMkDirSync('./debug/web/test/');
