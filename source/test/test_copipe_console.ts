@@ -26,7 +26,9 @@ namespace test_copipe_console {
 
     var consoleOutput = '';
     var consoleHook_hook = function() {
-      consoleHook._hook(methodName, function(args: string) { consoleOutput += args + ';'; });
+      consoleHook._hook(methodName, function(args: string) {
+        consoleOutput += args + ';';
+      });
     };
 
     var testConsoleMethod = function() {
@@ -108,9 +110,7 @@ namespace test_copipe_console {
     console.log('test_copipe_console start.');
 
     initialize(copipe);
-
-    var
-      test_consoleHook = test_copipe_console.test_consoleHook;
+    const { test_consoleHook } = test_copipe_console;
 
     test_consoleHook('log');
     test_consoleHook('info');

@@ -18,7 +18,9 @@ var test_copipe_console;
     test_copipe_console.test_consoleHook = function (methodName) {
         var consoleOutput = '';
         var consoleHook_hook = function () {
-            consoleHook._hook(methodName, function (args) { consoleOutput += args + ';'; });
+            consoleHook._hook(methodName, function (args) {
+                consoleOutput += args + ';';
+            });
         };
         var testConsoleMethod = function () {
             console[methodName]('debug1');

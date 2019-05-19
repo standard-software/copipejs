@@ -13,9 +13,6 @@ var require = function() {
 
 var SyntaxError = Error;
 
-// WScript.Echo((new SyntaxError).name);
-// WScript.Echo('test');
-
     ]]>
     </script>
     <script language="JavaScript" src="..\copipe_core.js"></script>
@@ -27,8 +24,11 @@ var SyntaxError = Error;
     <script language="JavaScript">
     <![CDATA[
 
-// var copipe = require('copipe');
-// WScript.Echo(copipe.VERSION);
+  copipe.consoleHook.original.log = function(message) { WScript.Echo(message); }
+  copipe.consoleHook.original.info = function(message) { WScript.Echo(message); }
+  copipe.consoleHook.original.warn = function(message) { WScript.Echo(message); }
+  copipe.consoleHook.original.error = function(message) { WScript.Echo(message); }
+  copipe.consoleHook.original.debug = function(message) { WScript.Echo(message); }
 
   var argsToArray = function(argsObj) {
     return Array.prototype.slice.call(argsObj);
@@ -46,9 +46,8 @@ var SyntaxError = Error;
     'copipe.VERSION', copipe.VERSION
   );
 
-  // WScript.Echo(outputMessage);
-
   test_copipe_core.run(copipe);
+  test_copipe_console.run(copipe);
 
   WScript.Echo(outputMessage);
     ]]>
