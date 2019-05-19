@@ -367,9 +367,9 @@ var test_copipe_core;
             checkEqual(undefined, if_(true)(ifElseFunc));
             checkEqual('ELSE', if_(false)(ifElseFunc));
             // Error
-            checkEqual(true, isThrownException(function () { if_(true)(); }, 'SyntaxError'));
-            checkEqual(true, isThrownException(function () { if_(true)({}); }, 'SyntaxError'));
-            checkEqual(true, isThrownException(function () { if_(true)({ thenn: '' }); }, 'SyntaxError'));
+            checkEqual(true, isThrownException(function () { if_(true)(); }, (new SyntaxError).name));
+            checkEqual(true, isThrownException(function () { if_(true)({}); }, (new SyntaxError).name));
+            checkEqual(true, isThrownException(function () { if_(true)({ thenn: '' }); }, (new SyntaxError).name));
             checkEqual(false, isNotThrown(function () { if_(true)(); }));
             checkEqual(true, isNotThrown(function () { if_(true)({ then: '' }); }));
         };
@@ -402,8 +402,8 @@ var test_copipe_core;
                 [1, '1'],
                 'default'
             ];
-            checkEqual(true, isThrownException(function () { switch_(1)(switchResultValue4); }, 'SyntaxError'));
-            checkEqual(true, isThrownException(function () { switch_(2)(switchResultValue4); }, 'SyntaxError'));
+            checkEqual(true, isThrownException(function () { switch_(1)(switchResultValue4); }, (new SyntaxError).name));
+            checkEqual(true, isThrownException(function () { switch_(2)(switchResultValue4); }, (new SyntaxError).name));
             var switchResultFunc1 = [
                 [1, function () { return 'number 1'; }],
                 ['1', function () { return 'string 1'; }],

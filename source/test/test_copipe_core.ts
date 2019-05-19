@@ -493,17 +493,17 @@ namespace test_copipe_core {
       // Error
       checkEqual(true, isThrownException(
         function() { if_(true)(); },
-        'SyntaxError'
+        (new SyntaxError).name
       ));
 
       checkEqual(true, isThrownException(
         function() { if_(true)({}); },
-        'SyntaxError'
+        (new SyntaxError).name
       ));
 
       checkEqual(true, isThrownException(
         function() { if_(true)({ thenn: '' }); },
-        'SyntaxError'
+        (new SyntaxError).name
       ));
 
       checkEqual(false, isNotThrown(
@@ -548,11 +548,11 @@ namespace test_copipe_core {
       ];
       checkEqual(true, isThrownException(
         function() { switch_(1)(switchResultValue4); },
-        'SyntaxError'
+        (new SyntaxError).name
       ));
       checkEqual(true, isThrownException(
         function() { switch_(2)(switchResultValue4); },
-        'SyntaxError'
+        (new SyntaxError).name
       ));
 
       var switchResultFunc1 = [
