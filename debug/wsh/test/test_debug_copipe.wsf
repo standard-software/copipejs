@@ -24,32 +24,32 @@ var SyntaxError = Error;
     <script language="JavaScript">
     <![CDATA[
 
-  copipe.consoleHook.original.log = function(message) { WScript.Echo(message); }
-  copipe.consoleHook.original.info = function(message) { WScript.Echo(message); }
-  copipe.consoleHook.original.warn = function(message) { WScript.Echo(message); }
-  copipe.consoleHook.original.error = function(message) { WScript.Echo(message); }
-  copipe.consoleHook.original.debug = function(message) { WScript.Echo(message); }
+copipe.consoleHook.original.log = function(message) { WScript.Echo(message); }
+copipe.consoleHook.original.info = function(message) { WScript.Echo(message); }
+copipe.consoleHook.original.warn = function(message) { WScript.Echo(message); }
+copipe.consoleHook.original.error = function(message) { WScript.Echo(message); }
+copipe.consoleHook.original.debug = function(message) { WScript.Echo(message); }
 
-  var argsToArray = function(argsObj) {
-    return Array.prototype.slice.call(argsObj);
-  };
+var argsToArray = function(argsObj) {
+return Array.prototype.slice.call(argsObj);
+};
 
-  var outputMessage = '';
-  copipe.consoleHook.hookLog(function() {
-    argsArray = argsToArray(arguments);
-    var message = argsArray.join(' ');
-    outputMessage += message + '\n';
-    // WScript.Echo(message);
-  })
+var outputMessage = '';
+copipe.consoleHook.hookLog(function() {
+argsArray = argsToArray(arguments);
+var message = argsArray.join(' ');
+outputMessage += message + '\n';
+// WScript.Echo(message);
+})
 
-  console.log(
-    'copipe.VERSION', copipe.VERSION
-  );
+console.log(
+'copipe.VERSION', copipe.VERSION
+);
 
-  test_copipe_core.run(copipe);
-  test_copipe_console.run(copipe);
+test_copipe_core.run(copipe);
+test_copipe_console.run(copipe);
 
-  WScript.Echo(outputMessage);
+WScript.Echo(outputMessage);
     ]]>
-    </script> -->
+    </script>
 </job>
