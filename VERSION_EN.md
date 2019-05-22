@@ -2,6 +2,16 @@
 
 ## Version
 
+### 1.0.0
+#### 2019/05/22(Wed)
+- update README.md for Web for WSH
+- Support Windows WSH (debug/release)
+- update README.md for Web for WSH
+- update pacage.json tsc command
+- Add Array.some polyfill
+- isThrownException no exceptionName support
+- update copipe_node.js forceMkDirSync
+
 ### 0.7.4
 #### 2019/05/17(Fri)
 - Update npm script 

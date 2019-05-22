@@ -9,12 +9,12 @@ https://github.com/standard-software/copipejs
 https://www.npmjs.com/package/@standard-software/copipe
 
 
-## install
+## for node webpack etc.. 
+
+### npm install
     npm i @standard-software/copipe
 
-## How to use
-
-### type CommonJS
+### How to use type CommonJS
 
 ```
 // index.js
@@ -26,7 +26,7 @@ console.log(
 ```
     node index.js
 
-### type ES Modules
+### How to use type ES Modules
 
 ```
 // index.mjs
@@ -38,33 +38,61 @@ console.log(
 ```
     node --experimental-modules index.mjs
 
+## for web
+
+### Setting to use Debug Version
+
+```
+<script>
+  var require = function() {
+    return copipe;
+  };
+  var module = {};
+</script>
+  <script src="../copipe_core.js"></script>
+  <script src="../copipe_console.js"></script>
+  <script src="../copipe_polyfill.js"></script>
+<script>
+  console.log(copipe.VERSION);
+</script>
+```
+- refer to ./debug/web/test/test_debug_copipe.html
+
+### Setting to use Release Version
+
+```
+<script>
+  var module = {};
+</script>
+  <script src="../copipe.js"></script>
+<script>
+  console.log(copipe.VERSION);
+</script>
+```
+- refer to ./release/web/test/test_release_copipe.html
+
+## for WSH(Window Scripting Host / Windows10)
+
+### Setting to use Debug Version
+
+- refer to ./debug/wsh/test/test_debug_copipe.wsf
+
+### Setting to use Release Version
+
+- refer to ./release/wsh/test/test_release_copipe.wsf
+
 
 ## Version
 
-### 0.7.4
-#### 2019/05/17(Fri)
-- Update npm script 
-- Created copipe_node.js function forceMkDirSync
-- Uninstalled cpx
-
-### 0.7.3
-#### 2019/05/16(Thu)
-- Created copipe.min.js and copipe.js for node and web
-- Changed folder structure build >> debug
-  same npm script name
-  same debug file name
-
-### 0.7.2
-#### 2019/05/14(Tue)
-- Update miss README.md and VERSION_EN.md
-
-### 0.7.1
-#### 2019/05/14(Tue)
-- Uninstall prettier with eslint
-
-### 0.7.0
-#### 2019/05/08(Wed)
-- Introduction eslint
+### 1.0.0
+#### 2019/05/22(Wed)
+- update README.md for Web for WSH
+- Support Windows WSH (debug/release)
+- update README.md for Web for WSH
+- update pacage.json tsc command
+- Add Array.some polyfill
+- isThrownException no exceptionName support
+- update copipe_node.js forceMkDirSync
 
 ### More Info
 [VERSION_EN.md](https://github.com/standard-software/copipejs/blob/master/VERSION_EN.md)
