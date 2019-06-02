@@ -162,6 +162,35 @@ var copipe;
                 return false;
             };
         }
+        // https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array/map
+        if (!Array.prototype.map) {
+            Array.prototype.map = function (callback /*, thisArg*/) {
+                var T, A, k;
+                if (this == null) {
+                    throw new TypeError('this is null or not defined');
+                }
+                var O = Object(this);
+                var len = O.length >>> 0;
+                if (typeof callback !== 'function') {
+                    throw new TypeError(callback + ' is not a function');
+                }
+                if (arguments.length > 1) {
+                    T = arguments[1];
+                }
+                A = new Array(len);
+                k = 0;
+                while (k < len) {
+                    var kValue, mappedValue;
+                    if (k in O) {
+                        kValue = O[k];
+                        mappedValue = callback.call(T, kValue, k, O);
+                        A[k] = mappedValue;
+                    }
+                    k++;
+                }
+                return A;
+            };
+        }
     };
     copipe.polyfillDefine();
 })(copipe || (copipe = {}));
@@ -188,6 +217,8 @@ var copipe;
     copipe.VERSION = copipe_core.VERSION, copipe.type = copipe_core.type, copipe.syntax = copipe_core.syntax, copipe.string = copipe_core.string, copipe.test = copipe_core.test;
     copipe.isUndefined = copipe.type.isUndefined, copipe.isNull = copipe.type.isNull, copipe.isBoolean = copipe.type.isBoolean, copipe.isNumber = copipe.type.isNumber, copipe.isInteger = copipe.type.isInteger, copipe.isString = copipe.type.isString, copipe.isFunction = copipe.type.isFunction, copipe.isObject = copipe.type.isObject, copipe.isArray = copipe.type.isArray, copipe.isDate = copipe.type.isDate, copipe.isRegExp = copipe.type.isRegExp, copipe.isException = copipe.type.isException, copipe.isNotUndefined = copipe.type.isNotUndefined, copipe.isNotNull = copipe.type.isNotNull, copipe.isNotBoolean = copipe.type.isNotBoolean, copipe.isNotNumber = copipe.type.isNotNumber, copipe.isNotInteger = copipe.type.isNotInteger, copipe.isNotString = copipe.type.isNotString, copipe.isNotFunction = copipe.type.isNotFunction, copipe.isNotObject = copipe.type.isNotObject, copipe.isNotArray = copipe.type.isNotArray, copipe.isNotDate = copipe.type.isNotDate, copipe.isNotRegExp = copipe.type.isNotRegExp, copipe.isNotException = copipe.type.isNotException, copipe.isUndefinedArray = copipe.type.isUndefinedArray, copipe.isNullArray = copipe.type.isNullArray, copipe.isBooleanArray = copipe.type.isBooleanArray, copipe.isNumberArray = copipe.type.isNumberArray, copipe.isIntegerArray = copipe.type.isIntegerArray, copipe.isStringArray = copipe.type.isStringArray, copipe.isFunctionArray = copipe.type.isFunctionArray, copipe.isObjectArray = copipe.type.isObjectArray, copipe.isArrayArray = copipe.type.isArrayArray, copipe.isDateArray = copipe.type.isDateArray, copipe.isRegExpArray = copipe.type.isRegExpArray, copipe.isExceptionArray = copipe.type.isExceptionArray, copipe.isNotUndefinedArray = copipe.type.isNotUndefinedArray, copipe.isNotNullArray = copipe.type.isNotNullArray, copipe.isNotBooleanArray = copipe.type.isNotBooleanArray, copipe.isNotNumberArray = copipe.type.isNotNumberArray, copipe.isNotIntegerArray = copipe.type.isNotIntegerArray, copipe.isNotStringArray = copipe.type.isNotStringArray, copipe.isNotFunctionArray = copipe.type.isNotFunctionArray, copipe.isNotObjectArray = copipe.type.isNotObjectArray, copipe.isNotArrayArray = copipe.type.isNotArrayArray, copipe.isNotDateArray = copipe.type.isNotDateArray, copipe.isNotRegExpArray = copipe.type.isNotRegExpArray, copipe.isNotExceptionArray = copipe.type.isNotExceptionArray, copipe.isUndef = copipe.type.isUndef, copipe.isBool = copipe.type.isBool, copipe.isNum = copipe.type.isNum, copipe.isInt = copipe.type.isInt, copipe.isStr = copipe.type.isStr, copipe.isFunc = copipe.type.isFunc, copipe.isObj = copipe.type.isObj, copipe.isExcept = copipe.type.isExcept, copipe.isNotUndef = copipe.type.isNotUndef, copipe.isNotBool = copipe.type.isNotBool, copipe.isNotNum = copipe.type.isNotNum, copipe.isNotInt = copipe.type.isNotInt, copipe.isNotStr = copipe.type.isNotStr, copipe.isNotFunc = copipe.type.isNotFunc, copipe.isNotObj = copipe.type.isNotObj, copipe.isNotExcept = copipe.type.isNotExcept;
     _a = copipe.syntax, copipe.assert = _a.assert, copipe.guard = _a.guard, copipe.functionValue = _a.functionValue, copipe.sc = _a.sc, copipe.equal = _a.equal, copipe.or = _a.or, copipe.if_ = _a.if_, copipe.switch_ = _a.switch_, copipe.isThrown = _a.isThrown, copipe.isThrownValue = _a.isThrownValue, copipe.isThrownException = _a.isThrownException, copipe.isNotThrown = _a.isNotThrown;
+    // export const {
+    // } = convert;
     copipe.checkEqual = copipe.test.checkEqual;
     var consoleHook;
     (function (consoleHook) {
@@ -260,10 +291,11 @@ var copipe;
                 for (var _i = 0; _i < arguments.length; _i++) {
                     messageArgs[_i] = arguments[_i];
                 }
+                var messageArgsAll = messageArgs.map(function (value) { return String(value); }).join(' ');
                 var acceptFlag = acceptArray.length === 0;
                 if (!acceptFlag) {
                     acceptFlag = acceptArray.some(function (acceptValue) {
-                        if (!copipe.isString(messageArgs[0])) {
+                        if (!copipe.isString(messageArgsAll)) {
                             return false;
                         }
                         copipe.guard(function () { return [
@@ -274,12 +306,12 @@ var copipe;
                         ]; }, function () {
                             throw new TypeError(copipe.guard.message());
                         });
-                        return copipe.string.includes(messageArgs[0], acceptValue);
+                        return copipe.string.includes(messageArgsAll, acceptValue);
                     });
                 }
                 if (acceptFlag && copipe.isArray(rejectArray)) {
                     acceptFlag = !(rejectArray.some(function (rejectValue) {
-                        if (!copipe.isString(messageArgs[0])) {
+                        if (!copipe.isString(messageArgsAll)) {
                             return false;
                         }
                         copipe.guard(function () { return [
@@ -290,7 +322,7 @@ var copipe;
                         ]; }, function () {
                             throw new TypeError(copipe.guard.message());
                         });
-                        return copipe.string.includes(messageArgs[0], rejectValue);
+                        return copipe.string.includes(messageArgsAll, rejectValue);
                     }));
                 }
                 if (acceptFlag) {
@@ -335,7 +367,7 @@ module.exports = copipe;
  */
 var copipe;
 (function (copipe) {
-    copipe.VERSION = '1.0.0';
+    copipe.VERSION = '1.0.1 beta';
 })(copipe || (copipe = {}));
 (function (copipe) {
     /**
@@ -825,6 +857,11 @@ var copipe;
     })(syntax = copipe.syntax || (copipe.syntax = {}));
 })(copipe || (copipe = {}));
 /**
+ * 変換処理
+ */
+// namespace copipe.convert {
+// }
+/**
  * 文字列処理
  */
 (function (copipe) {
@@ -916,9 +953,20 @@ var copipe;
      */
     _b = copipe.syntax, copipe.assert = _b.assert, copipe.guard = _b.guard, copipe.functionValue = _b.functionValue, copipe.sc = _b.sc, copipe.equal = _b.equal, copipe.or = _b.or, copipe.if_ = _b.if_, copipe.switch_ = _b.switch_, copipe.isThrown = _b.isThrown, copipe.isThrownValue = _b.isThrownValue, copipe.isThrownException = _b.isThrownException, copipe.isNotThrown = _b.isNotThrown;
     /**
+     * 変換
+     */
+    // export const {
+    // } = copipe.convert;
+    /**
+     * 文字列
+     */
+    // export const {
+    // } = copipe.string;
+    /**
      * テスト
      */
-    copipe.checkEqual = copipe.test.checkEqual;
+    // export const {
+    // } = copipe.test;
 })(copipe || (copipe = {}));
 module.exports = copipe;
 

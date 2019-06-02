@@ -76,8 +76,9 @@ namespace test_copipe_core {
       functionValue, sc, equal, or, if_, switch_,
       isThrown, isThrownValue, isThrownException, isNotThrown,
 
-      checkEqual,
     } = copipe);
+
+    ({ checkEqual } = copipe.test);
   };
 
   namespace type {
@@ -706,6 +707,14 @@ namespace test_copipe_core {
       checkEqual(false, isThrown(function() { }, function() { }));
       // 例外を投げない場合は isThrown は false
     };
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  namespace convert {
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  namespace string {
   }
 
   export const run = function(copipe) {

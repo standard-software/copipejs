@@ -42,6 +42,8 @@ namespace copipe {
     functionValue, sc, equal, or, if_, switch_,
     isThrown, isThrownValue, isThrownException, isNotThrown,
   } = copipe.syntax;
+  // export const {
+  // } = convert;
   export const {
     checkEqual,
   } = test;
@@ -124,10 +126,11 @@ namespace copipe {
       ], () => { throw new TypeError(guard.message()); });
 
       _hook(methodName, (...messageArgs: any[]) => {
+        const messageArgsAll = messageArgs.map((value) => String(value)).join(' ');
         let acceptFlag = acceptArray.length === 0;
         if (!acceptFlag) {
           acceptFlag = acceptArray.some((acceptValue) => {
-            if (!isString(messageArgs[0])) {
+            if (!isString(messageArgsAll)) {
               return false;
             }
             guard(() => [
@@ -138,12 +141,12 @@ namespace copipe {
             ], () => {
               throw new TypeError(guard.message());
             });
-            return copipe.string.includes(messageArgs[0], acceptValue);
+            return copipe.string.includes(messageArgsAll, acceptValue);
           });
         }
         if (acceptFlag && isArray(rejectArray)) {
           acceptFlag = !(rejectArray.some((rejectValue) => {
-            if (!isString(messageArgs[0])) {
+            if (!isString(messageArgsAll)) {
               return false;
             }
             guard(() => [
@@ -154,7 +157,7 @@ namespace copipe {
             ], () => {
               throw new TypeError(guard.message());
             });
-            return copipe.string.includes(messageArgs[0], rejectValue);
+            return copipe.string.includes(messageArgsAll, rejectValue);
           }));
         }
 

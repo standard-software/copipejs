@@ -13,6 +13,8 @@ var require = function() {
 
 var SyntaxError = Error;
 
+var JSON = undefined;
+
 var window = {};
 
     ]]>

@@ -4,7 +4,7 @@
  */
 
 namespace copipe {
-  export const VERSION = '1.0.0';
+  export const VERSION = '1.0.1 beta';
 }
 
 namespace copipe {
@@ -550,6 +550,12 @@ namespace copipe.syntax {
 }
 
 /**
+ * 変換処理
+ */
+// namespace copipe.convert {
+// }
+
+/**
  * 文字列処理
  */
 namespace copipe.string {
@@ -677,11 +683,22 @@ namespace copipe {
   } = copipe.syntax;
 
   /**
+   * 変換
+   */
+  // export const {
+  // } = copipe.convert;
+
+  /**
+   * 文字列
+   */
+  // export const {
+  // } = copipe.string;
+
+  /**
    * テスト
    */
-  export const {
-    checkEqual,
-  } = copipe.test;
+  // export const {
+  // } = copipe.test;
 }
 
 export = copipe;

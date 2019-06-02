@@ -31,14 +31,14 @@ namespace test_copipe_console {
       });
     };
 
+    var consoleMethod = console.log;
+
     var testConsoleMethod = function() {
       console[methodName]('debug1');
       console[methodName]('debug2');
       console[methodName]('release1');
       console[methodName]('release2');
     };
-
-    var consoleMethod = console.log;
 
     consoleOutput = '';
     consoleHook_hook();
@@ -101,6 +101,41 @@ namespace test_copipe_console {
     testConsoleMethod();
     consoleHook._unHook(methodName);
     checkEqual('debug2;', consoleOutput);
+
+    var testConsoleMethod = function() {
+      console[methodName]('debug1', 'a', 'messageA');
+      console[methodName]('debug2', 'b', 'messageB');
+      console[methodName]('release1', 'a', 'messageC');
+      console[methodName]('release2', 'b', 'messageD');
+    };
+
+    consoleOutput = '';
+    consoleHook_hook();
+    consoleHook._accept(methodName, ['debug', ' a '], [], console[methodName]);
+    testConsoleMethod();
+    consoleHook._unHook(methodName);
+    checkEqual('debug1;debug2;release1;', consoleOutput);
+
+    consoleOutput = '';
+    consoleHook_hook();
+    consoleHook._accept(methodName, ['debug'], [' a '], console[methodName]);
+    testConsoleMethod();
+    consoleHook._unHook(methodName);
+    checkEqual('debug2;', consoleOutput);
+
+    consoleOutput = '';
+    consoleHook_hook();
+    consoleHook._accept(methodName, [' b '], ['messageB'], console[methodName]);
+    testConsoleMethod();
+    consoleHook._unHook(methodName);
+    checkEqual('release2;', consoleOutput);
+
+    consoleOutput = '';
+    consoleHook_hook();
+    consoleHook._accept(methodName, ['messageD'], [], console[methodName]);
+    testConsoleMethod();
+    consoleHook._unHook(methodName);
+    checkEqual('release2;', consoleOutput);
 
     consoleHook._hook(methodName, consoleMethod);
   };
