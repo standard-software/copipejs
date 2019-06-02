@@ -2,6 +2,11 @@
 
 ## Version
 
+### 1.0.1
+#### 2019/06/02(Sun)
+- update consoleHook._accept
+  check args second over value
+
 ### 1.0.0
 #### 2019/05/22(Wed)
 - update README.md for Web for WSH
