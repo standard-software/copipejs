@@ -5,6 +5,7 @@
   "description": "simple code parts",
   "main": "./release/node/copipe",
   "scripts": {
+    "tsc:node": "tsc -p ./tsconfig.node.json",
     "start:node:debug": "node ./scripts/start_node_debug.js",
     "start:node:release": "node ./scripts/start_node_release.js",
     "start:node": "npm run start:node:debug && npm run start:node:release",

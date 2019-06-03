@@ -4,7 +4,7 @@
  */
 
 namespace copipe {
-  export const VERSION = '1.0.1';
+  export const VERSION = '1.1.0 beta';
 }
 
 namespace copipe {
@@ -349,21 +349,33 @@ namespace copipe.syntax {
   /**
    * 例外や値が投げられたかどうかを判定する関数
    *  テストコードに使うためのもの
-   *  compareFunc で 引数として投げられた値が渡されるのでそこで判定する
-   *  関数になっているのはオブジェクトを値比較ができないため
+   * compareFunc undefined の場合
+   *  なにか例外が投げられていれば true を返す
+   * copareFunc 関数の場合
+   *  何が投げられたのかを取得するために
+   *  compareFunc の引数として投げられた値が渡されるので
+   *  そこで判定する
    */
   export const isThrown = (
     targetFunc: Function,
-    compareFunc: Function
+    compareFunc: Function | undefined
   ): boolean => {
-    if (!isFunction(targetFunc, compareFunc)) {
-      throw new SyntaxError(
-        'isThrown args(targetFunc or compareFunc) type is not function.'
-      );
-    }
+    guard(() => [
+      [
+        isFunction(targetFunc),
+        'isThrown args(targetFunc) type is not function.'
+      ],
+      [
+        isFunction(compareFunc) || isUndefined(compareFunc),
+        'isThrown args(compareFunc) type is not function or undefined.'
+      ]
+    ], () => {
+      throw new SyntaxError(guard.message());
+    });
     try {
       targetFunc();
     } catch (e) {
+      if (isUndefined(compareFunc)) { return true; }
       return compareFunc(e);
     }
     return false;

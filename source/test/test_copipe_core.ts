@@ -706,6 +706,12 @@ namespace test_copipe_core {
 
       checkEqual(false, isThrown(function() { }, function() { }));
       // 例外を投げない場合は isThrown は false
+
+      // 第二引数指定のない isThrown
+      checkEqual(true, isThrown(function() { throw 1; }));
+      checkEqual(true, isThrown(function() { throw '1'; }));
+      checkEqual(false, isThrown(function() {  }));
+
     };
   }
 
