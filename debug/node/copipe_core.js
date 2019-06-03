@@ -5,7 +5,7 @@
  */
 var copipe;
 (function (copipe) {
-    copipe.VERSION = '1.0.1';
+    copipe.VERSION = '1.1.0 beta';
 })(copipe || (copipe = {}));
 (function (copipe) {
     /**
@@ -310,17 +310,33 @@ var copipe;
         /**
          * 例外や値が投げられたかどうかを判定する関数
          *  テストコードに使うためのもの
-         *  compareFunc で 引数として投げられた値が渡されるのでそこで判定する
-         *  関数になっているのはオブジェクトを値比較ができないため
+         * compareFunc undefined の場合
+         *  なにか例外が投げられていれば true を返す
+         * copareFunc 関数の場合
+         *  何が投げられたのかを取得するために
+         *  compareFunc の引数として投げられた値が渡されるので
+         *  そこで判定する
          */
         syntax.isThrown = function (targetFunc, compareFunc) {
-            if (!copipe.isFunction(targetFunc, compareFunc)) {
-                throw new SyntaxError('isThrown args(targetFunc or compareFunc) type is not function.');
-            }
+            syntax.guard(function () { return [
+                [
+                    copipe.isFunction(targetFunc),
+                    'isThrown args(targetFunc) type is not function.'
+                ],
+                [
+                    copipe.isFunction(compareFunc) || copipe.isUndefined(compareFunc),
+                    'isThrown args(compareFunc) type is not function or undefined.'
+                ]
+            ]; }, function () {
+                throw new SyntaxError(syntax.guard.message());
+            });
             try {
                 targetFunc();
             }
             catch (e) {
+                if (copipe.isUndefined(compareFunc)) {
+                    return true;
+                }
                 return compareFunc(e);
             }
             return false;
@@ -497,8 +513,13 @@ var copipe;
 /**
  * 変換処理
  */
-// namespace copipe.convert {
-// }
+(function (copipe) {
+    var convert;
+    (function (convert) {
+        convert.stringToNumber = function () {
+        };
+    })(convert = copipe.convert || (copipe.convert = {}));
+})(copipe || (copipe = {}));
 /**
  * 文字列処理
  */
@@ -508,45 +529,50 @@ var copipe;
         /**
          * 文字列を他の文字列か正規表現で一致を調べる関数
          */
-        string.match = function (value, compareValue) {
+        var _match = function (matchFunc, value, compareValues) {
             copipe.guard(function () { return [
-                [copipe.isString(value), 'match args1(value) type is not String.'],
+                [copipe.isString(value), '_match args1(value) type is not String.'],
                 [
-                    copipe.isString(compareValue) || copipe.isRegExp(compareValue),
-                    'match args2(compareValue) type is not String or RegExp.'
+                    copipe.isArray(compareValues),
+                    '_match args2(compareValues) type is not Array.'
                 ],
             ]; }, function () {
                 throw new TypeError(copipe.guard.message());
             });
-            if (copipe.isString(compareValue)) {
-                return value === compareValue;
+            return compareValues.some(function (element) {
+                if (copipe.isString(element)) {
+                    return matchFunc(value, element);
+                }
+                if (copipe.isRegExp(element)) {
+                    return value.match(element) !== null;
+                }
+                throw new TypeError('match args2(compareValue) type is not String or RegExp.');
+            });
+        };
+        string.match = function (
+        // value: string | { value: string; compareValue: string | RegExp },
+        value, compareValues) {
+            var compareFunc = function (a, b) { return a === b; };
+            if (copipe.isObject(value)) {
+                return _match(compareFunc, value.value, value.compareValues);
             }
-            if (copipe.isRegExp(compareValue)) {
-                return value.match(compareValue) !== null;
+            else {
+                return _match(compareFunc, value, compareValues);
             }
-            throw new TypeError('match args2(compareValue) type is not String or RegExp.');
         };
         /**
          * 文字列を他の文字列か正規表現で含むかどうかを調べる関数
          */
-        string.includes = function (value, compareValue) {
-            copipe.guard(function () { return [
-                [copipe.isString(value), 'includes args1(value) type is not String.'],
-                [
-                    copipe.isString(compareValue) || copipe.isRegExp(compareValue),
-                    'includes args2(compareValue) type is not String or RegExp.'
-                ],
-            ]; }, function () {
-                throw new TypeError(copipe.guard.message());
-            });
-            if (copipe.isString(compareValue)) {
-                // console.info('copipe_core value.incluedes', isString(value), value);
-                return value.includes(String(compareValue));
+        string.includes = function (value, 
+        // compareValues: [string | RegExp] | undefined
+        compareValues) {
+            var compareFunc = function (a, b) { return a.includes(b); };
+            if (copipe.isObject(value)) {
+                return _match(compareFunc, value.value, value.compareValues);
             }
-            if (copipe.isRegExp(compareValue)) {
-                return value.match(compareValue) !== null;
+            else {
+                return _match(compareFunc, value, compareValues);
             }
-            throw new TypeError('includes args2(compareValue) type is not String or RegExp.');
         };
     })(string = copipe.string || (copipe.string = {}));
 })(copipe || (copipe = {}));

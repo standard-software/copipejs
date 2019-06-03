@@ -89,37 +89,11 @@ var copipe;
                 }
                 var messageArgsAll = messageArgs.map(function (value) { return String(value); }).join(' ');
                 var acceptFlag = acceptArray.length === 0;
-                if (!acceptFlag) {
-                    acceptFlag = acceptArray.some(function (acceptValue) {
-                        if (!copipe.isString(messageArgsAll)) {
-                            return false;
-                        }
-                        copipe.guard(function () { return [
-                            [
-                                copipe.isString(acceptValue) || copipe.isRegExp(acceptValue),
-                                '_accept args2(acceptArray) array item type is not string|RegExp.'
-                            ],
-                        ]; }, function () {
-                            throw new TypeError(copipe.guard.message());
-                        });
-                        return copipe.string.includes(messageArgsAll, acceptValue);
-                    });
+                if (acceptFlag === false) {
+                    acceptFlag = copipe.string.includes(messageArgsAll, acceptArray);
                 }
                 if (acceptFlag && copipe.isArray(rejectArray)) {
-                    acceptFlag = !(rejectArray.some(function (rejectValue) {
-                        if (!copipe.isString(messageArgsAll)) {
-                            return false;
-                        }
-                        copipe.guard(function () { return [
-                            [
-                                copipe.isString(rejectValue) || copipe.isRegExp(rejectValue),
-                                '_accept args3(rejectValue) array item type is not string|RegExp.'
-                            ],
-                        ]; }, function () {
-                            throw new TypeError(copipe.guard.message());
-                        });
-                        return copipe.string.includes(messageArgsAll, rejectValue);
-                    }));
+                    acceptFlag = !copipe.string.includes(messageArgsAll, rejectArray);
                 }
                 if (acceptFlag) {
                     hookFunc.apply(void 0, messageArgs);

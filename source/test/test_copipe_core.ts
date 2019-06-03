@@ -39,6 +39,8 @@ namespace test_copipe_core {
     functionValue, sc, equal, or, if_, switch_,
     isThrown, isThrownValue, isThrownException, isNotThrown,
 
+    match,
+
     checkEqual;
 
   /**
@@ -77,6 +79,8 @@ namespace test_copipe_core {
       isThrown, isThrownValue, isThrownException, isNotThrown,
 
     } = copipe);
+
+    ({ match } = copipe.string);
 
     ({ checkEqual } = copipe.test);
   };
@@ -719,8 +723,74 @@ namespace test_copipe_core {
   namespace convert {
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   namespace string {
+    export const test_match = () => {
+      // 通常引数
+      checkEqual(false, match('abc', ['123', '456', '789']), 'test_match 1');
+      checkEqual(true,  match('abc', ['123', '456', 'abc']), 'test_match 2');
+      checkEqual(false,  match('abc', ['123', '456', /^b/]), 'test_match 3');
+      checkEqual(true,  match('abc', ['123', '456', /^a/]), 'test_match 4');
+      checkEqual(false,  match('abc', []), 'test_match 5');
+
+      // 例外判定
+      checkEqual(false, isThrown(
+        () => { match('123', []); }
+      ));
+      checkEqual(true, isThrownException(
+        () => { match('123', 'abc'); },
+        (new TypeError).name
+      ));
+
+      // パラメータ引数
+      checkEqual(false, match({
+        value: 'abc',
+        compareValues: ['123', '456', '789'],
+      }), 'test_match 1');
+      checkEqual(true,  match({
+        value: 'abc',
+        compareValues: ['123', '456', 'abc'],
+      }), 'test_match 2');
+      checkEqual(false,  match({
+        value: 'abc',
+        compareValues: ['123', '456', /^b/],
+      }), 'test_match 3');
+      checkEqual(true,  match({
+        value: 'abc',
+        compareValues: ['123', '456', /^a/]
+      }), 'test_match 4');
+      checkEqual(false,  match({
+        value: 'abc',
+        compareValues: []
+      }), 'test_match 5');
+
+      // 例外判定
+      checkEqual(false, isThrown(
+        () => {
+          match({
+            value: '123',
+            compareValues: ['123']
+          });
+        }
+      ), 'test_match thrown 1');
+      checkEqual(false, isThrown(
+        () => {
+          match({
+            value: '123',
+            compareValues: []
+          });
+        }
+      ), 'test_match thrown 2');
+      checkEqual(true, isThrown(
+        () => {
+          match({
+            value: '123',
+            compareValues: [123]
+          });
+        }
+      ), 'test_match thrown 3');
+
+    };
+
   }
 
   export const run = function(copipe) {
@@ -749,6 +819,8 @@ namespace test_copipe_core {
     const test_sc = syntax.test_sc;
     const test_guard = syntax.test_guard;
 
+    const { test_match } = string;
+
     console.log('test_copipe_core start.');
 
     test_isUndefined();
@@ -767,6 +839,8 @@ namespace test_copipe_core {
     test_switch_();
     test_sc();
     test_guard();
+
+    test_match();
 
     console.log('test_copipe_core finish.');
   };

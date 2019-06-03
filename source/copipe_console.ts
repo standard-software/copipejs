@@ -128,37 +128,11 @@ namespace copipe {
       _hook(methodName, (...messageArgs: any[]) => {
         const messageArgsAll = messageArgs.map((value) => String(value)).join(' ');
         let acceptFlag = acceptArray.length === 0;
-        if (!acceptFlag) {
-          acceptFlag = acceptArray.some((acceptValue) => {
-            if (!isString(messageArgsAll)) {
-              return false;
-            }
-            guard(() => [
-              [
-                isString(acceptValue) || isRegExp(acceptValue),
-                '_accept args2(acceptArray) array item type is not string|RegExp.'
-              ],
-            ], () => {
-              throw new TypeError(guard.message());
-            });
-            return copipe.string.includes(messageArgsAll, acceptValue);
-          });
+        if (acceptFlag === false) {
+          acceptFlag = copipe.string.includes(messageArgsAll, acceptArray);
         }
         if (acceptFlag && isArray(rejectArray)) {
-          acceptFlag = !(rejectArray.some((rejectValue) => {
-            if (!isString(messageArgsAll)) {
-              return false;
-            }
-            guard(() => [
-              [
-                isString(rejectValue) || isRegExp(rejectValue),
-                '_accept args3(rejectValue) array item type is not string|RegExp.'
-              ],
-            ], () => {
-              throw new TypeError(guard.message());
-            });
-            return copipe.string.includes(messageArgsAll, rejectValue);
-          }));
+          acceptFlag = !copipe.string.includes(messageArgsAll, rejectArray);
         }
 
         if (acceptFlag) {
