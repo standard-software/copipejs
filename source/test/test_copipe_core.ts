@@ -724,17 +724,17 @@ namespace test_copipe_core {
       // 通常引数 文字列
       checkEqual(false, match('abc', ['123', '456', '789']), 'test_match 1');
       checkEqual(true,  match('abc', ['123', '456', 'abc']), 'test_match 2');
-      checkEqual(false,  match('abc', ['123', '456', /^b/]), 'test_match 3');
+      checkEqual(false, match('abc', ['123', '456', /^b/]), 'test_match 3');
       checkEqual(true,  match('abc', ['123', '456', /^a/]), 'test_match 4');
-      checkEqual(false,  match('abc', []), 'test_match 5');
-      checkEqual(false,  match('123', [null, undefined, 123, 'abc']), 'test_match 6');
+      checkEqual(false, match('abc', []), 'test_match 5');
+      checkEqual(false, match('123', [null, undefined, 123, 'abc']), 'test_match 6');
 
-      // 通常引数 値
+      // 通常引数 数値
       checkEqual(false, match(123, ['123', '456', '789']), 'test_match number 1');
       checkEqual(true,  match(123, [123, 456, 'abc']), 'test_match number 2');
-      checkEqual(false,  match(123, ['123', '456', /^1/]), 'test_match number 3');
-      checkEqual(false,  match(123, ['123', '456', /^1/]), 'test_match number 4');
-      checkEqual(false,  match(123, []), 'test_match number 5');
+      checkEqual(false, match(123, ['123', '456', /^1/]), 'test_match number 3');
+      checkEqual(true,  match(123, [123, '456', /^1/]), 'test_match number 4');
+      checkEqual(false, match(123, []), 'test_match number 5');
       checkEqual(true,  match(123, [null, undefined, 123, 'abc']), 'test_match number 6');
 
       // 例外判定
@@ -743,7 +743,7 @@ namespace test_copipe_core {
         (new TypeError).name
       ));
 
-      // パラメータ引数
+      // パラメータ引数 文字列
       checkEqual(false, match({
         value: 'abc',
         compareArray: ['123', '456', '789'],
@@ -764,6 +764,32 @@ namespace test_copipe_core {
         value: 'abc',
         compareArray: []
       }), 'test_match param 5');
+
+      // パラメータ引数 数値
+      checkEqual(false, match({
+        value: 123,
+        compareArray: ['123', '456', '789'],
+      }), 'test_match param number 1');
+      checkEqual(true,  match({
+        value: 123,
+        compareArray: [123, 456, 'abc'],
+      }), 'test_match param number 2');
+      checkEqual(false,  match({
+        value: 123,
+        compareArray: ['123', '456', /^1/],
+      }), 'test_match param number 3');
+      checkEqual(true,  match({
+        value: 123,
+        compareArray: [123, '456', /^1/]
+      }), 'test_match param number 4');
+      checkEqual(false,  match({
+        value: 123,
+        compareArray: []
+      }), 'test_match param number 5');
+      checkEqual(true,  match({
+        value: 123,
+        compareArray: [null, undefined, 123, 'abc']
+      }), 'test_match param number 6');
 
       // 例外判定
       checkEqual(false, isThrown(
@@ -790,6 +816,14 @@ namespace test_copipe_core {
           });
         }
       ), 'test_match thrown 3');
+      checkEqual(true, isThrown(
+        () => {
+          match({
+            value: '123',
+            compareArray: 123
+          });
+        }
+      ), 'test_match thrown 4');
 
     };
   }
