@@ -562,14 +562,95 @@ namespace copipe.syntax {
 }
 
 /**
+ * 比較処理
+ */
+namespace copipe.compare {
+
+  /**
+   * 値が他の値と一致しているかどうかを調べる関数(内部)
+   */
+  export const _match = (
+    matchFunc: (value: any, element: any) => boolean,
+    value: any, compareArray: any[]
+  ) => {
+    guard(() => [
+      [
+        isArray(compareArray),
+        'copipe.compare._match args2(compareArray) type is not Array.'
+      ],
+    ], () => {
+      throw new TypeError(guard.message());
+    });
+
+    if (isString(value)) {
+      return compareArray.some((element) => {
+        let result;
+        if (isRegExp(element)) {
+          result = value.match(element) !== null;
+        } else if (isFunction(element)) {
+          result = element(value);
+        } else {
+          result = matchFunc(value, element);
+          // 文字列と数値の場合などでも判定できるように
+          // matchFunc に処理を渡す
+        }
+        if (!isBoolean(result)) {
+          throw new SyntaxError('_match args2(compareArray) Array element result is not Boolean.');
+        }
+        return result;
+      });
+    } else {
+      return compareArray.some((element) => {
+        let result;
+        if (isFunction(element)) {
+          result = element(value);
+        } else {
+          result = matchFunc(value, element);
+        }
+        if (!isBoolean(result)) {
+          throw new SyntaxError('_match args2(compareArray) Array element result is not Boolean.');
+        }
+        return result;
+      });
+    }
+  };
+
+  /**
+   * 値が他の値と一致しているかどうかを調べる関数
+   * パラメータ渡し(名前付き引数)と通常引数の場合分けを行っている
+   */
+  export const match = (
+    value,
+    compareArray: any[] | undefined
+  ) => {
+    const matchFunc = (a, b) => a === b;
+
+    const parameter = if_(isObject(value))({
+      then: value,
+      else: { value, compareArray }
+    });
+    return _match(matchFunc, parameter.value, parameter.compareArray);
+  };
+}
+
+/**
  * 変換処理
  */
 namespace copipe.convert {
 
-  export const stringToNumber = () => {
+  const dummy = () => {};
 
-  };
+  // export const stringToNumber = () => {};
+  // export const strToNumber = stringToNumber;
+  // export const strToNum = stringToNumber;
 
+  // export const stringToInteger = () => {};
+  // export const strToInteger = stringToInteger;
+  // export const strToInt = stringToInteger;
+
+  // export const numberToString = () => {};
+  // export const numToString = numberToString;
+  // export const numToStr = numberToString;
 }
 
 /**
@@ -580,63 +661,59 @@ namespace copipe.string {
   /**
    * 文字列を他の文字列か正規表現で一致を調べる関数
    */
-  const _match = (
-    matchFunc: (a: string, b: string) => boolean,
-    value: string, compareValues: any[]
-  ) => {
-    guard(() => [
-      [isString(value), '_match args1(value) type is not String.'],
-      [
-        isArray(compareValues),
-        '_match args2(compareValues) type is not Array.'
-      ],
-      // [
-      //   (compareValues.length === 0)
-      //   || compareValues.every((element) => {
-      //     return isString(element) || isRegExp(element);
-      //   })
-      // ]
-    ], () => {
-      throw new TypeError(guard.message());
-    });
+  // const _match = (
+  //   matchFunc: (a: string, b: string) => boolean,
+  //   value: string, compareArray: any[]
+  // ) => {
+  //   guard(() => [
+  //     [isString(value), '_match args1(value) type is not String.'],
+  //     [
+  //       isArray(compareArray),
+  //       '_match args2(compareArray) type is not Array.'
+  //     ],
+  //   ], () => {
+  //     throw new TypeError(guard.message());
+  //   });
 
-    return compareValues.some((element) => {
-      if (isString(element)) {
-        return matchFunc(value, element);
-      }
-      if (isRegExp(element)) {
-        return value.match(element) !== null;
-      }
-      throw new TypeError('match args2(compareValue) type is not String or RegExp.');
-    });
-  };
+  //   return compareArray.some((element) => {
+  //     if (isString(element)) {
+  //       return matchFunc(value, element);
+  //     }
+  //     if (isRegExp(element)) {
+  //       return value.match(element) !== null;
+  //     }
+  //     if (isFunction(element)) {
+  //       return element(value);
+  //     }
+  //     throw new TypeError('_match args2(compareArray) Array element is not String or RegExp or Function.');
+  //   });
+  // };
 
-  export const match = (
-    // value: string | { value: string; compareValue: string | RegExp },
-    value,
-    compareValues: (string|RegExp)[] | undefined
-  ) => {
-    const compareFunc = (a, b) => a === b;
-    if (isObject(value)) {
-      return _match(compareFunc , value.value, value.compareValues);
-    } else {
-      return _match(compareFunc ,value, compareValues);
-    }
-  };
+  // export const match = (
+  //   // value: string | { value: string; compareValues: string | RegExp },
+  //   value,
+  //   compareArray: (string|RegExp)[] | undefined
+  // ) => {
+  //   const compareFunc = (a, b) => a === b;
+  //   if (isObject(value)) {
+  //     return copipe.compare._match(compareFunc , value.value, value.compareArray);
+  //   } else {
+  //     return copipe.compare._match(compareFunc ,value, compareArray);
+  //   }
+  // };
 
   /**
    * 文字列を他の文字列か正規表現で含むかどうかを調べる関数
    */
   export const includes = (
     value,
-    // compareValues: [string | RegExp] | undefined
-    compareValues: (string|RegExp)[],
+    compareArray: (string|RegExp)[],
   ) => {
     const compareFunc = (a, b) => a.includes(b);
     if (isObject(value)) {
-      return _match(compareFunc , value.value, value.compareValues);
+      return copipe.compare._match(compareFunc, value.value, value.compareArray);
     } else {
-      return _match(compareFunc ,value, compareValues);
+      return copipe.compare._match(compareFunc, value, compareArray);
     }
   };
 }

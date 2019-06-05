@@ -9,7 +9,10 @@ namespace copipe {
   /**
    * ルート公開されている名前空間の展開
    */
-  export const { VERSION, type, syntax, string, test, consoleHook } = copipe_console;
+  export const {
+    VERSION, type, syntax, compare, convert, string, test,
+    consoleHook,
+  } = copipe_console;
   export const {
     isUndefined, isNull,
     isBoolean, isNumber, isInteger, isString,

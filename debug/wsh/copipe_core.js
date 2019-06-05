@@ -5,7 +5,7 @@
  */
 var copipe;
 (function (copipe) {
-    copipe.VERSION = '1.0.1';
+    copipe.VERSION = '1.1.0 beta';
 })(copipe || (copipe = {}));
 (function (copipe) {
     /**
@@ -310,17 +310,33 @@ var copipe;
         /**
          * 例外や値が投げられたかどうかを判定する関数
          *  テストコードに使うためのもの
-         *  compareFunc で 引数として投げられた値が渡されるのでそこで判定する
-         *  関数になっているのはオブジェクトを値比較ができないため
+         * compareFunc undefined の場合
+         *  なにか例外が投げられていれば true を返す
+         * copareFunc 関数の場合
+         *  何が投げられたのかを取得するために
+         *  compareFunc の引数として投げられた値が渡されるので
+         *  そこで判定する
          */
         syntax.isThrown = function (targetFunc, compareFunc) {
-            if (!copipe.isFunction(targetFunc, compareFunc)) {
-                throw new SyntaxError('isThrown args(targetFunc or compareFunc) type is not function.');
-            }
+            syntax.guard(function () { return [
+                [
+                    copipe.isFunction(targetFunc),
+                    'isThrown args(targetFunc) type is not function.'
+                ],
+                [
+                    copipe.isFunction(compareFunc) || copipe.isUndefined(compareFunc),
+                    'isThrown args(compareFunc) type is not function or undefined.'
+                ]
+            ]; }, function () {
+                throw new SyntaxError(syntax.guard.message());
+            });
             try {
                 targetFunc();
             }
             catch (e) {
+                if (copipe.isUndefined(compareFunc)) {
+                    return true;
+                }
                 return compareFunc(e);
             }
             return false;
@@ -495,10 +511,91 @@ var copipe;
     })(syntax = copipe.syntax || (copipe.syntax = {}));
 })(copipe || (copipe = {}));
 /**
+ * 比較処理
+ */
+(function (copipe) {
+    var compare;
+    (function (compare) {
+        /**
+         * 値が他の値と一致しているかどうかを調べる関数(内部)
+         */
+        compare._match = function (matchFunc, value, compareArray) {
+            copipe.guard(function () { return [
+                [
+                    copipe.isArray(compareArray),
+                    'copipe.compare._match args2(compareArray) type is not Array.'
+                ],
+            ]; }, function () {
+                throw new TypeError(copipe.guard.message());
+            });
+            if (copipe.isString(value)) {
+                return compareArray.some(function (element) {
+                    var result;
+                    if (copipe.isRegExp(element)) {
+                        result = value.match(element) !== null;
+                    }
+                    else if (copipe.isFunction(element)) {
+                        result = element(value);
+                    }
+                    else {
+                        result = matchFunc(value, element);
+                        // 文字列と数値の場合などでも判定できるように
+                        // matchFunc に処理を渡す
+                    }
+                    if (!copipe.isBoolean(result)) {
+                        throw new SyntaxError('_match args2(compareArray) Array element result is not Boolean.');
+                    }
+                    return result;
+                });
+            }
+            else {
+                return compareArray.some(function (element) {
+                    var result;
+                    if (copipe.isFunction(element)) {
+                        result = element(value);
+                    }
+                    else {
+                        result = matchFunc(value, element);
+                    }
+                    if (!copipe.isBoolean(result)) {
+                        throw new SyntaxError('_match args2(compareArray) Array element result is not Boolean.');
+                    }
+                    return result;
+                });
+            }
+        };
+        /**
+         * 値が他の値と一致しているかどうかを調べる関数
+         * パラメータ渡し(名前付き引数)と通常引数の場合分けを行っている
+         */
+        compare.match = function (value, compareArray) {
+            var matchFunc = function (a, b) { return a === b; };
+            var parameter = copipe.if_(copipe.isObject(value))({
+                then: value,
+                "else": { value: value, compareArray: compareArray }
+            });
+            return compare._match(matchFunc, parameter.value, parameter.compareArray);
+        };
+    })(compare = copipe.compare || (copipe.compare = {}));
+})(copipe || (copipe = {}));
+/**
  * 変換処理
  */
-// namespace copipe.convert {
-// }
+(function (copipe) {
+    var convert;
+    (function (convert) {
+        var dummy = function () { };
+        // export const stringToNumber = () => {};
+        // export const strToNumber = stringToNumber;
+        // export const strToNum = stringToNumber;
+        // export const stringToInteger = () => {};
+        // export const strToInteger = stringToInteger;
+        // export const strToInt = stringToInteger;
+        // export const numberToString = () => {};
+        // export const numToString = numberToString;
+        // export const numToStr = numberToString;
+    })(convert = copipe.convert || (copipe.convert = {}));
+})(copipe || (copipe = {}));
 /**
  * 文字列処理
  */
@@ -508,45 +605,55 @@ var copipe;
         /**
          * 文字列を他の文字列か正規表現で一致を調べる関数
          */
-        string.match = function (value, compareValue) {
-            copipe.guard(function () { return [
-                [copipe.isString(value), 'match args1(value) type is not String.'],
-                [
-                    copipe.isString(compareValue) || copipe.isRegExp(compareValue),
-                    'match args2(compareValue) type is not String or RegExp.'
-                ],
-            ]; }, function () {
-                throw new TypeError(copipe.guard.message());
-            });
-            if (copipe.isString(compareValue)) {
-                return value === compareValue;
-            }
-            if (copipe.isRegExp(compareValue)) {
-                return value.match(compareValue) !== null;
-            }
-            throw new TypeError('match args2(compareValue) type is not String or RegExp.');
-        };
+        // const _match = (
+        //   matchFunc: (a: string, b: string) => boolean,
+        //   value: string, compareArray: any[]
+        // ) => {
+        //   guard(() => [
+        //     [isString(value), '_match args1(value) type is not String.'],
+        //     [
+        //       isArray(compareArray),
+        //       '_match args2(compareArray) type is not Array.'
+        //     ],
+        //   ], () => {
+        //     throw new TypeError(guard.message());
+        //   });
+        //   return compareArray.some((element) => {
+        //     if (isString(element)) {
+        //       return matchFunc(value, element);
+        //     }
+        //     if (isRegExp(element)) {
+        //       return value.match(element) !== null;
+        //     }
+        //     if (isFunction(element)) {
+        //       return element(value);
+        //     }
+        //     throw new TypeError('_match args2(compareArray) Array element is not String or RegExp or Function.');
+        //   });
+        // };
+        // export const match = (
+        //   // value: string | { value: string; compareValues: string | RegExp },
+        //   value,
+        //   compareArray: (string|RegExp)[] | undefined
+        // ) => {
+        //   const compareFunc = (a, b) => a === b;
+        //   if (isObject(value)) {
+        //     return copipe.compare._match(compareFunc , value.value, value.compareArray);
+        //   } else {
+        //     return copipe.compare._match(compareFunc ,value, compareArray);
+        //   }
+        // };
         /**
          * 文字列を他の文字列か正規表現で含むかどうかを調べる関数
          */
-        string.includes = function (value, compareValue) {
-            copipe.guard(function () { return [
-                [copipe.isString(value), 'includes args1(value) type is not String.'],
-                [
-                    copipe.isString(compareValue) || copipe.isRegExp(compareValue),
-                    'includes args2(compareValue) type is not String or RegExp.'
-                ],
-            ]; }, function () {
-                throw new TypeError(copipe.guard.message());
-            });
-            if (copipe.isString(compareValue)) {
-                // console.info('copipe_core value.incluedes', isString(value), value);
-                return value.includes(String(compareValue));
+        string.includes = function (value, compareArray) {
+            var compareFunc = function (a, b) { return a.includes(b); };
+            if (copipe.isObject(value)) {
+                return copipe.compare._match(compareFunc, value.value, value.compareArray);
             }
-            if (copipe.isRegExp(compareValue)) {
-                return value.match(compareValue) !== null;
+            else {
+                return copipe.compare._match(compareFunc, value, compareArray);
             }
-            throw new TypeError('includes args2(compareValue) type is not String or RegExp.');
         };
     })(string = copipe.string || (copipe.string = {}));
 })(copipe || (copipe = {}));

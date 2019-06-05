@@ -80,7 +80,7 @@ namespace test_copipe_core {
 
     } = copipe);
 
-    ({ match } = copipe.string);
+    ({ match } = copipe.compare);
 
     ({ checkEqual } = copipe.test);
   };
@@ -719,23 +719,25 @@ namespace test_copipe_core {
     };
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  namespace convert {
-  }
-
-  namespace string {
+  namespace compare {
     export const test_match = () => {
-      // 通常引数
+      // 通常引数 文字列
       checkEqual(false, match('abc', ['123', '456', '789']), 'test_match 1');
       checkEqual(true,  match('abc', ['123', '456', 'abc']), 'test_match 2');
       checkEqual(false,  match('abc', ['123', '456', /^b/]), 'test_match 3');
       checkEqual(true,  match('abc', ['123', '456', /^a/]), 'test_match 4');
       checkEqual(false,  match('abc', []), 'test_match 5');
+      checkEqual(false,  match('123', [null, undefined, 123, 'abc']), 'test_match 6');
+
+      // 通常引数 値
+      checkEqual(false, match(123, ['123', '456', '789']), 'test_match number 1');
+      checkEqual(true,  match(123, [123, 456, 'abc']), 'test_match number 2');
+      checkEqual(false,  match(123, ['123', '456', /^1/]), 'test_match number 3');
+      checkEqual(false,  match(123, ['123', '456', /^1/]), 'test_match number 4');
+      checkEqual(false,  match(123, []), 'test_match number 5');
+      checkEqual(true,  match(123, [null, undefined, 123, 'abc']), 'test_match number 6');
 
       // 例外判定
-      checkEqual(false, isThrown(
-        () => { match('123', []); }
-      ));
       checkEqual(true, isThrownException(
         () => { match('123', 'abc'); },
         (new TypeError).name
@@ -744,31 +746,31 @@ namespace test_copipe_core {
       // パラメータ引数
       checkEqual(false, match({
         value: 'abc',
-        compareValues: ['123', '456', '789'],
-      }), 'test_match 1');
+        compareArray: ['123', '456', '789'],
+      }), 'test_match param 1');
       checkEqual(true,  match({
         value: 'abc',
-        compareValues: ['123', '456', 'abc'],
-      }), 'test_match 2');
+        compareArray: ['123', '456', 'abc'],
+      }), 'test_match param 2');
       checkEqual(false,  match({
         value: 'abc',
-        compareValues: ['123', '456', /^b/],
-      }), 'test_match 3');
+        compareArray: ['123', '456', /^b/],
+      }), 'test_match param 3');
       checkEqual(true,  match({
         value: 'abc',
-        compareValues: ['123', '456', /^a/]
-      }), 'test_match 4');
+        compareArray: ['123', '456', /^a/]
+      }), 'test_match param 4');
       checkEqual(false,  match({
         value: 'abc',
-        compareValues: []
-      }), 'test_match 5');
+        compareArray: []
+      }), 'test_match param 5');
 
       // 例外判定
       checkEqual(false, isThrown(
         () => {
           match({
             value: '123',
-            compareValues: ['123']
+            compareArray: ['123']
           });
         }
       ), 'test_match thrown 1');
@@ -776,21 +778,26 @@ namespace test_copipe_core {
         () => {
           match({
             value: '123',
-            compareValues: []
+            compareArray: []
           });
         }
       ), 'test_match thrown 2');
-      checkEqual(true, isThrown(
+      checkEqual(false, isThrown(
         () => {
           match({
             value: '123',
-            compareValues: [123]
+            compareArray: [123]
           });
         }
       ), 'test_match thrown 3');
 
     };
+  }
 
+  namespace convert {
+  }
+
+  namespace string {
   }
 
   export const run = function(copipe) {
@@ -819,7 +826,7 @@ namespace test_copipe_core {
     const test_sc = syntax.test_sc;
     const test_guard = syntax.test_guard;
 
-    const { test_match } = string;
+    const { test_match } = compare;
 
     console.log('test_copipe_core start.');
 

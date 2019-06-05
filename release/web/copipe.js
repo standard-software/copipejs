@@ -122,7 +122,7 @@ var copipe;
     /**
      * ルート公開されている名前空間の展開
      */
-    copipe.VERSION = copipe_console.VERSION, copipe.type = copipe_console.type, copipe.syntax = copipe_console.syntax, copipe.string = copipe_console.string, copipe.test = copipe_console.test, copipe.consoleHook = copipe_console.consoleHook;
+    copipe.VERSION = copipe_console.VERSION, copipe.type = copipe_console.type, copipe.syntax = copipe_console.syntax, copipe.compare = copipe_console.compare, copipe.convert = copipe_console.convert, copipe.string = copipe_console.string, copipe.test = copipe_console.test, copipe.consoleHook = copipe_console.consoleHook;
     copipe.isUndefined = copipe.type.isUndefined, copipe.isNull = copipe.type.isNull, copipe.isBoolean = copipe.type.isBoolean, copipe.isNumber = copipe.type.isNumber, copipe.isInteger = copipe.type.isInteger, copipe.isString = copipe.type.isString, copipe.isFunction = copipe.type.isFunction, copipe.isObject = copipe.type.isObject, copipe.isArray = copipe.type.isArray, copipe.isDate = copipe.type.isDate, copipe.isRegExp = copipe.type.isRegExp, copipe.isException = copipe.type.isException, copipe.isNotUndefined = copipe.type.isNotUndefined, copipe.isNotNull = copipe.type.isNotNull, copipe.isNotBoolean = copipe.type.isNotBoolean, copipe.isNotNumber = copipe.type.isNotNumber, copipe.isNotInteger = copipe.type.isNotInteger, copipe.isNotString = copipe.type.isNotString, copipe.isNotFunction = copipe.type.isNotFunction, copipe.isNotObject = copipe.type.isNotObject, copipe.isNotArray = copipe.type.isNotArray, copipe.isNotDate = copipe.type.isNotDate, copipe.isNotRegExp = copipe.type.isNotRegExp, copipe.isNotException = copipe.type.isNotException, copipe.isUndefinedArray = copipe.type.isUndefinedArray, copipe.isNullArray = copipe.type.isNullArray, copipe.isBooleanArray = copipe.type.isBooleanArray, copipe.isNumberArray = copipe.type.isNumberArray, copipe.isIntegerArray = copipe.type.isIntegerArray, copipe.isStringArray = copipe.type.isStringArray, copipe.isFunctionArray = copipe.type.isFunctionArray, copipe.isObjectArray = copipe.type.isObjectArray, copipe.isArrayArray = copipe.type.isArrayArray, copipe.isDateArray = copipe.type.isDateArray, copipe.isRegExpArray = copipe.type.isRegExpArray, copipe.isExceptionArray = copipe.type.isExceptionArray, copipe.isNotUndefinedArray = copipe.type.isNotUndefinedArray, copipe.isNotNullArray = copipe.type.isNotNullArray, copipe.isNotBooleanArray = copipe.type.isNotBooleanArray, copipe.isNotNumberArray = copipe.type.isNotNumberArray, copipe.isNotIntegerArray = copipe.type.isNotIntegerArray, copipe.isNotStringArray = copipe.type.isNotStringArray, copipe.isNotFunctionArray = copipe.type.isNotFunctionArray, copipe.isNotObjectArray = copipe.type.isNotObjectArray, copipe.isNotArrayArray = copipe.type.isNotArrayArray, copipe.isNotDateArray = copipe.type.isNotDateArray, copipe.isNotRegExpArray = copipe.type.isNotRegExpArray, copipe.isNotExceptionArray = copipe.type.isNotExceptionArray, copipe.isUndef = copipe.type.isUndef, copipe.isBool = copipe.type.isBool, copipe.isNum = copipe.type.isNum, copipe.isInt = copipe.type.isInt, copipe.isStr = copipe.type.isStr, copipe.isFunc = copipe.type.isFunc, copipe.isObj = copipe.type.isObj, copipe.isExcept = copipe.type.isExcept, copipe.isNotUndef = copipe.type.isNotUndef, copipe.isNotBool = copipe.type.isNotBool, copipe.isNotNum = copipe.type.isNotNum, copipe.isNotInt = copipe.type.isNotInt, copipe.isNotStr = copipe.type.isNotStr, copipe.isNotFunc = copipe.type.isNotFunc, copipe.isNotObj = copipe.type.isNotObj, copipe.isNotExcept = copipe.type.isNotExcept;
     copipe.assert = copipe.syntax.assert, copipe.guard = copipe.syntax.guard, copipe.functionValue = copipe.syntax.functionValue, copipe.sc = copipe.syntax.sc, copipe.equal = copipe.syntax.equal, copipe.or = copipe.syntax.or, copipe.if_ = copipe.syntax.if_, copipe.switch_ = copipe.syntax.switch_, copipe.isThrown = copipe.syntax.isThrown, copipe.isThrownValue = copipe.syntax.isThrownValue, copipe.isThrownException = copipe.syntax.isThrownException, copipe.isNotThrown = copipe.syntax.isNotThrown;
     copipe.checkEqual = copipe.test.checkEqual;
@@ -214,7 +214,7 @@ var copipe;
     /**
      * ルート公開されている名前空間の展開
      */
-    copipe.VERSION = copipe_core.VERSION, copipe.type = copipe_core.type, copipe.syntax = copipe_core.syntax, copipe.string = copipe_core.string, copipe.test = copipe_core.test;
+    copipe.VERSION = copipe_core.VERSION, copipe.type = copipe_core.type, copipe.syntax = copipe_core.syntax, copipe.compare = copipe_core.compare, copipe.convert = copipe_core.convert, copipe.string = copipe_core.string, copipe.test = copipe_core.test;
     copipe.isUndefined = copipe.type.isUndefined, copipe.isNull = copipe.type.isNull, copipe.isBoolean = copipe.type.isBoolean, copipe.isNumber = copipe.type.isNumber, copipe.isInteger = copipe.type.isInteger, copipe.isString = copipe.type.isString, copipe.isFunction = copipe.type.isFunction, copipe.isObject = copipe.type.isObject, copipe.isArray = copipe.type.isArray, copipe.isDate = copipe.type.isDate, copipe.isRegExp = copipe.type.isRegExp, copipe.isException = copipe.type.isException, copipe.isNotUndefined = copipe.type.isNotUndefined, copipe.isNotNull = copipe.type.isNotNull, copipe.isNotBoolean = copipe.type.isNotBoolean, copipe.isNotNumber = copipe.type.isNotNumber, copipe.isNotInteger = copipe.type.isNotInteger, copipe.isNotString = copipe.type.isNotString, copipe.isNotFunction = copipe.type.isNotFunction, copipe.isNotObject = copipe.type.isNotObject, copipe.isNotArray = copipe.type.isNotArray, copipe.isNotDate = copipe.type.isNotDate, copipe.isNotRegExp = copipe.type.isNotRegExp, copipe.isNotException = copipe.type.isNotException, copipe.isUndefinedArray = copipe.type.isUndefinedArray, copipe.isNullArray = copipe.type.isNullArray, copipe.isBooleanArray = copipe.type.isBooleanArray, copipe.isNumberArray = copipe.type.isNumberArray, copipe.isIntegerArray = copipe.type.isIntegerArray, copipe.isStringArray = copipe.type.isStringArray, copipe.isFunctionArray = copipe.type.isFunctionArray, copipe.isObjectArray = copipe.type.isObjectArray, copipe.isArrayArray = copipe.type.isArrayArray, copipe.isDateArray = copipe.type.isDateArray, copipe.isRegExpArray = copipe.type.isRegExpArray, copipe.isExceptionArray = copipe.type.isExceptionArray, copipe.isNotUndefinedArray = copipe.type.isNotUndefinedArray, copipe.isNotNullArray = copipe.type.isNotNullArray, copipe.isNotBooleanArray = copipe.type.isNotBooleanArray, copipe.isNotNumberArray = copipe.type.isNotNumberArray, copipe.isNotIntegerArray = copipe.type.isNotIntegerArray, copipe.isNotStringArray = copipe.type.isNotStringArray, copipe.isNotFunctionArray = copipe.type.isNotFunctionArray, copipe.isNotObjectArray = copipe.type.isNotObjectArray, copipe.isNotArrayArray = copipe.type.isNotArrayArray, copipe.isNotDateArray = copipe.type.isNotDateArray, copipe.isNotRegExpArray = copipe.type.isNotRegExpArray, copipe.isNotExceptionArray = copipe.type.isNotExceptionArray, copipe.isUndef = copipe.type.isUndef, copipe.isBool = copipe.type.isBool, copipe.isNum = copipe.type.isNum, copipe.isInt = copipe.type.isInt, copipe.isStr = copipe.type.isStr, copipe.isFunc = copipe.type.isFunc, copipe.isObj = copipe.type.isObj, copipe.isExcept = copipe.type.isExcept, copipe.isNotUndef = copipe.type.isNotUndef, copipe.isNotBool = copipe.type.isNotBool, copipe.isNotNum = copipe.type.isNotNum, copipe.isNotInt = copipe.type.isNotInt, copipe.isNotStr = copipe.type.isNotStr, copipe.isNotFunc = copipe.type.isNotFunc, copipe.isNotObj = copipe.type.isNotObj, copipe.isNotExcept = copipe.type.isNotExcept;
     _a = copipe.syntax, copipe.assert = _a.assert, copipe.guard = _a.guard, copipe.functionValue = _a.functionValue, copipe.sc = _a.sc, copipe.equal = _a.equal, copipe.or = _a.or, copipe.if_ = _a.if_, copipe.switch_ = _a.switch_, copipe.isThrown = _a.isThrown, copipe.isThrownValue = _a.isThrownValue, copipe.isThrownException = _a.isThrownException, copipe.isNotThrown = _a.isNotThrown;
     // export const {
@@ -847,13 +847,89 @@ var copipe;
     })(syntax = copipe.syntax || (copipe.syntax = {}));
 })(copipe || (copipe = {}));
 /**
+ * 比較処理
+ */
+(function (copipe) {
+    var compare;
+    (function (compare) {
+        /**
+         * 値が他の値と一致しているかどうかを調べる関数(内部)
+         */
+        compare._match = function (matchFunc, value, compareArray) {
+            copipe.guard(function () { return [
+                [
+                    copipe.isArray(compareArray),
+                    'copipe.compare._match args2(compareArray) type is not Array.'
+                ],
+            ]; }, function () {
+                throw new TypeError(copipe.guard.message());
+            });
+            if (copipe.isString(value)) {
+                return compareArray.some(function (element) {
+                    var result;
+                    if (copipe.isRegExp(element)) {
+                        result = value.match(element) !== null;
+                    }
+                    else if (copipe.isFunction(element)) {
+                        result = element(value);
+                    }
+                    else {
+                        result = matchFunc(value, element);
+                        // 文字列と数値の場合などでも判定できるように
+                        // matchFunc に処理を渡す
+                    }
+                    if (!copipe.isBoolean(result)) {
+                        throw new SyntaxError('_match args2(compareArray) Array element result is not Boolean.');
+                    }
+                    return result;
+                });
+            }
+            else {
+                return compareArray.some(function (element) {
+                    var result;
+                    if (copipe.isFunction(element)) {
+                        result = element(value);
+                    }
+                    else {
+                        result = matchFunc(value, element);
+                    }
+                    if (!copipe.isBoolean(result)) {
+                        throw new SyntaxError('_match args2(compareArray) Array element result is not Boolean.');
+                    }
+                    return result;
+                });
+            }
+        };
+        /**
+         * 値が他の値と一致しているかどうかを調べる関数
+         * パラメータ渡し(名前付き引数)と通常引数の場合分けを行っている
+         */
+        compare.match = function (value, compareArray) {
+            var matchFunc = function (a, b) { return a === b; };
+            var parameter = copipe.if_(copipe.isObject(value))({
+                then: value,
+                "else": { value: value, compareArray: compareArray }
+            });
+            return compare._match(matchFunc, parameter.value, parameter.compareArray);
+        };
+    })(compare = copipe.compare || (copipe.compare = {}));
+})(copipe || (copipe = {}));
+/**
  * 変換処理
  */
 (function (copipe) {
     var convert;
     (function (convert) {
-        convert.stringToNumber = function () {
-        };
+        var dummy = function () { };
+        // export const stringToNumber = () => {};
+        // export const strToNumber = stringToNumber;
+        // export const strToNum = stringToNumber;
+        // export const stringToInteger = () => {};
+        // export const strToInteger = stringToInteger;
+        // export const strToInt = stringToInteger;
+        // export const numberToString = () => {};
+        // export const numToString = numberToString;
+        // export const numToStr = numberToString;
     })(convert = copipe.convert || (copipe.convert = {}));
 })(copipe || (copipe = {}));
 /**
@@ -865,49 +941,54 @@ var copipe;
         /**
          * 文字列を他の文字列か正規表現で一致を調べる関数
          */
-        var _match = function (matchFunc, value, compareValues) {
-            copipe.guard(function () { return [
-                [copipe.isString(value), '_match args1(value) type is not String.'],
-                [
-                    copipe.isArray(compareValues),
-                    '_match args2(compareValues) type is not Array.'
-                ],
-            ]; }, function () {
-                throw new TypeError(copipe.guard.message());
-            });
-            return compareValues.some(function (element) {
-                if (copipe.isString(element)) {
-                    return matchFunc(value, element);
-                }
-                if (copipe.isRegExp(element)) {
-                    return value.match(element) !== null;
-                }
-                throw new TypeError('match args2(compareValue) type is not String or RegExp.');
-            });
-        };
-        string.match = function (
-        // value: string | { value: string; compareValue: string | RegExp },
-        value, compareValues) {
-            var compareFunc = function (a, b) { return a === b; };
-            if (copipe.isObject(value)) {
-                return _match(compareFunc, value.value, value.compareValues);
-            }
-            else {
-                return _match(compareFunc, value, compareValues);
-            }
-        };
+        // const _match = (
+        //   matchFunc: (a: string, b: string) => boolean,
+        //   value: string, compareArray: any[]
+        // ) => {
+        //   guard(() => [
+        //     [isString(value), '_match args1(value) type is not String.'],
+        //     [
+        //       isArray(compareArray),
+        //       '_match args2(compareArray) type is not Array.'
+        //     ],
+        //   ], () => {
+        //     throw new TypeError(guard.message());
+        //   });
+        //   return compareArray.some((element) => {
+        //     if (isString(element)) {
+        //       return matchFunc(value, element);
+        //     }
+        //     if (isRegExp(element)) {
+        //       return value.match(element) !== null;
+        //     }
+        //     if (isFunction(element)) {
+        //       return element(value);
+        //     }
+        //     throw new TypeError('_match args2(compareArray) Array element is not String or RegExp or Function.');
+        //   });
+        // };
+        // export const match = (
+        //   // value: string | { value: string; compareValues: string | RegExp },
+        //   value,
+        //   compareArray: (string|RegExp)[] | undefined
+        // ) => {
+        //   const compareFunc = (a, b) => a === b;
+        //   if (isObject(value)) {
+        //     return copipe.compare._match(compareFunc , value.value, value.compareArray);
+        //   } else {
+        //     return copipe.compare._match(compareFunc ,value, compareArray);
+        //   }
+        // };
         /**
          * 文字列を他の文字列か正規表現で含むかどうかを調べる関数
          */
-        string.includes = function (value, 
-        // compareValues: [string | RegExp] | undefined
-        compareValues) {
+        string.includes = function (value, compareArray) {
             var compareFunc = function (a, b) { return a.includes(b); };
             if (copipe.isObject(value)) {
-                return _match(compareFunc, value.value, value.compareValues);
+                return copipe.compare._match(compareFunc, value.value, value.compareArray);
             }
             else {
-                return _match(compareFunc, value, compareValues);
+                return copipe.compare._match(compareFunc, value, compareArray);
             }
         };
     })(string = copipe.string || (copipe.string = {}));

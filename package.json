@@ -19,6 +19,7 @@
     "start:wsh": "npm run start:wsh:debug && npm run start:wsh:release",
 
     "start:all": "npm run start:node && npm run start:web",
+    "start:all:win": "npm run start:node && npm run start:web && npm run start:wsh",
     "test": ""
   },
   "author": "Satoshi Yamamoto",
