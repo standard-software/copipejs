@@ -617,6 +617,8 @@ var test_copipe_core;
             checkEqual(true, match('abc', ['123', '456', /^a/]), 'test_match 4');
             checkEqual(false, match('abc', []), 'test_match 5');
             checkEqual(false, match('123', [null, undefined, 123, 'abc']), 'test_match 6');
+            checkEqual(true, match('abc', [function (value) { return value.startsWith('a'); }]), 'test_match 7');
+            checkEqual(false, match('abc', [function (value) { return value.startsWith('b'); }]), 'test_match 8');
             // 通常引数 数値
             checkEqual(false, match(123, ['123', '456', '789']), 'test_match number 1');
             checkEqual(true, match(123, [123, 456, 'abc']), 'test_match number 2');
@@ -624,77 +626,79 @@ var test_copipe_core;
             checkEqual(true, match(123, [123, '456', /^1/]), 'test_match number 4');
             checkEqual(false, match(123, []), 'test_match number 5');
             checkEqual(true, match(123, [null, undefined, 123, 'abc']), 'test_match number 6');
+            checkEqual(true, match(100, [function (value) { return 100 <= value; }]), 'test_match 7');
+            checkEqual(false, match(99, [function (value) { return 100 <= value; }]), 'test_match 8');
             // 例外判定
             checkEqual(true, isThrownException(function () { match('123', 'abc'); }, (new TypeError).name));
             // パラメータ引数 文字列
             checkEqual(false, match({
-                value: 'abc',
-                compareArray: ['123', '456', '789'],
+                value: 'abc', compareArray: ['123', '456', '789'],
             }), 'test_match param 1');
             checkEqual(true, match({
-                value: 'abc',
-                compareArray: ['123', '456', 'abc'],
+                value: 'abc', compareArray: ['123', '456', 'abc'],
             }), 'test_match param 2');
             checkEqual(false, match({
-                value: 'abc',
-                compareArray: ['123', '456', /^b/],
+                value: 'abc', compareArray: ['123', '456', /^b/],
             }), 'test_match param 3');
             checkEqual(true, match({
-                value: 'abc',
-                compareArray: ['123', '456', /^a/]
+                value: 'abc', compareArray: ['123', '456', /^a/]
             }), 'test_match param 4');
             checkEqual(false, match({
-                value: 'abc',
-                compareArray: []
+                value: 'abc', compareArray: []
             }), 'test_match param 5');
+            checkEqual(false, match({
+                value: '123', compareArray: [null, undefined, 123, 'abc']
+            }), 'test_match param 6');
+            checkEqual(true, match({
+                value: 'abc', compareArray: [function (value) { return value.startsWith('a'); }]
+            }), 'test_match param 7');
+            checkEqual(false, match({
+                value: 'abc', compareArray: [function (value) { return value.startsWith('b'); }]
+            }), 'test_match param 8');
             // パラメータ引数 数値
             checkEqual(false, match({
-                value: 123,
-                compareArray: ['123', '456', '789'],
+                value: 123, compareArray: ['123', '456', '789'],
             }), 'test_match param number 1');
             checkEqual(true, match({
-                value: 123,
-                compareArray: [123, 456, 'abc'],
+                value: 123, compareArray: [123, 456, 'abc'],
             }), 'test_match param number 2');
             checkEqual(false, match({
-                value: 123,
-                compareArray: ['123', '456', /^1/],
+                value: 123, compareArray: ['123', '456', /^1/],
             }), 'test_match param number 3');
             checkEqual(true, match({
-                value: 123,
-                compareArray: [123, '456', /^1/]
+                value: 123, compareArray: [123, '456', /^1/]
             }), 'test_match param number 4');
             checkEqual(false, match({
-                value: 123,
-                compareArray: []
+                value: 123, compareArray: []
             }), 'test_match param number 5');
             checkEqual(true, match({
-                value: 123,
-                compareArray: [null, undefined, 123, 'abc']
+                value: 123, compareArray: [null, undefined, 123, 'abc']
             }), 'test_match param number 6');
+            checkEqual(true, match({
+                value: 100, compareArray: [function (value) { return 100 <= value; }]
+            }), 'test_match param 7');
+            checkEqual(false, match({
+                value: 99, compareArray: [function (value) { return 100 <= value; }]
+            }), 'test_match param 8');
             // 例外判定
             checkEqual(false, isThrown(function () {
                 match({
-                    value: '123',
-                    compareArray: ['123']
+                    value: '123', compareArray: ['123']
                 });
             }), 'test_match thrown 1');
             checkEqual(false, isThrown(function () {
                 match({
-                    value: '123',
-                    compareArray: []
+                    value: '123', compareArray: []
                 });
             }), 'test_match thrown 2');
             checkEqual(false, isThrown(function () {
                 match({
-                    value: '123',
-                    compareArray: [123]
+                    value: '123', compareArray: [123]
                 });
             }), 'test_match thrown 3');
             checkEqual(true, isThrown(function () {
                 match({
-                    value: '123',
-                    compareArray: 123
+                    value: '123', compareArray: 123
                 });
             }), 'test_match thrown 4');
         };
