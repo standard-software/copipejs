@@ -84,6 +84,15 @@ console.log(
 
 ## Version
 
+### 1.1.0
+#### 2019/06/06(Thu)
+- update isThrown no args thrown value.
+- update compare.match
+- update string.include and consoleHook
+- add Polyfill statsWith endsWith
+- update compare.equal or
+- add compare.matchValue defaultValue
+
 ### 1.0.1
 #### 2019/06/02(Sun)
 - update consoleHook._accept
