@@ -397,24 +397,6 @@ var copipe;
             return func.apply(void 0, [argsFirst].concat(argsRest));
         };
         /**
-         * 比較する関数
-         */
-        syntax.equal = function (valueA, valueB) {
-            return valueA === valueB;
-        };
-        /**
-         * 配列内に value と一致する値があるかどうかを判定する関数
-         */
-        syntax.or = function (value, compareArray) {
-            syntax.assert(copipe.isArray(compareArray));
-            for (var i = 0; i < compareArray.length; i += 1) {
-                if (value === compareArray[i]) {
-                    return true;
-                }
-            }
-            return false;
-        };
-        /**
          * ifを値を返す関数にしたもの。
          *  次の形式で記載する
          *  if_(true)({
@@ -517,13 +499,31 @@ var copipe;
     var compare;
     (function (compare) {
         /**
+         * 比較する関数
+         */
+        compare.equal = function (valueA, valueB) {
+            return valueA === valueB;
+        };
+        /**
+         * 配列内に value と一致する値があるかどうかを判定する関数
+         */
+        compare.or = function (value, compareArray) {
+            copipe.assert(copipe.isArray(compareArray));
+            for (var i = 0; i < compareArray.length; i += 1) {
+                if (value === compareArray[i]) {
+                    return true;
+                }
+            }
+            return false;
+        };
+        /**
          * 値が他の値と一致しているかどうかを調べる関数(内部)
          */
         compare._match = function (matchFunc, value, compareArray) {
             copipe.guard(function () { return [
                 [
                     copipe.isArray(compareArray),
-                    'copipe.compare._match args2(compareArray) type is not Array.'
+                    '_match args2(compareArray) type is not Array.'
                 ],
             ]; }, function () {
                 throw new TypeError(copipe.guard.message());
@@ -576,6 +576,34 @@ var copipe;
             });
             return compare._match(matchFunc, parameter.value, parameter.compareArray);
         };
+        /**
+         * 値が一致していた場合にデフォルト値を返す関数
+         */
+        compare._matchValue = function (value, compareArray, inMatchValue) {
+            if (compare.match(value, compareArray)) {
+                return inMatchValue;
+            }
+            return value;
+        };
+        compare.matchValue = function (value, compareArray, inMatchValue) {
+            var parameter = copipe.if_(copipe.isObject(value))({
+                then: value,
+                else: { value: value, compareArray: compareArray, inMatchValue: inMatchValue }
+            });
+            return compare._matchValue(parameter.value, parameter.compareArray, parameter.inMatchValue);
+        };
+        compare.matchTo = compare.matchValue;
+        compare.defaultValue = function (value, inMatchValue) {
+            var parameter = copipe.if_(copipe.isObject(value))({
+                then: value,
+                else: { value: value, inMatchValue: inMatchValue }
+            });
+            return compare._matchValue(parameter.value, [
+                function (value) { return copipe.isUndefined(value); },
+                function (value) { return copipe.isNull(value); },
+            ], parameter.inMatchValue);
+        };
+        compare.defaultTo = compare.defaultValue;
     })(compare = copipe.compare || (copipe.compare = {}));
 })(copipe || (copipe = {}));
 /**
@@ -602,47 +630,6 @@ var copipe;
 (function (copipe) {
     var string;
     (function (string) {
-        /**
-         * 文字列を他の文字列か正規表現で一致を調べる関数
-         */
-        // const _match = (
-        //   matchFunc: (a: string, b: string) => boolean,
-        //   value: string, compareArray: any[]
-        // ) => {
-        //   guard(() => [
-        //     [isString(value), '_match args1(value) type is not String.'],
-        //     [
-        //       isArray(compareArray),
-        //       '_match args2(compareArray) type is not Array.'
-        //     ],
-        //   ], () => {
-        //     throw new TypeError(guard.message());
-        //   });
-        //   return compareArray.some((element) => {
-        //     if (isString(element)) {
-        //       return matchFunc(value, element);
-        //     }
-        //     if (isRegExp(element)) {
-        //       return value.match(element) !== null;
-        //     }
-        //     if (isFunction(element)) {
-        //       return element(value);
-        //     }
-        //     throw new TypeError('_match args2(compareArray) Array element is not String or RegExp or Function.');
-        //   });
-        // };
-        // export const match = (
-        //   // value: string | { value: string; compareValues: string | RegExp },
-        //   value,
-        //   compareArray: (string|RegExp)[] | undefined
-        // ) => {
-        //   const compareFunc = (a, b) => a === b;
-        //   if (isObject(value)) {
-        //     return copipe.compare._match(compareFunc , value.value, value.compareArray);
-        //   } else {
-        //     return copipe.compare._match(compareFunc ,value, compareArray);
-        //   }
-        // };
         /**
          * 文字列を他の文字列か正規表現で含むかどうかを調べる関数
          */
@@ -688,7 +675,7 @@ var copipe;
  * 名前空間ルートの公開
  */
 (function (copipe) {
-    var _a, _b;
+    var _a, _b, _c;
     /**
      * 型判定
      */
@@ -696,7 +683,11 @@ var copipe;
     /**
      * 文法拡張
      */
-    _b = copipe.syntax, copipe.assert = _b.assert, copipe.guard = _b.guard, copipe.functionValue = _b.functionValue, copipe.sc = _b.sc, copipe.equal = _b.equal, copipe.or = _b.or, copipe.if_ = _b.if_, copipe.switch_ = _b.switch_, copipe.isThrown = _b.isThrown, copipe.isThrownValue = _b.isThrownValue, copipe.isThrownException = _b.isThrownException, copipe.isNotThrown = _b.isNotThrown;
+    _b = copipe.syntax, copipe.assert = _b.assert, copipe.guard = _b.guard, copipe.functionValue = _b.functionValue, copipe.sc = _b.sc, copipe.if_ = _b.if_, copipe.switch_ = _b.switch_, copipe.isThrown = _b.isThrown, copipe.isThrownValue = _b.isThrownValue, copipe.isThrownException = _b.isThrownException, copipe.isNotThrown = _b.isNotThrown;
+    /**
+     * 比較
+     */
+    _c = copipe.compare, copipe.equal = _c.equal, copipe.or = _c.or, copipe.match = _c.match, copipe.matchValue = _c.matchValue, copipe.matchTo = _c.matchTo, copipe.defaultValue = _c.defaultValue, copipe.defaultTo = _c.defaultTo;
     /**
      * 変換
      */

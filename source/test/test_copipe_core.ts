@@ -36,10 +36,11 @@ namespace test_copipe_core {
     isNotFunc, isNotObj, isNotExcept,
 
     assert, guard,
-    functionValue, sc, equal, or, if_, switch_,
+    functionValue, sc, if_, switch_,
     isThrown, isThrownValue, isThrownException, isNotThrown,
 
-    match,
+    equal, or,
+    match, matchValue, matchTo, defaultValue, defaultTo,
 
     checkEqual;
 
@@ -47,7 +48,12 @@ namespace test_copipe_core {
    * 初期化として関数変数を代入する
    */
   const initialize = function (copipe) {
+
+    /**
+     * 名前空間でルート公開されている関数の展開
+     */
     ({
+      // type
       isUndefined, isNull,
       isBoolean, isNumber, isInteger, isString,
       isFunction, isObject, isArray, isDate,
@@ -74,15 +80,31 @@ namespace test_copipe_core {
       isNotUndef, isNotBool, isNotNum, isNotInt, isNotStr,
       isNotFunc, isNotObj, isNotExcept,
 
+      // syntax
       assert, guard,
-      functionValue, sc, equal, or, if_, switch_,
+      functionValue, sc, if_, switch_,
       isThrown, isThrownValue, isThrownException, isNotThrown,
+
+      // compare
+      equal, or,
+      match, matchValue, matchTo, defaultValue, defaultTo,
+
+      // convert
+
+      // number
+
+      // string
+
+      // test
 
     } = copipe);
 
-    ({ match } = copipe.compare);
-
-    ({ checkEqual } = copipe.test);
+    /**
+     * 名前空間でルート公開されていない関数の展開
+     */
+    ({
+      checkEqual
+    } = copipe.test);
   };
 
   namespace type {
@@ -830,6 +852,20 @@ namespace test_copipe_core {
       ), 'test_match thrown 4');
 
     };
+
+    export const test_matchValue = () => {
+      checkEqual(999, matchValue(99, [99], 999));
+      checkEqual(98,  matchValue(98, [99], 999));
+      // ほとんどのテストは test_match で行っているとみなす
+    };
+
+    export const test_defaultValue = () => {
+      checkEqual('123', defaultValue('123', 999));
+      checkEqual(999,  defaultValue(undefined, 999));
+      checkEqual(999,  defaultValue(null, 999));
+      // ほとんどのテストは test_match で行っているとみなす
+    };
+
   }
 
   namespace convert {
@@ -846,25 +882,33 @@ namespace test_copipe_core {
     checkEqual(true, true, 'assert test');
     checkEqual(false, false, 'assert test');
 
-    const test_isUndefined = type.test_isUndefined;
-    const test_isNull = type.test_isNull;
-    const test_isBoolean = type.test_isBoolean;
-    const test_isNumber = type.test_isNumber;
-    const test_isInteger = type.test_isInteger;
-    const test_isString = type.test_isString;
-    const test_isFunction = type.test_isFunction;
-    const test_isObject = type.test_isObject;
-    const test_isArray = type.test_isArray;
-    const test_isDate = type.test_isDate;
-    const test_isExcection = type.test_isExcection;
+    const {
+      test_isUndefined,
+      test_isNull,
+      test_isBoolean,
+      test_isNumber,
+      test_isInteger,
+      test_isString,
+      test_isFunction,
+      test_isObject,
+      test_isArray,
+      test_isDate,
+      test_isExcection,
+    } = type;
 
-    const test_or = syntax.test_or;
-    const test_if_ = syntax.test_if_;
-    const test_switch_ = syntax.test_switch_;
-    const test_sc = syntax.test_sc;
-    const test_guard = syntax.test_guard;
+    const {
+      test_or,
+      test_if_,
+      test_switch_,
+      test_sc,
+      test_guard,
+    } = syntax;
 
-    const { test_match } = compare;
+    const {
+      test_match,
+      test_matchValue,
+      test_defaultValue,
+    } = compare;
 
     console.log('test_copipe_core start.');
 
@@ -879,6 +923,7 @@ namespace test_copipe_core {
     test_isArray();
     test_isDate();
     test_isExcection(),
+
     test_or();
     test_if_();
     test_switch_();
@@ -886,6 +931,8 @@ namespace test_copipe_core {
     test_guard();
 
     test_match();
+    test_matchValue();
+    test_defaultValue();
 
     console.log('test_copipe_core finish.');
   };

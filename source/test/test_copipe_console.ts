@@ -16,10 +16,20 @@ namespace test_copipe_console {
    * 初期化として関数変数を代入する
    */
   export const initialize = function (copipe) {
+
+    /**
+     * 名前空間でルート公開されている関数の展開
+     */
     ({
-      checkEqual,
       consoleHook,
     } = copipe);
+
+    /**
+     * 名前空間でルート公開されていない関数の展開
+     */
+    ({
+      checkEqual,
+    } = copipe.test);
   };
 
   export const test_consoleHook = function(methodName: string) {

@@ -13,7 +13,14 @@ var test_copipe_console;
      * 初期化として関数変数を代入する
      */
     test_copipe_console.initialize = function (copipe) {
-        (checkEqual = copipe.checkEqual, consoleHook = copipe.consoleHook);
+        /**
+         * 名前空間でルート公開されている関数の展開
+         */
+        (consoleHook = copipe.consoleHook);
+        /**
+         * 名前空間でルート公開されていない関数の展開
+         */
+        (checkEqual = copipe.test.checkEqual);
     };
     test_copipe_console.test_consoleHook = function (methodName) {
         var consoleOutput = '';

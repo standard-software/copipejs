@@ -450,26 +450,6 @@ namespace copipe.syntax {
   };
 
   /**
-   * 比較する関数
-   */
-  export const equal = (valueA: any, valueB: any) => {
-    return valueA === valueB;
-  };
-
-  /**
-   * 配列内に value と一致する値があるかどうかを判定する関数
-   */
-  export const or = (value: any, compareArray: any[]) => {
-    assert(isArray(compareArray));
-    for (let i = 0; i < compareArray.length; i += 1) {
-      if (value === compareArray[i]) {
-        return true;
-      }
-    }
-    return false;
-  };
-
-  /**
    * ifを値を返す関数にしたもの。
    *  次の形式で記載する
    *  if_(true)({
@@ -567,6 +547,26 @@ namespace copipe.syntax {
 namespace copipe.compare {
 
   /**
+   * 比較する関数
+   */
+  export const equal = (valueA: any, valueB: any) => {
+    return valueA === valueB;
+  };
+
+  /**
+   * 配列内に value と一致する値があるかどうかを判定する関数
+   */
+  export const or = (value: any, compareArray: any[]) => {
+    assert(isArray(compareArray));
+    for (let i = 0; i < compareArray.length; i += 1) {
+      if (value === compareArray[i]) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  /**
    * 値が他の値と一致しているかどうかを調べる関数(内部)
    */
   export const _match = (
@@ -576,7 +576,7 @@ namespace copipe.compare {
     guard(() => [
       [
         isArray(compareArray),
-        'copipe.compare._match args2(compareArray) type is not Array.'
+        '_match args2(compareArray) type is not Array.'
       ],
     ], () => {
       throw new TypeError(guard.message());
@@ -624,13 +624,58 @@ namespace copipe.compare {
     compareArray: any[] | undefined
   ) => {
     const matchFunc = (a, b) => a === b;
-
     const parameter = if_(isObject(value))({
       then: value,
       else: { value, compareArray }
     });
     return _match(matchFunc, parameter.value, parameter.compareArray);
   };
+
+  /**
+   * 値が一致していた場合にデフォルト値を返す関数
+   */
+  export const _matchValue = (
+    value,
+    compareArray: any[],
+    inMatchValue,
+  ) => {
+    if (match(value, compareArray)) {
+      return inMatchValue;
+    }
+    return value;
+  };
+
+  export const matchValue = (
+    value,
+    compareArray: any[] | undefined,
+    inMatchValue: any | undefined,
+  ) => {
+    const parameter = if_(isObject(value))({
+      then: value,
+      else: { value, compareArray, inMatchValue }
+    });
+    return _matchValue(
+      parameter.value, parameter.compareArray, parameter.inMatchValue
+    );
+  };
+  export const matchTo = matchValue;
+
+  export const defaultValue = (
+    value,
+    inMatchValue: any | undefined,
+  ) => {
+    const parameter = if_(isObject(value))({
+      then: value,
+      else: { value, inMatchValue }
+    });
+    return _matchValue(
+      parameter.value, [
+        (value) => isUndefined(value),
+        (value) => isNull(value),
+      ], parameter.inMatchValue
+    );
+  };
+  export const defaultTo = defaultValue;
 }
 
 /**
@@ -657,50 +702,6 @@ namespace copipe.convert {
  * 文字列処理
  */
 namespace copipe.string {
-
-  /**
-   * 文字列を他の文字列か正規表現で一致を調べる関数
-   */
-  // const _match = (
-  //   matchFunc: (a: string, b: string) => boolean,
-  //   value: string, compareArray: any[]
-  // ) => {
-  //   guard(() => [
-  //     [isString(value), '_match args1(value) type is not String.'],
-  //     [
-  //       isArray(compareArray),
-  //       '_match args2(compareArray) type is not Array.'
-  //     ],
-  //   ], () => {
-  //     throw new TypeError(guard.message());
-  //   });
-
-  //   return compareArray.some((element) => {
-  //     if (isString(element)) {
-  //       return matchFunc(value, element);
-  //     }
-  //     if (isRegExp(element)) {
-  //       return value.match(element) !== null;
-  //     }
-  //     if (isFunction(element)) {
-  //       return element(value);
-  //     }
-  //     throw new TypeError('_match args2(compareArray) Array element is not String or RegExp or Function.');
-  //   });
-  // };
-
-  // export const match = (
-  //   // value: string | { value: string; compareValues: string | RegExp },
-  //   value,
-  //   compareArray: (string|RegExp)[] | undefined
-  // ) => {
-  //   const compareFunc = (a, b) => a === b;
-  //   if (isObject(value)) {
-  //     return copipe.compare._match(compareFunc , value.value, value.compareArray);
-  //   } else {
-  //     return copipe.compare._match(compareFunc ,value, compareArray);
-  //   }
-  // };
 
   /**
    * 文字列を他の文字列か正規表現で含むかどうかを調べる関数
@@ -784,9 +785,17 @@ namespace copipe {
    */
   export const {
     assert, guard,
-    functionValue, sc, equal, or, if_, switch_,
+    functionValue, sc, if_, switch_,
     isThrown, isThrownValue, isThrownException, isNotThrown,
   } = copipe.syntax;
+
+  /**
+   * 比較
+   */
+  export const {
+    equal, or,
+    match, matchValue, matchTo, defaultValue, defaultTo,
+  } = copipe.compare;
 
   /**
    * 変換

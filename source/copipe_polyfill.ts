@@ -6,14 +6,17 @@
 import copipe_console = require('./copipe_console');
 
 namespace copipe {
-  /**
-   * ルート公開されている名前空間の展開
-   */
+
   export const {
     VERSION, type, syntax, compare, convert, string, test,
     consoleHook,
   } = copipe_console;
+
+  /**
+   * 名前空間でルート公開されている関数の展開
+   */
   export const {
+    // type
     isUndefined, isNull,
     isBoolean, isNumber, isInteger, isString,
     isFunction, isObject, isArray, isDate,
@@ -39,15 +42,25 @@ namespace copipe {
 
     isNotUndef, isNotBool, isNotNum, isNotInt, isNotStr,
     isNotFunc, isNotObj, isNotExcept,
-  } = type;
-  export const {
+
+    // syntax
     assert, guard,
-    functionValue, sc, equal, or, if_, switch_,
+    functionValue, sc, if_, switch_,
     isThrown, isThrownValue, isThrownException, isNotThrown,
-  } = syntax;
-  export const {
-    checkEqual,
-  } = test;
+
+    // compare
+    equal, or,
+    match, matchValue, matchTo, defaultValue, defaultTo,
+
+    // convert
+
+    // number
+
+    // string
+
+    // test
+
+  } = copipe_console;
 
   export const polyfillDefine = () => {
     // console.info('polyfill String.prototype.includes');
