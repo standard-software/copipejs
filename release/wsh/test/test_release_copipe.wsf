@@ -1,31 +1,28 @@
 <?xml version="1.0" encoding="shift-jis" ?>
 
 <job>
-    <script language="JavaScript">
-    <![CDATA[
+  <script language="JavaScript">
+  <![CDATA[
 
 var module = {};
 var console = {};
-
 var require = function() {
   return copipe;
 }
-
 var SyntaxError = Error;
-
 var JSON = undefined;
-
 var window = {};
 
-    ]]>
-    </script>
-    <script language="JavaScript" src="..\copipe.js"></script>
+  ]]>
+  </script>
+  <script language="JavaScript" src="..\copipe.js"></script>
 
-    <script language="JavaScript" src=".\test_copipe_core.js"></script>
-    <script language="JavaScript" src=".\test_copipe_console.js"></script>
-    <script language="JavaScript">
-    <![CDATA[
+  <script language="JavaScript" src=".\test_copipe_core.js"></script>
+  <script language="JavaScript" src=".\test_copipe_console.js"></script>
+  <script language="JavaScript">
+  <![CDATA[
 
+var main = function() {
   var copipe = window.copipe;
 
   copipe.consoleHook.original.log = function(message) { WScript.Echo(message); }
@@ -46,6 +43,7 @@ var window = {};
     // WScript.Echo(message);
   })
 
+  console.log('test_release_copipe.wsf');
   console.log(
     'copipe.VERSION', copipe.VERSION
   );
@@ -54,6 +52,9 @@ var window = {};
   test_copipe_console.run(copipe);
 
   WScript.Echo(outputMessage);
-    ]]>
-    </script>
+};
+main();
+
+  ]]>
+  </script>
 </job>

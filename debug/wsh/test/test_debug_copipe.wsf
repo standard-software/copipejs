@@ -1,57 +1,60 @@
 <?xml version="1.0" encoding="shift-jis" ?>
 
 <job>
-    <script language="JavaScript">
-    <![CDATA[
+  <script language="JavaScript">
+  <![CDATA[
 
 var module = {};
 var console = {};
-
 var require = function() {
   return copipe;
 }
-
 var SyntaxError = Error;
-
 var JSON = undefined;
 
-    ]]>
-    </script>
-    <script language="JavaScript" src="..\copipe_core.js"></script>
-    <script language="JavaScript" src="..\copipe_console.js"></script>
-    <script language="JavaScript" src="..\copipe_polyfill.js"></script>
+  ]]>
+  </script>
+  <script language="JavaScript" src="..\copipe_core.js"></script>
+  <script language="JavaScript" src="..\copipe_console.js"></script>
+  <script language="JavaScript" src="..\copipe_polyfill.js"></script>
 
-    <script language="JavaScript" src=".\test_copipe_core.js"></script>
-    <script language="JavaScript" src=".\test_copipe_console.js"></script>
-    <script language="JavaScript">
-    <![CDATA[
+  <script language="JavaScript" src=".\test_copipe_core.js"></script>
+  <script language="JavaScript" src=".\test_copipe_console.js"></script>
+  <script language="JavaScript">
+  <![CDATA[
 
-copipe.consoleHook.original.log = function(message) { WScript.Echo(message); }
-copipe.consoleHook.original.info = function(message) { WScript.Echo(message); }
-copipe.consoleHook.original.warn = function(message) { WScript.Echo(message); }
-copipe.consoleHook.original.error = function(message) { WScript.Echo(message); }
-copipe.consoleHook.original.debug = function(message) { WScript.Echo(message); }
+var main = function() {
+  copipe.consoleHook.original.log = function(message) { WScript.Echo(message); }
+  copipe.consoleHook.original.info = function(message) { WScript.Echo(message); }
+  copipe.consoleHook.original.warn = function(message) { WScript.Echo(message); }
+  copipe.consoleHook.original.error = function(message) { WScript.Echo(message); }
+  copipe.consoleHook.original.debug = function(message) { WScript.Echo(message); }
 
-var argsToArray = function(argsObj) {
-return Array.prototype.slice.call(argsObj);
+  var argsToArray = function(argsObj) {
+  return Array.prototype.slice.call(argsObj);
+  };
+
+  var outputMessage = '';
+  copipe.consoleHook.hookLog(function() {
+    argsArray = argsToArray(arguments);
+    var message = argsArray.join(' ');
+    outputMessage += message + '\n';
+    // WScript.Echo(message);
+  })
+
+  console.log('test_debug_copipe.wsf');
+  console.log(
+    'copipe.VERSION', copipe.VERSION
+  );
+
+  test_copipe_core.run(copipe);
+  test_copipe_console.run(copipe);
+
+  WScript.Echo(outputMessage);
+
 };
+main();
 
-var outputMessage = '';
-copipe.consoleHook.hookLog(function() {
-argsArray = argsToArray(arguments);
-var message = argsArray.join(' ');
-outputMessage += message + '\n';
-// WScript.Echo(message);
-})
-
-console.log(
-'copipe.VERSION', copipe.VERSION
-);
-
-test_copipe_core.run(copipe);
-test_copipe_console.run(copipe);
-
-WScript.Echo(outputMessage);
-    ]]>
-    </script>
+  ]]>
+  </script>
 </job>
