@@ -15,7 +15,9 @@ var copipe;
     // syntax
     copipe.assert = copipe_core.assert, copipe.guard = copipe_core.guard, copipe.functionValue = copipe_core.functionValue, copipe.sc = copipe_core.sc, copipe.if_ = copipe_core.if_, copipe.switch_ = copipe_core.switch_, copipe.isThrown = copipe_core.isThrown, copipe.isThrownValue = copipe_core.isThrownValue, copipe.isThrownException = copipe_core.isThrownException, copipe.isNotThrown = copipe_core.isNotThrown, 
     // compare
-    copipe.equal = copipe_core.equal, copipe.or = copipe_core.or, copipe.match = copipe_core.match, copipe.matchValue = copipe_core.matchValue, copipe.matchTo = copipe_core.matchTo, copipe.defaultValue = copipe_core.defaultValue, copipe.defaultTo = copipe_core.defaultTo;
+    copipe.equal = copipe_core.equal, copipe.or = copipe_core.or, copipe.match = copipe_core.match, copipe.matchValue = copipe_core.matchValue, copipe.matchTo = copipe_core.matchTo, copipe.defaultValue = copipe_core.defaultValue, copipe.defaultTo = copipe_core.defaultTo, 
+    // convert
+    copipe.numberToString = copipe_core.numberToString, copipe.numToString = copipe_core.numToString, copipe.numToStr = copipe_core.numToStr, copipe.stringToNumber = copipe_core.stringToNumber, copipe.strToNumber = copipe_core.strToNumber, copipe.strToNum = copipe_core.strToNum, copipe.stringToInteger = copipe_core.stringToInteger, copipe.strToInteger = copipe_core.strToInteger, copipe.strToInt = copipe_core.strToInt;
     var consoleHook;
     (function (consoleHook) {
         consoleHook.original = {};

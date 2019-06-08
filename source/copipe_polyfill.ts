@@ -53,6 +53,9 @@ namespace copipe {
     match, matchValue, matchTo, defaultValue, defaultTo,
 
     // convert
+    numberToString, numToString, numToStr,
+    stringToNumber, strToNumber, strToNum,
+    stringToInteger, strToInteger, strToInt,
 
     // number
 

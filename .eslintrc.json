@@ -30,6 +30,7 @@
     "@typescript-eslint/no-unused-vars": "warn",
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/no-var-requires": "off",
+    "no-control-regex": "off",
     "no-undef": "off",
     "no-redeclare": "off",
     "no-console": "off"

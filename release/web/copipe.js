@@ -128,7 +128,9 @@ var copipe;
     // syntax
     copipe.assert = copipe_console.assert, copipe.guard = copipe_console.guard, copipe.functionValue = copipe_console.functionValue, copipe.sc = copipe_console.sc, copipe.if_ = copipe_console.if_, copipe.switch_ = copipe_console.switch_, copipe.isThrown = copipe_console.isThrown, copipe.isThrownValue = copipe_console.isThrownValue, copipe.isThrownException = copipe_console.isThrownException, copipe.isNotThrown = copipe_console.isNotThrown, 
     // compare
-    copipe.equal = copipe_console.equal, copipe.or = copipe_console.or, copipe.match = copipe_console.match, copipe.matchValue = copipe_console.matchValue, copipe.matchTo = copipe_console.matchTo, copipe.defaultValue = copipe_console.defaultValue, copipe.defaultTo = copipe_console.defaultTo;
+    copipe.equal = copipe_console.equal, copipe.or = copipe_console.or, copipe.match = copipe_console.match, copipe.matchValue = copipe_console.matchValue, copipe.matchTo = copipe_console.matchTo, copipe.defaultValue = copipe_console.defaultValue, copipe.defaultTo = copipe_console.defaultTo, 
+    // convert
+    copipe.numberToString = copipe_console.numberToString, copipe.numToString = copipe_console.numToString, copipe.numToStr = copipe_console.numToStr, copipe.stringToNumber = copipe_console.stringToNumber, copipe.strToNumber = copipe_console.strToNumber, copipe.strToNum = copipe_console.strToNum, copipe.stringToInteger = copipe_console.stringToInteger, copipe.strToInteger = copipe_console.strToInteger, copipe.strToInt = copipe_console.strToInt;
     copipe.polyfillDefine = function () {
         // console.info('polyfill String.prototype.includes');
         if (!String.prototype.includes) {
@@ -236,7 +238,9 @@ var copipe;
     // syntax
     copipe.assert = copipe_core.assert, copipe.guard = copipe_core.guard, copipe.functionValue = copipe_core.functionValue, copipe.sc = copipe_core.sc, copipe.if_ = copipe_core.if_, copipe.switch_ = copipe_core.switch_, copipe.isThrown = copipe_core.isThrown, copipe.isThrownValue = copipe_core.isThrownValue, copipe.isThrownException = copipe_core.isThrownException, copipe.isNotThrown = copipe_core.isNotThrown, 
     // compare
-    copipe.equal = copipe_core.equal, copipe.or = copipe_core.or, copipe.match = copipe_core.match, copipe.matchValue = copipe_core.matchValue, copipe.matchTo = copipe_core.matchTo, copipe.defaultValue = copipe_core.defaultValue, copipe.defaultTo = copipe_core.defaultTo;
+    copipe.equal = copipe_core.equal, copipe.or = copipe_core.or, copipe.match = copipe_core.match, copipe.matchValue = copipe_core.matchValue, copipe.matchTo = copipe_core.matchTo, copipe.defaultValue = copipe_core.defaultValue, copipe.defaultTo = copipe_core.defaultTo, 
+    // convert
+    copipe.numberToString = copipe_core.numberToString, copipe.numToString = copipe_core.numToString, copipe.numToStr = copipe_core.numToStr, copipe.stringToNumber = copipe_core.stringToNumber, copipe.strToNumber = copipe_core.strToNumber, copipe.strToNum = copipe_core.strToNum, copipe.stringToInteger = copipe_core.stringToInteger, copipe.strToInteger = copipe_core.strToInteger, copipe.strToInt = copipe_core.strToInt;
     var consoleHook;
     (function (consoleHook) {
         consoleHook.original = {};
@@ -358,7 +362,7 @@ module.exports = copipe;
  */
 var copipe;
 (function (copipe) {
-    copipe.VERSION = '1.1.0';
+    copipe.VERSION = '1.2.0 beta';
 })(copipe || (copipe = {}));
 (function (copipe) {
     /**
@@ -382,6 +386,7 @@ var copipe;
         };
         _type._isUndefined = _primitiveTypeCheckFunc('undefined');
         _type._isNull = function (value) { return (value === null); };
+        _type._isNaNStrict = function (value) { return value !== value; };
         _type._isBoolean = _primitiveTypeCheckFunc('boolean');
         _type._isNumber = function (value) {
             return (_primitiveTypeCheckFunc('number')(value) && (isFinite(value)));
@@ -440,6 +445,7 @@ var copipe;
          */
         _type._isNotUndefined = function (value) { return !_type._isUndefined(value); };
         _type._isNotNull = function (value) { return !_type._isNull(value); };
+        _type._isNotNaNStrict = function (value) { return !_type._isNaNStrict(value); };
         _type._isNotBoolean = function (value) { return !_type._isBoolean(value); };
         _type._isNotNumber = function (value) { return !_type._isNumber(value); };
         _type._isNotInteger = function (value) { return !_type._isInteger(value); };
@@ -548,7 +554,7 @@ var copipe;
      */
     (function (type) {
         var assert = syntax.assert;
-        var _isUndefined = _type._isUndefined, _isNull = _type._isNull, _isBoolean = _type._isBoolean, _isNumber = _type._isNumber, _isInteger = _type._isInteger, _isString = _type._isString, _isFunction = _type._isFunction, _isObject = _type._isObject, _isArray = _type._isArray, _isDate = _type._isDate, _isRegExp = _type._isRegExp, _isException = _type._isException, _isNotUndefined = _type._isNotUndefined, _isNotNull = _type._isNotNull, _isNotBoolean = _type._isNotBoolean, _isNotNumber = _type._isNotNumber, _isNotInteger = _type._isNotInteger, _isNotString = _type._isNotString, _isNotFunction = _type._isNotFunction, _isNotObject = _type._isNotObject, _isNotArray = _type._isNotArray, _isNotDate = _type._isNotDate, _isNotRegExp = _type._isNotRegExp, _isNotException = _type._isNotException;
+        var _isUndefined = _type._isUndefined, _isNull = _type._isNull, _isNaNStrict = _type._isNaNStrict, _isBoolean = _type._isBoolean, _isNumber = _type._isNumber, _isInteger = _type._isInteger, _isString = _type._isString, _isFunction = _type._isFunction, _isObject = _type._isObject, _isArray = _type._isArray, _isDate = _type._isDate, _isRegExp = _type._isRegExp, _isException = _type._isException, _isNotUndefined = _type._isNotUndefined, _isNotNull = _type._isNotNull, _isNotNaNStrict = _type._isNotNaNStrict, _isNotBoolean = _type._isNotBoolean, _isNotNumber = _type._isNotNumber, _isNotInteger = _type._isNotInteger, _isNotString = _type._isNotString, _isNotFunction = _type._isNotFunction, _isNotObject = _type._isNotObject, _isNotArray = _type._isNotArray, _isNotDate = _type._isNotDate, _isNotRegExp = _type._isNotRegExp, _isNotException = _type._isNotException;
         var _isTypeCheck = function (checkFunc, argsArray) {
             assert(_isFunction(checkFunc));
             assert(_isArray(argsArray));
@@ -582,6 +588,7 @@ var copipe;
         };
         type.isUndefined = _isTypeCheckArgsFunc(_isUndefined);
         type.isNull = _isTypeCheckArgsFunc(_isNull);
+        type.isNaNStrict = _isTypeCheckArgsFunc(_isNaNStrict);
         type.isBoolean = _isTypeCheckArgsFunc(_isBoolean);
         type.isNumber = _isTypeCheckArgsFunc(_isNumber);
         type.isInteger = _isTypeCheckArgsFunc(_isInteger);
@@ -594,6 +601,7 @@ var copipe;
         type.isException = _isTypeCheckArgsFunc(_isException);
         type.isNotUndefined = _isTypeCheckArgsFunc(_isNotUndefined);
         type.isNotNull = _isTypeCheckArgsFunc(_isNotNull);
+        type.isNotNaNStrict = _isTypeCheckArgsFunc(_isNotNaNStrict);
         type.isNotBoolean = _isTypeCheckArgsFunc(_isNotBoolean);
         type.isNotNumber = _isTypeCheckArgsFunc(_isNotNumber);
         type.isNotInteger = _isTypeCheckArgsFunc(_isNotInteger);
@@ -606,6 +614,7 @@ var copipe;
         type.isNotException = _isTypeCheckArgsFunc(_isNotException);
         type.isUndefinedArray = _isTypeCheckArrayFunc(_isUndefined);
         type.isNullArray = _isTypeCheckArrayFunc(_isNull);
+        type.isNaNStrictArray = _isTypeCheckArrayFunc(_isNaNStrict);
         type.isBooleanArray = _isTypeCheckArrayFunc(_isBoolean);
         type.isNumberArray = _isTypeCheckArrayFunc(_isNumber);
         type.isIntegerArray = _isTypeCheckArrayFunc(_isInteger);
@@ -618,6 +627,7 @@ var copipe;
         type.isExceptionArray = _isTypeCheckArrayFunc(_isException);
         type.isNotUndefinedArray = _isTypeCheckArrayFunc(_isNotUndefined);
         type.isNotNullArray = _isTypeCheckArrayFunc(_isNotNull);
+        type.isNotNaNStrictArray = _isTypeCheckArrayFunc(_isNotNaNStrict);
         type.isNotBooleanArray = _isTypeCheckArrayFunc(_isNotBoolean);
         type.isNotNumberArray = _isTypeCheckArrayFunc(_isNotNumber);
         type.isNotIntegerArray = _isTypeCheckArrayFunc(_isNotInteger);
@@ -965,16 +975,61 @@ var copipe;
 (function (copipe) {
     var convert;
     (function (convert) {
-        var dummy = function () { };
-        // export const stringToNumber = () => {};
-        // export const strToNumber = stringToNumber;
-        // export const strToNum = stringToNumber;
-        // export const stringToInteger = () => {};
-        // export const strToInteger = stringToInteger;
-        // export const strToInt = stringToInteger;
-        // export const numberToString = () => {};
-        // export const numToString = numberToString;
-        // export const numToStr = numberToString;
+        /**
+         * 数値を文字列に変換する
+         */
+        convert.numberToString = function (value, radix) {
+            radix = copipe.defaultTo(radix, 10);
+            copipe.guard(function () { return [
+                [copipe.isNumber(value), 'args1(value) is not number.'],
+                [copipe.isInteger(radix), 'args2(radix) is not number.'],
+                [(2 <= radix && radix <= 36), 'args2(radix) is not in 2..36.'],
+            ]; }, function () {
+                throw new TypeError('numberToString ' + copipe.guard.message());
+            });
+            return value.toString(radix);
+        };
+        convert.numToString = convert.numberToString;
+        convert.numToStr = convert.numberToString;
+        /**
+         * 文字列を数値に変換する
+         *  変換できない場合は defaultValue で指定された値を返す
+         *  進数指定はできない
+         */
+        convert.stringToNumber = function (value, defaultValue) {
+            copipe.guard(function () { return [
+                [copipe.isString(value), 'args1(value) is not string.'],
+            ]; }, function () {
+                throw new TypeError('stringToNumber ' + copipe.guard.message());
+            });
+            if (!copipe.string.matchFormat(value, 'float')) {
+                return defaultValue;
+            }
+            return copipe.matchValue(Number(value), [copipe.isNotNumber], defaultValue);
+        };
+        convert.strToNumber = convert.stringToNumber;
+        convert.strToNum = convert.stringToNumber;
+        /**
+         * 文字列を整数に変換する
+         *  変換できない場合は defaultValue で指定された値を返す
+         *  進数指定可能
+         */
+        convert.stringToInteger = function (value, radix, defaultValue) {
+            radix = copipe.defaultTo(radix, 10);
+            copipe.guard(function () { return [
+                [copipe.isString(value), 'args1(value) is not string.'],
+                [copipe.isInteger(radix), 'args2(radix) is not number.'],
+                [(2 <= radix && radix <= 36), 'args2(radix) is not in 2..36.'],
+            ]; }, function () {
+                throw new TypeError('stringToInteger ' + copipe.guard.message());
+            });
+            if (!copipe.string.matchFormat(value, String(radix) + '_base_number')) {
+                return defaultValue;
+            }
+            return copipe.matchValue(parseInt(value, radix), [copipe.isNotInteger], defaultValue);
+        };
+        convert.strToInteger = convert.stringToInteger;
+        convert.strToInt = convert.stringToInteger;
     })(convert = copipe.convert || (copipe.convert = {}));
 })(copipe || (copipe = {}));
 /**
@@ -995,6 +1050,107 @@ var copipe;
                 return copipe.compare._match(compareFunc, value, compareArray);
             }
         };
+        /**
+         * フォーマットに一致しているかどうかを判定する関数
+         */
+        string.matchFormat = function (value, formatName) {
+            copipe.guard(function () { return [
+                [copipe.isString(value), 'args1(value) is not string.'],
+                [copipe.isString(formatName), 'args2(formatName) is not string.'],
+            ]; }, function () {
+                throw new TypeError('matchFormat ' + copipe.guard.message());
+            });
+            switch (formatName) {
+                case 'zenkaku':
+                    // 全角文字
+                    return (value.match(/^[^\x01-\x7E\xA1-\xDF]+$/)) ? true : false;
+                case 'hiragana':
+                    // 全角ひらがな
+                    return (value.match(/^[\u3041-\u3096]+$/)) ? true : false;
+                case 'katakana':
+                    // 全角カタカナ
+                    return (value.match(/^[\u30a1-\u30f6]+$/)) ? true : false;
+                case 'alphabet-number':
+                    // 半角英数字（大文字・小文字）
+                    return (value.match(/^[0-9a-zA-Z]+$/)) ? true : false;
+                case 'number':
+                    // 半角数字
+                    return (value.match(/^[0-9]+$/)) ? true : false;
+                case 'alphabet':
+                    // 半角英字（大文字・小文字）
+                    return (value.match(/^[a-zA-Z]+$/)) ? true : false;
+                case 'upper_alphabet':
+                    // 半角英字（大文字のみ）
+                    return (value.match(/^[A-Z]+$/)) ? true : false;
+                case 'lower_alphabet':
+                    // 半角英字（小文字のみ）
+                    return (value.match(/^[a-z]+$/)) ? true : false;
+                case 'integer':
+                    // 整数値
+                    return (value.match(/^[+|-]?[0-9]+$/)) ? true : false;
+                case 'float_only':
+                    // 小数
+                    return (value.match(/^[-|+]?[0-9]*\.[0-9]+$/)) ? true : false;
+                case 'float':
+                    // 整数か小数
+                    return (value.match(/^[-|+]?[0-9]*\.[0-9]+$|^[+|-]?[0-9]+$/)) ? true : false;
+                case 'binary':
+                    // 2進数
+                    return (value.match(/^[-|+]?[01]+$/)) ? true : false;
+                case 'octal':
+                    // 8進数
+                    return (value.match(/^[-|+]?[0-7]+$/)) ? true : false;
+                case 'hex':
+                    // 16進数
+                    return (value.match(/^[-|+]?[0-9A-F]+$|^[0-9a-f]+$/)) ? true : false;
+                case '2_base_number':
+                    return (value.match(/^[-|+]?[01]+$/)) ? true : false;
+                case '3_base_number':
+                    return (value.match(/^[-|+]?[0-2]+$/)) ? true : false;
+                case '4_base_number':
+                    return (value.match(/^[-|+]?[0-3]+$/)) ? true : false;
+                case '5_base_number':
+                    return (value.match(/^[-|+]?[0-4]+$/)) ? true : false;
+                case '6_base_number':
+                    return (value.match(/^[-|+]?[0-5]+$/)) ? true : false;
+                case '7_base_number':
+                    return (value.match(/^[-|+]?[0-6]+$/)) ? true : false;
+                case '8_base_number':
+                    return (value.match(/^[-|+]?[0-7]+$/)) ? true : false;
+                case '9_base_number':
+                    return (value.match(/^[-|+]?[0-8]+$/)) ? true : false;
+                case '10_base_number':
+                    return (value.match(/^[-|+]?[0-9]+$/)) ? true : false;
+                case '11_base_number':
+                    return (value.match(/^[-|+]?[0-9A]+$|^[-|+]?[0-9a]+$/)) ? true : false;
+                case '12_base_number':
+                    return (value.match(/^[-|+]?[0-9AB]+$|^[-|+]?[0-9ab]+$/)) ? true : false;
+                case '13_base_number':
+                    return (value.match(/^[-|+]?[0-9A-C]+$|^[-|+]?[0-9a-c]+$/)) ? true : false;
+                case '14_base_number':
+                    return (value.match(/^[-|+]?[0-9A-D]+$|^[-|+]?[0-9a-d]+$/)) ? true : false;
+                case '15_base_number':
+                    return (value.match(/^[-|+]?[0-9A-E]+$|^[-|+]?[0-9a-e]+$/)) ? true : false;
+                case '16_base_number':
+                    return (value.match(/^[-|+]?[0-9A-F]+$|^[-|+]?[0-9a-f]+$/)) ? true : false;
+                case 'date':
+                    // y/m/d
+                    return (value.match(/^\d{1,4}\/\d{1,2}\/\d{1,2}$/)) ? true : false;
+                case 'date-minutes':
+                    // y/m/d h:n
+                    return (value.match(/^\d{1,4}\/\d{1,2}\/\d{1,2}\s\d{1,2}:\d{1,2}$/)) ? true : false;
+                case 'date-seconds':
+                    // y/m/d h:n:s
+                    return (value.match(/^\d{1,4}\/\d{1,2}\/\d{1,2}\s\d{1,2}:\d{1,2}:\d{1,2}$/))
+                        ? true : false;
+                case 'date-milliseconds':
+                    // y/m/d h:n:s.ms
+                    return (value.match(/^\d{1,4}\/\d{1,2}\/\d{1,2}\s\d{1,2}:\d{1,2}:\d{1,2}\.\d{1,3}$/))
+                        ? true : false;
+                default:
+                    throw new Error("matchFormat args2(formatName) is not exists format. " + formatName);
+            }
+        };
     })(string = copipe.string || (copipe.string = {}));
 })(copipe || (copipe = {}));
 /**
@@ -1012,6 +1168,9 @@ var copipe;
             if (!copipe.isString(message)) {
                 throw new SyntaxError('checkEqual args(message) type is not string.');
             }
+            if (copipe.isNaNStrict(a, b)) {
+                return true;
+            }
             if (a === b) {
                 return true;
             }
@@ -1028,11 +1187,11 @@ var copipe;
  * 名前空間ルートの公開
  */
 (function (copipe) {
-    var _a, _b, _c;
+    var _a, _b, _c, _d;
     /**
      * 型判定
      */
-    _a = copipe.type, copipe.isUndefined = _a.isUndefined, copipe.isNull = _a.isNull, copipe.isBoolean = _a.isBoolean, copipe.isNumber = _a.isNumber, copipe.isInteger = _a.isInteger, copipe.isString = _a.isString, copipe.isFunction = _a.isFunction, copipe.isObject = _a.isObject, copipe.isArray = _a.isArray, copipe.isDate = _a.isDate, copipe.isRegExp = _a.isRegExp, copipe.isException = _a.isException, copipe.isNotUndefined = _a.isNotUndefined, copipe.isNotNull = _a.isNotNull, copipe.isNotBoolean = _a.isNotBoolean, copipe.isNotNumber = _a.isNotNumber, copipe.isNotInteger = _a.isNotInteger, copipe.isNotString = _a.isNotString, copipe.isNotFunction = _a.isNotFunction, copipe.isNotObject = _a.isNotObject, copipe.isNotArray = _a.isNotArray, copipe.isNotDate = _a.isNotDate, copipe.isNotRegExp = _a.isNotRegExp, copipe.isNotException = _a.isNotException, copipe.isUndefinedArray = _a.isUndefinedArray, copipe.isNullArray = _a.isNullArray, copipe.isBooleanArray = _a.isBooleanArray, copipe.isNumberArray = _a.isNumberArray, copipe.isIntegerArray = _a.isIntegerArray, copipe.isStringArray = _a.isStringArray, copipe.isFunctionArray = _a.isFunctionArray, copipe.isObjectArray = _a.isObjectArray, copipe.isArrayArray = _a.isArrayArray, copipe.isDateArray = _a.isDateArray, copipe.isRegExpArray = _a.isRegExpArray, copipe.isExceptionArray = _a.isExceptionArray, copipe.isNotUndefinedArray = _a.isNotUndefinedArray, copipe.isNotNullArray = _a.isNotNullArray, copipe.isNotBooleanArray = _a.isNotBooleanArray, copipe.isNotNumberArray = _a.isNotNumberArray, copipe.isNotIntegerArray = _a.isNotIntegerArray, copipe.isNotStringArray = _a.isNotStringArray, copipe.isNotFunctionArray = _a.isNotFunctionArray, copipe.isNotObjectArray = _a.isNotObjectArray, copipe.isNotArrayArray = _a.isNotArrayArray, copipe.isNotDateArray = _a.isNotDateArray, copipe.isNotRegExpArray = _a.isNotRegExpArray, copipe.isNotExceptionArray = _a.isNotExceptionArray, copipe.isUndef = _a.isUndef, copipe.isBool = _a.isBool, copipe.isNum = _a.isNum, copipe.isInt = _a.isInt, copipe.isStr = _a.isStr, copipe.isFunc = _a.isFunc, copipe.isObj = _a.isObj, copipe.isExcept = _a.isExcept, copipe.isNotUndef = _a.isNotUndef, copipe.isNotBool = _a.isNotBool, copipe.isNotNum = _a.isNotNum, copipe.isNotInt = _a.isNotInt, copipe.isNotStr = _a.isNotStr, copipe.isNotFunc = _a.isNotFunc, copipe.isNotObj = _a.isNotObj, copipe.isNotExcept = _a.isNotExcept;
+    _a = copipe.type, copipe.isUndefined = _a.isUndefined, copipe.isNull = _a.isNull, copipe.isNaNStrict = _a.isNaNStrict, copipe.isBoolean = _a.isBoolean, copipe.isNumber = _a.isNumber, copipe.isInteger = _a.isInteger, copipe.isString = _a.isString, copipe.isFunction = _a.isFunction, copipe.isObject = _a.isObject, copipe.isArray = _a.isArray, copipe.isDate = _a.isDate, copipe.isRegExp = _a.isRegExp, copipe.isException = _a.isException, copipe.isNotUndefined = _a.isNotUndefined, copipe.isNotNull = _a.isNotNull, copipe.isNotBoolean = _a.isNotBoolean, copipe.isNotNumber = _a.isNotNumber, copipe.isNotInteger = _a.isNotInteger, copipe.isNotString = _a.isNotString, copipe.isNotFunction = _a.isNotFunction, copipe.isNotObject = _a.isNotObject, copipe.isNotArray = _a.isNotArray, copipe.isNotDate = _a.isNotDate, copipe.isNotRegExp = _a.isNotRegExp, copipe.isNotException = _a.isNotException, copipe.isUndefinedArray = _a.isUndefinedArray, copipe.isNullArray = _a.isNullArray, copipe.isBooleanArray = _a.isBooleanArray, copipe.isNumberArray = _a.isNumberArray, copipe.isIntegerArray = _a.isIntegerArray, copipe.isStringArray = _a.isStringArray, copipe.isFunctionArray = _a.isFunctionArray, copipe.isObjectArray = _a.isObjectArray, copipe.isArrayArray = _a.isArrayArray, copipe.isDateArray = _a.isDateArray, copipe.isRegExpArray = _a.isRegExpArray, copipe.isExceptionArray = _a.isExceptionArray, copipe.isNotUndefinedArray = _a.isNotUndefinedArray, copipe.isNotNullArray = _a.isNotNullArray, copipe.isNotBooleanArray = _a.isNotBooleanArray, copipe.isNotNumberArray = _a.isNotNumberArray, copipe.isNotIntegerArray = _a.isNotIntegerArray, copipe.isNotStringArray = _a.isNotStringArray, copipe.isNotFunctionArray = _a.isNotFunctionArray, copipe.isNotObjectArray = _a.isNotObjectArray, copipe.isNotArrayArray = _a.isNotArrayArray, copipe.isNotDateArray = _a.isNotDateArray, copipe.isNotRegExpArray = _a.isNotRegExpArray, copipe.isNotExceptionArray = _a.isNotExceptionArray, copipe.isUndef = _a.isUndef, copipe.isBool = _a.isBool, copipe.isNum = _a.isNum, copipe.isInt = _a.isInt, copipe.isStr = _a.isStr, copipe.isFunc = _a.isFunc, copipe.isObj = _a.isObj, copipe.isExcept = _a.isExcept, copipe.isNotUndef = _a.isNotUndef, copipe.isNotBool = _a.isNotBool, copipe.isNotNum = _a.isNotNum, copipe.isNotInt = _a.isNotInt, copipe.isNotStr = _a.isNotStr, copipe.isNotFunc = _a.isNotFunc, copipe.isNotObj = _a.isNotObj, copipe.isNotExcept = _a.isNotExcept;
     /**
      * 文法拡張
      */
@@ -1044,8 +1203,7 @@ var copipe;
     /**
      * 変換
      */
-    // export const {
-    // } = copipe.convert;
+    _d = copipe.convert, copipe.numberToString = _d.numberToString, copipe.numToString = _d.numToString, copipe.numToStr = _d.numToStr, copipe.stringToNumber = _d.stringToNumber, copipe.strToNumber = _d.strToNumber, copipe.strToNum = _d.strToNum, copipe.stringToInteger = _d.stringToInteger, copipe.strToInteger = _d.strToInteger, copipe.strToInt = _d.strToInt;
     /**
      * 文字列
      */

@@ -15,7 +15,9 @@ var copipe;
     // syntax
     copipe.assert = copipe_console.assert, copipe.guard = copipe_console.guard, copipe.functionValue = copipe_console.functionValue, copipe.sc = copipe_console.sc, copipe.if_ = copipe_console.if_, copipe.switch_ = copipe_console.switch_, copipe.isThrown = copipe_console.isThrown, copipe.isThrownValue = copipe_console.isThrownValue, copipe.isThrownException = copipe_console.isThrownException, copipe.isNotThrown = copipe_console.isNotThrown, 
     // compare
-    copipe.equal = copipe_console.equal, copipe.or = copipe_console.or, copipe.match = copipe_console.match, copipe.matchValue = copipe_console.matchValue, copipe.matchTo = copipe_console.matchTo, copipe.defaultValue = copipe_console.defaultValue, copipe.defaultTo = copipe_console.defaultTo;
+    copipe.equal = copipe_console.equal, copipe.or = copipe_console.or, copipe.match = copipe_console.match, copipe.matchValue = copipe_console.matchValue, copipe.matchTo = copipe_console.matchTo, copipe.defaultValue = copipe_console.defaultValue, copipe.defaultTo = copipe_console.defaultTo, 
+    // convert
+    copipe.numberToString = copipe_console.numberToString, copipe.numToString = copipe_console.numToString, copipe.numToStr = copipe_console.numToStr, copipe.stringToNumber = copipe_console.stringToNumber, copipe.strToNumber = copipe_console.strToNumber, copipe.strToNum = copipe_console.strToNum, copipe.stringToInteger = copipe_console.stringToInteger, copipe.strToInteger = copipe_console.strToInteger, copipe.strToInt = copipe_console.strToInt;
     copipe.polyfillDefine = function () {
         // console.info('polyfill String.prototype.includes');
         if (!String.prototype.includes) {

@@ -8,7 +8,7 @@ var test_copipe_core;
     /**
      * 各関数を変数として宣言
      */
-    var isUndefined, isNull, isBoolean, isNumber, isInteger, isString, isFunction, isObject, isArray, isDate, isRegExp, isException, isNotUndefined, isNotNull, isNotBoolean, isNotNumber, isNotInteger, isNotString, isNotFunction, isNotObject, isNotArray, isNotDate, isNotRegExp, isNotException, isUndefinedArray, isNullArray, isBooleanArray, isNumberArray, isIntegerArray, isStringArray, isFunctionArray, isObjectArray, isArrayArray, isDateArray, isRegExpArray, isExceptionArray, isNotUndefinedArray, isNotNullArray, isNotBooleanArray, isNotNumberArray, isNotIntegerArray, isNotStringArray, isNotFunctionArray, isNotObjectArray, isNotArrayArray, isNotDateArray, isNotRegExpArray, isNotExceptionArray, isUndef, isBool, isNum, isInt, isStr, isFunc, isObj, isExcept, isNotUndef, isNotBool, isNotNum, isNotInt, isNotStr, isNotFunc, isNotObj, isNotExcept, assert, guard, functionValue, sc, if_, switch_, isThrown, isThrownValue, isThrownException, isNotThrown, equal, or, match, matchValue, matchTo, defaultValue, defaultTo, checkEqual;
+    var isUndefined, isNull, isBoolean, isNumber, isInteger, isString, isFunction, isObject, isArray, isDate, isRegExp, isException, isNotUndefined, isNotNull, isNotBoolean, isNotNumber, isNotInteger, isNotString, isNotFunction, isNotObject, isNotArray, isNotDate, isNotRegExp, isNotException, isUndefinedArray, isNullArray, isBooleanArray, isNumberArray, isIntegerArray, isStringArray, isFunctionArray, isObjectArray, isArrayArray, isDateArray, isRegExpArray, isExceptionArray, isNotUndefinedArray, isNotNullArray, isNotBooleanArray, isNotNumberArray, isNotIntegerArray, isNotStringArray, isNotFunctionArray, isNotObjectArray, isNotArrayArray, isNotDateArray, isNotRegExpArray, isNotExceptionArray, isUndef, isBool, isNum, isInt, isStr, isFunc, isObj, isExcept, isNotUndef, isNotBool, isNotNum, isNotInt, isNotStr, isNotFunc, isNotObj, isNotExcept, assert, guard, functionValue, sc, if_, switch_, isThrown, isThrownValue, isThrownException, isNotThrown, equal, or, match, matchValue, matchTo, defaultValue, defaultTo, numberToString, numToString, numToStr, stringToNumber, strToNumber, strToNum, stringToInteger, strToInteger, strToInt, checkEqual;
     /**
      * 初期化として関数変数を代入する
      */
@@ -22,7 +22,9 @@ var test_copipe_core;
         // syntax
         assert = copipe.assert, guard = copipe.guard, functionValue = copipe.functionValue, sc = copipe.sc, if_ = copipe.if_, switch_ = copipe.switch_, isThrown = copipe.isThrown, isThrownValue = copipe.isThrownValue, isThrownException = copipe.isThrownException, isNotThrown = copipe.isNotThrown, 
         // compare
-        equal = copipe.equal, or = copipe.or, match = copipe.match, matchValue = copipe.matchValue, matchTo = copipe.matchTo, defaultValue = copipe.defaultValue, defaultTo = copipe.defaultTo);
+        equal = copipe.equal, or = copipe.or, match = copipe.match, matchValue = copipe.matchValue, matchTo = copipe.matchTo, defaultValue = copipe.defaultValue, defaultTo = copipe.defaultTo, 
+        // convert
+        numberToString = copipe.numberToString, numToString = copipe.numToString, numToStr = copipe.numToStr, stringToNumber = copipe.stringToNumber, strToNumber = copipe.strToNumber, strToNum = copipe.strToNum, stringToInteger = copipe.stringToInteger, strToInteger = copipe.strToInteger, strToInt = copipe.strToInt);
         /**
          * 名前空間でルート公開されていない関数の展開
          */
@@ -725,6 +727,240 @@ var test_copipe_core;
             // ほとんどのテストは test_match で行っているとみなす
         };
     })(compare || (compare = {}));
+    var convert;
+    (function (convert) {
+        convert.test_numberToString = function () {
+            // 正数
+            checkEqual('32', numberToString(32));
+            checkEqual('32', numberToString(32, 10));
+            checkEqual('31.5', numberToString(31.5, 10));
+            checkEqual('100000', numberToString(32, 2));
+            checkEqual('11111', numberToString(31, 2));
+            checkEqual('11111.1', numberToString(31.5, 2));
+            checkEqual('11111.01', numberToString(31.25, 2));
+            checkEqual('40', numberToString(32, 8));
+            checkEqual('37', numberToString(31, 8));
+            checkEqual('37.4', numberToString(31.5, 8));
+            checkEqual('20', numberToString(32, 16));
+            checkEqual('1f', numberToString(31, 16));
+            checkEqual('1f.8', numberToString(31.5, 16));
+            checkEqual('44', numberToString(32, 7));
+            checkEqual('43', numberToString(31, 7));
+            checkEqual('255', numberToString(255));
+            checkEqual('11', numberToString(11));
+            checkEqual('255', numberToString(0xFF));
+            checkEqual('16', numberToString(16));
+            checkEqual('ff', numberToString(255, 16));
+            checkEqual('b', numberToString(11, 16));
+            checkEqual('177', numberToString(127, 8));
+            checkEqual('12', numberToString(10, 8));
+            checkEqual('11', numberToString(3, 2));
+            checkEqual('1111', numberToString(15, 2));
+            // 負数
+            checkEqual('-32', numberToString(-32));
+            checkEqual('-32', numberToString(-32, 10));
+            checkEqual('-31.5', numberToString(-31.5, 10));
+            checkEqual('-100000', numberToString(-32, 2));
+            checkEqual('-11111', numberToString(-31, 2));
+            checkEqual('-11111.1', numberToString(-31.5, 2));
+            checkEqual('-11111.01', numberToString(-31.25, 2));
+            checkEqual('-40', numberToString(-32, 8));
+            checkEqual('-37', numberToString(-31, 8));
+            checkEqual('-37.4', numberToString(-31.5, 8));
+            checkEqual('-20', numberToString(-32, 16));
+            checkEqual('-1f', numberToString(-31, 16));
+            checkEqual('-1f.8', numberToString(-31.5, 16));
+            checkEqual('-44', numberToString(-32, 7));
+            checkEqual('-43', numberToString(-31, 7));
+            checkEqual('-255', numberToString(-255));
+            checkEqual('-11', numberToString(-11));
+            checkEqual('-255', numberToString(-0xFF));
+            checkEqual('-16', numberToString(-16));
+            checkEqual('-ff', numberToString(-255, 16));
+            checkEqual('-b', numberToString(-11, 16));
+            checkEqual('-177', numberToString(-127, 8));
+            checkEqual('-12', numberToString(-10, 8));
+            checkEqual('-11', numberToString(-3, 2));
+            checkEqual('-1111', numberToString(-15, 2));
+            var i = 0;
+            i += 1;
+            checkEqual(true, isThrownException(function () {
+                numberToString('123', 10);
+            }, (new TypeError).name), "test numberToString exception " + i);
+            i += 1;
+            checkEqual(false, isThrownException(function () {
+                numberToString(32, 2);
+            }, (new TypeError).name), "test numberToString exception " + i);
+            i += 1;
+            checkEqual(true, isThrownException(function () {
+                numberToString(32, 2.5);
+            }, (new TypeError).name), "test numberToString exception " + i);
+            i += 1;
+            checkEqual(true, isThrownException(function () {
+                numberToString(32, 1);
+            }, (new TypeError).name), "test numberToString exception " + i);
+            i += 1;
+            checkEqual(false, isThrownException(function () {
+                numberToString(32, 36);
+            }, (new TypeError).name), "test numberToString exception " + i);
+            i += 1;
+            checkEqual(true, isThrownException(function () {
+                numberToString(32, 37);
+            }, (new TypeError).name), "test numberToString exception " + i);
+        };
+        convert.test_stringToNumber = function () {
+            // 整数
+            checkEqual(123, stringToNumber('123'));
+            checkEqual(123, stringToNumber('0123'));
+            checkEqual(123, stringToNumber('+123'));
+            checkEqual(-123, stringToNumber('-0123'));
+            checkEqual(undefined, stringToNumber(' 123'));
+            checkEqual(undefined, stringToNumber('123 '));
+            checkEqual(undefined, stringToNumber(' 123 '));
+            checkEqual(undefined, stringToNumber('123 0'));
+            checkEqual(undefined, stringToNumber('0 123'));
+            checkEqual(undefined, stringToNumber('1 123'));
+            checkEqual(undefined, stringToNumber('123a'));
+            checkEqual(undefined, stringToNumber('a123'));
+            // 小数
+            checkEqual(123.4, stringToNumber('123.4'));
+            checkEqual(123.4, stringToNumber('0123.4'));
+            checkEqual(123.4, stringToNumber('+123.4'));
+            checkEqual(-123.4, stringToNumber('-0123.4'));
+            checkEqual(undefined, stringToNumber(' 123.4'));
+            checkEqual(undefined, stringToNumber('123.4 '));
+            checkEqual(undefined, stringToNumber(' 123.4 '));
+            checkEqual(undefined, stringToNumber('123.4 0'));
+            checkEqual(undefined, stringToNumber('0 123.4'));
+            checkEqual(undefined, stringToNumber('1 123.4'));
+            checkEqual(undefined, stringToNumber('123 .4'));
+            checkEqual(undefined, stringToNumber('123. 4'));
+            checkEqual(undefined, stringToNumber('123.4a'));
+            checkEqual(undefined, stringToNumber('a123.4'));
+            checkEqual(123.45, stringToNumber('123.45'));
+            checkEqual(undefined, stringToNumber('123.4.5'));
+            checkEqual(undefined, stringToNumber('abc'));
+            checkEqual(null, stringToNumber('abc', null));
+            checkEqual(NaN, stringToNumber('abc', NaN));
+            var i = 0;
+            i += 1;
+            checkEqual(true, isThrownException(function () {
+                stringToNumber(123);
+            }, (new TypeError).name), "test stringToNumber exception " + i);
+        };
+        convert.test_stringToInteger = function () {
+            // 整数
+            checkEqual(123, stringToInteger('123'));
+            checkEqual(123, stringToInteger('0123'));
+            checkEqual(123, stringToInteger('+123'));
+            checkEqual(-123, stringToInteger('-0123'));
+            checkEqual(undefined, stringToInteger(' 123'));
+            checkEqual(undefined, stringToInteger('123 '));
+            checkEqual(undefined, stringToInteger(' 123 '));
+            checkEqual(undefined, stringToInteger('123 0'));
+            checkEqual(undefined, stringToInteger('0 123'));
+            checkEqual(undefined, stringToInteger('1 123'));
+            checkEqual(undefined, stringToInteger('123a'));
+            checkEqual(undefined, stringToInteger('a123'));
+            // 小数
+            checkEqual(undefined, stringToInteger('123.4'));
+            checkEqual(undefined, stringToInteger('0123.4'));
+            checkEqual(undefined, stringToInteger('+123.4'));
+            checkEqual(undefined, stringToInteger('-0123.4'));
+            checkEqual(undefined, stringToInteger(' 123.4'));
+            checkEqual(undefined, stringToInteger('123.4 '));
+            checkEqual(undefined, stringToInteger(' 123.4 '));
+            checkEqual(undefined, stringToInteger('123.4 0'));
+            checkEqual(undefined, stringToInteger('0 123.4'));
+            checkEqual(undefined, stringToInteger('1 123.4'));
+            checkEqual(undefined, stringToInteger('123 .4'));
+            checkEqual(undefined, stringToInteger('123. 4'));
+            checkEqual(undefined, stringToInteger('123.4a'));
+            checkEqual(undefined, stringToInteger('a123.4'));
+            checkEqual(undefined, stringToInteger('123.45'));
+            checkEqual(undefined, stringToInteger('123.4.5'));
+            // 正数
+            checkEqual(32, stringToInteger('32'));
+            checkEqual(32, stringToInteger('32', 10));
+            checkEqual(undefined, stringToInteger('31.5', 10));
+            checkEqual(32, stringToInteger('100000', 2));
+            checkEqual(31, stringToInteger('11111', 2));
+            checkEqual(undefined, stringToInteger('11111.1', 2));
+            checkEqual(undefined, stringToInteger('11111.01', 2));
+            checkEqual(32, stringToInteger('40', 8));
+            checkEqual(31, stringToInteger('37', 8));
+            checkEqual(undefined, stringToInteger('37.4', 8));
+            checkEqual(32, stringToInteger('20', 16));
+            checkEqual(31, stringToInteger('1f', 16));
+            checkEqual(undefined, stringToInteger('1f.8', 16));
+            checkEqual(32, stringToInteger('44', 7));
+            checkEqual(31, stringToInteger('43', 7));
+            checkEqual(255, stringToInteger('255', 10));
+            checkEqual(11, stringToInteger('11', 10));
+            checkEqual(255, stringToInteger('FF', 16));
+            checkEqual(16, stringToInteger('20', 8));
+            checkEqual(255, stringToInteger('ff', 16));
+            checkEqual(11, stringToInteger('b', 16));
+            checkEqual(127, stringToInteger('177', 8));
+            checkEqual(10, stringToInteger('12', 8));
+            checkEqual(3, stringToInteger('11', 2));
+            checkEqual(15, stringToInteger('1111', 2));
+            // 負数
+            checkEqual(-32, stringToInteger('-32'));
+            checkEqual(-32, stringToInteger('-32', 10));
+            checkEqual(undefined, stringToInteger('-31.5', 10));
+            checkEqual(-32, stringToInteger('-100000', 2));
+            checkEqual(-31, stringToInteger('-11111', 2));
+            checkEqual(undefined, stringToInteger('-11111.1', 2));
+            checkEqual(undefined, stringToInteger('-11111.01', 2));
+            checkEqual(-32, stringToInteger('-40', 8));
+            checkEqual(-31, stringToInteger('-37', 8));
+            checkEqual(undefined, stringToInteger('-37.4', 8));
+            checkEqual(-32, stringToInteger('-20', 16));
+            checkEqual(-31, stringToInteger('-1f', 16));
+            checkEqual(undefined, stringToInteger('-1f.8', 16));
+            checkEqual(-32, stringToInteger('-44', 7));
+            checkEqual(-31, stringToInteger('-43', 7));
+            checkEqual(-255, stringToInteger('-255', 10));
+            checkEqual(-11, stringToInteger('-11', 10));
+            checkEqual(-255, stringToInteger('-FF', 16));
+            checkEqual(-16, stringToInteger('-20', 8));
+            checkEqual(-255, stringToInteger('-ff', 16));
+            checkEqual(-11, stringToInteger('-b', 16));
+            checkEqual(-127, stringToInteger('-177', 8));
+            checkEqual(-10, stringToInteger('-12', 8));
+            checkEqual(-3, stringToInteger('-11', 2));
+            checkEqual(-15, stringToInteger('-1111', 2));
+            checkEqual(undefined, stringToNumber('abc'));
+            checkEqual(null, stringToNumber('abc', null));
+            checkEqual(NaN, stringToNumber('abc', NaN));
+            var i = 0;
+            i += 1;
+            checkEqual(true, isThrownException(function () {
+                stringToInteger(123);
+            }, (new TypeError).name), "test stringToInteger exception " + i);
+            i += 1;
+            checkEqual(false, isThrownException(function () {
+                stringToInteger('123', 2);
+            }, (new TypeError).name), "test stringToInteger exception " + i);
+            i += 1;
+            checkEqual(true, isThrownException(function () {
+                stringToInteger('123', 2.5);
+            }, (new TypeError).name), "test stringToInteger exception " + i);
+            i += 1;
+            checkEqual(true, isThrownException(function () {
+                stringToInteger('123', 1);
+            }, (new TypeError).name), "test stringToInteger exception " + i);
+            i += 1;
+            checkEqual(false, isThrownException(function () {
+                stringToInteger('123', 36);
+            }, (new TypeError).name), "test stringToInteger exception " + i);
+            i += 1;
+            checkEqual(true, isThrownException(function () {
+                stringToInteger('123', 37);
+            }, (new TypeError).name), "test stringToInteger exception " + i);
+        };
+    })(convert || (convert = {}));
     test_copipe_core.run = function (copipe) {
         initialize(copipe);
         var checkEqual = copipe.test.checkEqual;
@@ -733,6 +969,7 @@ var test_copipe_core;
         var test_isUndefined = type.test_isUndefined, test_isNull = type.test_isNull, test_isBoolean = type.test_isBoolean, test_isNumber = type.test_isNumber, test_isInteger = type.test_isInteger, test_isString = type.test_isString, test_isFunction = type.test_isFunction, test_isObject = type.test_isObject, test_isArray = type.test_isArray, test_isDate = type.test_isDate, test_isExcection = type.test_isExcection;
         var test_or = syntax.test_or, test_if_ = syntax.test_if_, test_switch_ = syntax.test_switch_, test_sc = syntax.test_sc, test_guard = syntax.test_guard;
         var test_match = compare.test_match, test_matchValue = compare.test_matchValue, test_defaultValue = compare.test_defaultValue;
+        var test_numberToString = convert.test_numberToString, test_stringToNumber = convert.test_stringToNumber, test_stringToInteger = convert.test_stringToInteger;
         console.log('test_copipe_core start.');
         test_isUndefined();
         test_isNull();
@@ -753,6 +990,9 @@ var test_copipe_core;
         test_match();
         test_matchValue();
         test_defaultValue();
+        test_numberToString();
+        test_stringToNumber();
+        test_stringToInteger();
         console.log('test_copipe_core finish.');
     };
 })(test_copipe_core || (test_copipe_core = {}));

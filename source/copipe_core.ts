@@ -156,7 +156,7 @@ namespace copipe {
      */
     let guard_status = true;
     let guard_message: any;
-    export const guard = (guardFunc: () => any[], runFunc: any): boolean => {
+    export const guard = (guardFunc: () => any[], runFunc?: any): boolean => {
       guard_message = '';
       if (guard_status === false) { return false; }
 
@@ -690,19 +690,72 @@ namespace copipe.compare {
  */
 namespace copipe.convert {
 
-  const dummy = () => {};
+  /**
+   * 数値を文字列に変換する
+   */
+  export const numberToString = (
+    value: number, radix: number | undefined
+  ): string => {
+    radix = defaultTo(radix, 10);
+    guard(() => [
+      [isNumber(value), 'args1(value) is not number.'],
+      [isInteger(radix), 'args2(radix) is not number.'],
+      [(2 <= radix && radix <= 36), 'args2(radix) is not in 2..36.'],
+    ], () => {
+      throw new TypeError('numberToString ' + guard.message());
+    });
+    return value.toString(radix);
+  };
+  export const numToString = numberToString;
+  export const numToStr = numberToString;
 
-  // export const stringToNumber = () => {};
-  // export const strToNumber = stringToNumber;
-  // export const strToNum = stringToNumber;
+  /**
+   * 文字列を数値に変換する
+   *  変換できない場合は defaultValue で指定された値を返す
+   *  進数指定はできない
+   */
+  export const stringToNumber = (
+    value: string,
+    defaultValue: number | null | undefined,
+  ): number | null | undefined => {
+    guard(() => [
+      [isString(value), 'args1(value) is not string.'],
+    ], () => {
+      throw new TypeError('stringToNumber ' + guard.message());
+    });
+    if (!string.matchFormat(value, 'float')) {
+      return defaultValue;
+    }
+    return matchValue(Number(value), [isNotNumber], defaultValue);
+  };
+  export const strToNumber = stringToNumber;
+  export const strToNum = stringToNumber;
 
-  // export const stringToInteger = () => {};
-  // export const strToInteger = stringToInteger;
-  // export const strToInt = stringToInteger;
+  /**
+   * 文字列を整数に変換する
+   *  変換できない場合は defaultValue で指定された値を返す
+   *  進数指定可能
+   */
+  export const stringToInteger = (
+    value: string, radix: number | undefined,
+    defaultValue: number | null | undefined,
+  ): number | null => {
+    radix = defaultTo(radix, 10);
+    guard(() => [
+      [isString(value), 'args1(value) is not string.'],
+      [isInteger(radix), 'args2(radix) is not number.'],
+      [(2 <= radix && radix <= 36), 'args2(radix) is not in 2..36.'],
+    ], () => {
+      throw new TypeError('stringToInteger ' + guard.message());
+    });
+    if (!string.matchFormat(value, String(radix)+'_base_number')) {
+      return defaultValue;
+    }
+    return matchValue(parseInt(value, radix), [isNotInteger], defaultValue);
+  };
+  export const strToInteger = stringToInteger;
+  export const strToInt = stringToInteger;
 
-  // export const numberToString = () => {};
-  // export const numToString = numberToString;
-  // export const numToStr = numberToString;
 }
 
 /**
@@ -716,7 +769,7 @@ namespace copipe.string {
   export const includes = (
     value,
     compareArray: (string|RegExp)[],
-  ) => {
+  ): boolean => {
     const compareFunc = (a, b) => a.includes(b);
     if (isObject(value)) {
       return copipe.compare._match(compareFunc, value.value, value.compareArray);
@@ -724,6 +777,117 @@ namespace copipe.string {
       return copipe.compare._match(compareFunc, value, compareArray);
     }
   };
+
+  /**
+   * フォーマットに一致しているかどうかを判定する関数
+   */
+  export const matchFormat = (
+    value: string,
+    formatName: string,
+  ): boolean => {
+    guard(() => [
+      [isString(value), 'args1(value) is not string.'],
+      [isString(formatName), 'args2(formatName) is not string.'],
+    ], () => {
+      throw new TypeError('matchFormat ' + guard.message());
+    });
+    switch (formatName) {
+      case 'zenkaku':
+        // 全角文字
+        return (value.match(/^[^\x01-\x7E\xA1-\xDF]+$/)) ? true : false;
+      case 'hiragana':
+        // 全角ひらがな
+        return (value.match(/^[\u3041-\u3096]+$/)) ? true : false;
+      case 'katakana':
+        // 全角カタカナ
+        return (value.match(/^[\u30a1-\u30f6]+$/)) ? true : false;
+      case 'alphabet-number':
+        // 半角英数字（大文字・小文字）
+        return (value.match(/^[0-9a-zA-Z]+$/)) ? true : false;
+      case 'number':
+        // 半角数字
+        return (value.match(/^[0-9]+$/)) ? true : false;
+      case 'alphabet':
+        // 半角英字（大文字・小文字）
+        return (value.match(/^[a-zA-Z]+$/)) ? true : false;
+      case 'upper_alphabet':
+        // 半角英字（大文字のみ）
+        return (value.match(/^[A-Z]+$/)) ? true : false;
+      case 'lower_alphabet':
+        // 半角英字（小文字のみ）
+        return (value.match(/^[a-z]+$/)) ? true : false;
+      case 'integer':
+        // 整数値
+        return (value.match(/^[+|-]?[0-9]+$/)) ? true : false;
+      case 'float_only':
+        // 小数
+        return (value.match(/^[-|+]?[0-9]*\.[0-9]+$/)) ? true : false;
+      case 'float':
+        // 整数か小数
+        return (value.match(/^[-|+]?[0-9]*\.[0-9]+$|^[+|-]?[0-9]+$/)) ? true : false;
+      case 'binary':
+        // 2進数
+        return (value.match(/^[-|+]?[01]+$/)) ? true : false;
+      case 'octal':
+        // 8進数
+        return (value.match(/^[-|+]?[0-7]+$/)) ? true : false;
+      case 'hex':
+        // 16進数
+        return (value.match(/^[-|+]?[0-9A-F]+$|^[0-9a-f]+$/)) ? true : false;
+      case '2_base_number':
+        return (value.match(/^[-|+]?[01]+$/)) ? true : false;
+      case '3_base_number':
+        return (value.match(/^[-|+]?[0-2]+$/)) ? true : false;
+      case '4_base_number':
+        return (value.match(/^[-|+]?[0-3]+$/)) ? true : false;
+      case '5_base_number':
+        return (value.match(/^[-|+]?[0-4]+$/)) ? true : false;
+      case '6_base_number':
+        return (value.match(/^[-|+]?[0-5]+$/)) ? true : false;
+      case '7_base_number':
+        return (value.match(/^[-|+]?[0-6]+$/)) ? true : false;
+      case '8_base_number':
+        return (value.match(/^[-|+]?[0-7]+$/)) ? true : false;
+      case '9_base_number':
+        return (value.match(/^[-|+]?[0-8]+$/)) ? true : false;
+      case '10_base_number':
+        return (value.match(/^[-|+]?[0-9]+$/)) ? true : false;
+      case '11_base_number':
+        return (value.match(/^[-|+]?[0-9A]+$|^[-|+]?[0-9a]+$/)) ? true : false;
+      case '12_base_number':
+        return (value.match(/^[-|+]?[0-9AB]+$|^[-|+]?[0-9ab]+$/)) ? true : false;
+      case '13_base_number':
+        return (value.match(/^[-|+]?[0-9A-C]+$|^[-|+]?[0-9a-c]+$/)) ? true : false;
+      case '14_base_number':
+        return (value.match(/^[-|+]?[0-9A-D]+$|^[-|+]?[0-9a-d]+$/)) ? true : false;
+      case '15_base_number':
+        return (value.match(/^[-|+]?[0-9A-E]+$|^[-|+]?[0-9a-e]+$/)) ? true : false;
+      case '16_base_number':
+        return (value.match(/^[-|+]?[0-9A-F]+$|^[-|+]?[0-9a-f]+$/)) ? true : false;
+      case 'date':
+        // y/m/d
+        return (value.match(/^\d{1,4}\/\d{1,2}\/\d{1,2}$/)) ? true : false;
+      case 'date-minutes':
+        // y/m/d h:n
+        return (value.match(
+          /^\d{1,4}\/\d{1,2}\/\d{1,2}\s\d{1,2}:\d{1,2}$/)) ? true : false;
+      case 'date-seconds':
+        // y/m/d h:n:s
+        return (value.match(
+          /^\d{1,4}\/\d{1,2}\/\d{1,2}\s\d{1,2}:\d{1,2}:\d{1,2}$/))
+          ? true : false;
+      case 'date-milliseconds':
+        // y/m/d h:n:s.ms
+        return (value.match(
+          /^\d{1,4}\/\d{1,2}\/\d{1,2}\s\d{1,2}:\d{1,2}:\d{1,2}\.\d{1,3}$/))
+          ? true : false;
+      default:
+        throw new Error(
+          `matchFormat args2(formatName) is not exists format. ${formatName}`
+        );
+    }
+  };
+
 }
 
 /**
@@ -808,8 +972,11 @@ namespace copipe {
   /**
    * 変換
    */
-  // export const {
-  // } = copipe.convert;
+  export const {
+    numberToString, numToString, numToStr,
+    stringToNumber, strToNumber, strToNum,
+    stringToInteger, strToInteger, strToInt,
+  } = copipe.convert;
 
   /**
    * 文字列
