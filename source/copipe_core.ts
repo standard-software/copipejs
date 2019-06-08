@@ -38,6 +38,8 @@ namespace copipe {
 
     export const _isNull = (value: any): boolean => (value === null);
 
+    export const _isNaNStrict = (value: any): boolean => value !== value;
+
     export const _isBoolean = _primitiveTypeCheckFunc('boolean');
 
     export const _isNumber = (value: any): boolean => {
@@ -107,6 +109,7 @@ namespace copipe {
      */
     export const _isNotUndefined = (value: any) => !_isUndefined(value);
     export const _isNotNull = (value: any) => !_isNull(value);
+    export const _isNotNaNStrict = (value: any) => !_isNaNStrict(value);
     export const _isNotBoolean = (value: any) => !_isBoolean(value);
     export const _isNotNumber = (value: any) => !_isNumber(value);
     export const _isNotInteger = (value: any) => !_isInteger(value);
@@ -219,12 +222,12 @@ namespace copipe {
     const { assert } = syntax;
 
     const {
-      _isUndefined, _isNull,
+      _isUndefined, _isNull, _isNaNStrict,
       _isBoolean, _isNumber, _isInteger, _isString,
       _isFunction, _isObject, _isArray, _isDate,
       _isRegExp, _isException,
 
-      _isNotUndefined, _isNotNull,
+      _isNotUndefined, _isNotNull, _isNotNaNStrict,
       _isNotBoolean, _isNotNumber, _isNotInteger, _isNotString,
       _isNotFunction, _isNotObject, _isNotArray, _isNotDate,
       _isNotRegExp, _isNotException,
@@ -266,6 +269,7 @@ namespace copipe {
 
     export const isUndefined = _isTypeCheckArgsFunc(_isUndefined);
     export const isNull = _isTypeCheckArgsFunc(_isNull);
+    export const isNaNStrict = _isTypeCheckArgsFunc(_isNaNStrict);
     export const isBoolean = _isTypeCheckArgsFunc(_isBoolean);
     export const isNumber = _isTypeCheckArgsFunc(_isNumber);
     export const isInteger = _isTypeCheckArgsFunc(_isInteger);
@@ -279,6 +283,7 @@ namespace copipe {
 
     export const isNotUndefined = _isTypeCheckArgsFunc(_isNotUndefined);
     export const isNotNull = _isTypeCheckArgsFunc(_isNotNull);
+    export const isNotNaNStrict = _isTypeCheckArgsFunc(_isNotNaNStrict);
     export const isNotBoolean = _isTypeCheckArgsFunc(_isNotBoolean);
     export const isNotNumber = _isTypeCheckArgsFunc(_isNotNumber);
     export const isNotInteger = _isTypeCheckArgsFunc(_isNotInteger);
@@ -292,6 +297,7 @@ namespace copipe {
 
     export const isUndefinedArray = _isTypeCheckArrayFunc(_isUndefined);
     export const isNullArray = _isTypeCheckArrayFunc(_isNull);
+    export const isNaNStrictArray = _isTypeCheckArrayFunc(_isNaNStrict);
     export const isBooleanArray = _isTypeCheckArrayFunc(_isBoolean);
     export const isNumberArray = _isTypeCheckArrayFunc(_isNumber);
     export const isIntegerArray = _isTypeCheckArrayFunc(_isInteger);
@@ -305,6 +311,7 @@ namespace copipe {
 
     export const isNotUndefinedArray = _isTypeCheckArrayFunc(_isNotUndefined);
     export const isNotNullArray = _isTypeCheckArrayFunc(_isNotNull);
+    export const isNotNaNStrictArray = _isTypeCheckArrayFunc(_isNotNaNStrict);
     export const isNotBooleanArray = _isTypeCheckArrayFunc(_isNotBoolean);
     export const isNotNumberArray = _isTypeCheckArrayFunc(_isNotNumber);
     export const isNotIntegerArray = _isTypeCheckArrayFunc(_isNotInteger);
@@ -734,6 +741,7 @@ namespace copipe.test {
         throw new SyntaxError('checkEqual args(message) type is not string.');
       }
 
+      if (isNaNStrict(a, b)) { return true; }
       if (a === b) { return true; }
       message = `Test: ${message}\n` +
         'A !== B\n' +
@@ -753,7 +761,7 @@ namespace copipe {
    * 型判定
    */
   export const {
-    isUndefined, isNull,
+    isUndefined, isNull, isNaNStrict,
     isBoolean, isNumber, isInteger, isString,
     isFunction, isObject, isArray, isDate,
     isRegExp, isException,
