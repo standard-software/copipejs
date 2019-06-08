@@ -825,16 +825,8 @@ namespace copipe.string {
       case 'float':
         // 整数か小数
         return (value.match(/^[-|+]?[0-9]*\.[0-9]+$|^[+|-]?[0-9]+$/)) ? true : false;
-      case 'binary':
-        // 2進数
-        return (value.match(/^[-|+]?[01]+$/)) ? true : false;
-      case 'octal':
-        // 8進数
-        return (value.match(/^[-|+]?[0-7]+$/)) ? true : false;
-      case 'hex':
-        // 16進数
-        return (value.match(/^[-|+]?[0-9A-F]+$|^[0-9a-f]+$/)) ? true : false;
-      case '2_base_number':
+      // 各進数
+      case '2_base_number': case 'binary':  // 2進数
         return (value.match(/^[-|+]?[01]+$/)) ? true : false;
       case '3_base_number':
         return (value.match(/^[-|+]?[0-2]+$/)) ? true : false;
@@ -846,7 +838,7 @@ namespace copipe.string {
         return (value.match(/^[-|+]?[0-5]+$/)) ? true : false;
       case '7_base_number':
         return (value.match(/^[-|+]?[0-6]+$/)) ? true : false;
-      case '8_base_number':
+      case '8_base_number': case 'octal': // 8進数
         return (value.match(/^[-|+]?[0-7]+$/)) ? true : false;
       case '9_base_number':
         return (value.match(/^[-|+]?[0-8]+$/)) ? true : false;
@@ -862,7 +854,7 @@ namespace copipe.string {
         return (value.match(/^[-|+]?[0-9A-D]+$|^[-|+]?[0-9a-d]+$/)) ? true : false;
       case '15_base_number':
         return (value.match(/^[-|+]?[0-9A-E]+$|^[-|+]?[0-9a-e]+$/)) ? true : false;
-      case '16_base_number':
+      case '16_base_number': case 'hex':  // 16進数
         return (value.match(/^[-|+]?[0-9A-F]+$|^[-|+]?[0-9a-f]+$/)) ? true : false;
       case 'date':
         // y/m/d
