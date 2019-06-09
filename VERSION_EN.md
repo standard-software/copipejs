@@ -2,6 +2,12 @@
 
 ## Version
 
+### 1.2.0
+#### 2019/06/08(Sat)
+- add numberToString, stringToNumber, stringToInteger
+- add isNaNStrict
+- add matchFormat
+
 ### 1.1.0
 #### 2019/06/06(Thu)
 - update isThrown no args thrown value.

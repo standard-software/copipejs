@@ -362,7 +362,7 @@ module.exports = copipe;
  */
 var copipe;
 (function (copipe) {
-    copipe.VERSION = '1.2.0 beta';
+    copipe.VERSION = '1.2.0';
 })(copipe || (copipe = {}));
 (function (copipe) {
     /**
