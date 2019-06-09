@@ -4,7 +4,7 @@
  */
 
 namespace copipe {
-  export const VERSION = '1.2.0';
+  export const VERSION = '1.2.1 beta';
 }
 
 namespace copipe {
@@ -624,10 +624,10 @@ namespace copipe.compare {
 
   /**
    * 値が他の値と一致しているかどうかを調べる関数
-   * パラメータ渡し(名前付き引数)と通常引数の場合分けを行っている
+   * パラメータ渡し(名前付き引数)への対応
    */
   export const match = (
-    value,
+    value: any | {},
     compareArray: any[] | undefined
   ) => {
     const matchFunc = (a, b) => a === b;
@@ -642,18 +642,23 @@ namespace copipe.compare {
    * 値が一致していた場合にデフォルト値を返す関数
    */
   export const _matchValue = (
-    value,
+    value: any,
     compareArray: any[],
     inMatchValue,
   ) => {
-    if (match(value, compareArray)) {
+    const matchFunc = (a, b) => a === b;
+    if (_match(matchFunc, value, compareArray)) {
       return inMatchValue;
     }
     return value;
   };
 
+  /**
+   * 値が一致していた場合にデフォルト値を返す関数
+   * パラメータ渡し(名前付き引数)への対応
+   */
   export const matchValue = (
-    value,
+    value: any | {},
     compareArray: any[] | undefined,
     inMatchValue: any | undefined,
   ) => {
@@ -667,8 +672,12 @@ namespace copipe.compare {
   };
   export const matchTo = matchValue;
 
+  /**
+   * null か undefined の場合にデフォルト値を返す関数
+   * パラメータ渡し(名前付き引数)への対応
+   */
   export const defaultValue = (
-    value,
+    value: any | {},
     inMatchValue: any | undefined,
   ) => {
     const parameter = if_(isObject(value))({
@@ -676,10 +685,7 @@ namespace copipe.compare {
       else: { value, inMatchValue }
     });
     return _matchValue(
-      parameter.value, [
-        (value) => isUndefined(value),
-        (value) => isNull(value),
-      ], parameter.inMatchValue
+      parameter.value, [ isUndefined, isNull], parameter.inMatchValue
     );
   };
   export const defaultTo = defaultValue;
@@ -693,8 +699,9 @@ namespace copipe.convert {
   /**
    * 数値を文字列に変換する
    */
-  export const numberToString = (
-    value: number, radix: number | undefined
+  export const _numberToString = (
+    value: number,
+    radix: number | undefined
   ): string => {
     radix = defaultTo(radix, 10);
     guard(() => [
@@ -706,6 +713,18 @@ namespace copipe.convert {
     });
     return value.toString(radix);
   };
+  export const numberToString = (
+    value: number | {},
+    radix: number | undefined
+  ) => {
+    const parameter = if_(isObject(value))({
+      then: value,
+      else: { value, radix }
+    });
+    return _numberToString(
+      parameter.value, parameter.radix
+    );
+  };
   export const numToString = numberToString;
   export const numToStr = numberToString;
 
@@ -714,7 +733,7 @@ namespace copipe.convert {
    *  変換できない場合は defaultValue で指定された値を返す
    *  進数指定はできない
    */
-  export const stringToNumber = (
+  export const _stringToNumber = (
     value: string,
     defaultValue: number | null | undefined,
   ): number | null | undefined => {
@@ -723,10 +742,22 @@ namespace copipe.convert {
     ], () => {
       throw new TypeError('stringToNumber ' + guard.message());
     });
-    if (!string.matchFormat(value, 'float')) {
+    if (!string.matchFormat('float', value)) {
       return defaultValue;
     }
     return matchValue(Number(value), [isNotNumber], defaultValue);
+  };
+  export const stringToNumber = (
+    value: string | {},
+    defaultValue: number | null | undefined,
+  ) => {
+    const parameter = if_(isObject(value))({
+      then: value,
+      else: { value, defaultValue }
+    });
+    return _stringToNumber(
+      parameter.value, parameter.defaultValue
+    );
   };
   export const strToNumber = stringToNumber;
   export const strToNum = stringToNumber;
@@ -736,9 +767,10 @@ namespace copipe.convert {
    *  変換できない場合は defaultValue で指定された値を返す
    *  進数指定可能
    */
-  export const stringToInteger = (
-    value: string, radix: number | undefined,
+  export const _stringToInteger = (
+    value: string,
     defaultValue: number | null | undefined,
+    radix: number | undefined,
   ): number | null => {
     radix = defaultTo(radix, 10);
     guard(() => [
@@ -748,10 +780,25 @@ namespace copipe.convert {
     ], () => {
       throw new TypeError('stringToInteger ' + guard.message());
     });
-    if (!string.matchFormat(value, String(radix)+'_base_number')) {
+    if (!string.matchFormat(String(radix)+'_base_number',value )) {
       return defaultValue;
     }
     return matchValue(parseInt(value, radix), [isNotInteger], defaultValue);
+  };
+  export const stringToInteger = (
+    value: string | {},
+    defaultValue: number | null | undefined,
+    radix: number | undefined,
+  ) => {
+    const parameter = if_(isObject(value))({
+      then: value,
+      else: { value, radix, defaultValue }
+    });
+    return _stringToInteger(
+      parameter.value,
+      parameter.defaultValue,
+      parameter.radix,
+    );
   };
   export const strToInteger = stringToInteger;
   export const strToInt = stringToInteger;
@@ -766,24 +813,35 @@ namespace copipe.string {
   /**
    * 文字列を他の文字列か正規表現で含むかどうかを調べる関数
    */
-  export const includes = (
+  export const _includes = (
     value,
     compareArray: (string|RegExp)[],
   ): boolean => {
     const compareFunc = (a, b) => a.includes(b);
+    const { _match } = copipe.compare;
     if (isObject(value)) {
-      return copipe.compare._match(compareFunc, value.value, value.compareArray);
+      return _match(compareFunc, value.value, value.compareArray);
     } else {
-      return copipe.compare._match(compareFunc, value, compareArray);
+      return _match(compareFunc, value, compareArray);
     }
+  };
+  export const includes = (
+    value: any | {},
+    compareArray: (string|RegExp)[] | undefined,
+  ) => {
+    const parameter = if_(isObject(value))({
+      then: value,
+      else: { value, compareArray }
+    });
+    return _includes(parameter.value, parameter.compareArray);
   };
 
   /**
    * フォーマットに一致しているかどうかを判定する関数
    */
-  export const matchFormat = (
-    value: string,
+  export const _matchFormat = (
     formatName: string,
+    value: string,
   ): boolean => {
     guard(() => [
       [isString(value), 'args1(value) is not string.'],
@@ -878,6 +936,16 @@ namespace copipe.string {
           `matchFormat args2(formatName) is not exists format. ${formatName}`
         );
     }
+  };
+  export const matchFormat = (
+    formatName: string | {},
+    value: string | undefined,
+  ) => {
+    const parameter = if_(isObject(formatName))({
+      then: formatName,
+      else: { formatName, value }
+    });
+    return _matchFormat(parameter.formatName, parameter.value);
   };
 
 }

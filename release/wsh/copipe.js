@@ -362,7 +362,7 @@ module.exports = copipe;
  */
 var copipe;
 (function (copipe) {
-    copipe.VERSION = '1.2.0';
+    copipe.VERSION = '1.2.1 beta';
 })(copipe || (copipe = {}));
 (function (copipe) {
     /**
@@ -929,7 +929,7 @@ var copipe;
         };
         /**
          * 値が他の値と一致しているかどうかを調べる関数
-         * パラメータ渡し(名前付き引数)と通常引数の場合分けを行っている
+         * パラメータ渡し(名前付き引数)への対応
          */
         compare.match = function (value, compareArray) {
             var matchFunc = function (a, b) { return a === b; };
@@ -943,11 +943,16 @@ var copipe;
          * 値が一致していた場合にデフォルト値を返す関数
          */
         compare._matchValue = function (value, compareArray, inMatchValue) {
-            if (compare.match(value, compareArray)) {
+            var matchFunc = function (a, b) { return a === b; };
+            if (compare._match(matchFunc, value, compareArray)) {
                 return inMatchValue;
             }
             return value;
         };
+        /**
+         * 値が一致していた場合にデフォルト値を返す関数
+         * パラメータ渡し(名前付き引数)への対応
+         */
         compare.matchValue = function (value, compareArray, inMatchValue) {
             var parameter = copipe.if_(copipe.isObject(value))({
                 then: value,
@@ -956,15 +961,16 @@ var copipe;
             return compare._matchValue(parameter.value, parameter.compareArray, parameter.inMatchValue);
         };
         compare.matchTo = compare.matchValue;
+        /**
+         * null か undefined の場合にデフォルト値を返す関数
+         * パラメータ渡し(名前付き引数)への対応
+         */
         compare.defaultValue = function (value, inMatchValue) {
             var parameter = copipe.if_(copipe.isObject(value))({
                 then: value,
                 "else": { value: value, inMatchValue: inMatchValue }
             });
-            return compare._matchValue(parameter.value, [
-                function (value) { return copipe.isUndefined(value); },
-                function (value) { return copipe.isNull(value); },
-            ], parameter.inMatchValue);
+            return compare._matchValue(parameter.value, [copipe.isUndefined, copipe.isNull], parameter.inMatchValue);
         };
         compare.defaultTo = compare.defaultValue;
     })(compare = copipe.compare || (copipe.compare = {}));
@@ -978,7 +984,7 @@ var copipe;
         /**
          * 数値を文字列に変換する
          */
-        convert.numberToString = function (value, radix) {
+        convert._numberToString = function (value, radix) {
             radix = copipe.defaultTo(radix, 10);
             copipe.guard(function () { return [
                 [copipe.isNumber(value), 'args1(value) is not number.'],
@@ -989,6 +995,13 @@ var copipe;
             });
             return value.toString(radix);
         };
+        convert.numberToString = function (value, radix) {
+            var parameter = copipe.if_(copipe.isObject(value))({
+                then: value,
+                "else": { value: value, radix: radix }
+            });
+            return convert._numberToString(parameter.value, parameter.radix);
+        };
         convert.numToString = convert.numberToString;
         convert.numToStr = convert.numberToString;
         /**
@@ -996,16 +1009,23 @@ var copipe;
          *  変換できない場合は defaultValue で指定された値を返す
          *  進数指定はできない
          */
-        convert.stringToNumber = function (value, defaultValue) {
+        convert._stringToNumber = function (value, defaultValue) {
             copipe.guard(function () { return [
                 [copipe.isString(value), 'args1(value) is not string.'],
             ]; }, function () {
                 throw new TypeError('stringToNumber ' + copipe.guard.message());
             });
-            if (!copipe.string.matchFormat(value, 'float')) {
+            if (!copipe.string.matchFormat('float', value)) {
                 return defaultValue;
             }
             return copipe.matchValue(Number(value), [copipe.isNotNumber], defaultValue);
+        };
+        convert.stringToNumber = function (value, defaultValue) {
+            var parameter = copipe.if_(copipe.isObject(value))({
+                then: value,
+                "else": { value: value, defaultValue: defaultValue }
+            });
+            return convert._stringToNumber(parameter.value, parameter.defaultValue);
         };
         convert.strToNumber = convert.stringToNumber;
         convert.strToNum = convert.stringToNumber;
@@ -1014,7 +1034,7 @@ var copipe;
          *  変換できない場合は defaultValue で指定された値を返す
          *  進数指定可能
          */
-        convert.stringToInteger = function (value, radix, defaultValue) {
+        convert._stringToInteger = function (value, defaultValue, radix) {
             radix = copipe.defaultTo(radix, 10);
             copipe.guard(function () { return [
                 [copipe.isString(value), 'args1(value) is not string.'],
@@ -1023,10 +1043,17 @@ var copipe;
             ]; }, function () {
                 throw new TypeError('stringToInteger ' + copipe.guard.message());
             });
-            if (!copipe.string.matchFormat(value, String(radix) + '_base_number')) {
+            if (!copipe.string.matchFormat(String(radix) + '_base_number', value)) {
                 return defaultValue;
             }
             return copipe.matchValue(parseInt(value, radix), [copipe.isNotInteger], defaultValue);
+        };
+        convert.stringToInteger = function (value, defaultValue, radix) {
+            var parameter = copipe.if_(copipe.isObject(value))({
+                then: value,
+                "else": { value: value, radix: radix, defaultValue: defaultValue }
+            });
+            return convert._stringToInteger(parameter.value, parameter.defaultValue, parameter.radix);
         };
         convert.strToInteger = convert.stringToInteger;
         convert.strToInt = convert.stringToInteger;
@@ -1041,19 +1068,27 @@ var copipe;
         /**
          * 文字列を他の文字列か正規表現で含むかどうかを調べる関数
          */
-        string.includes = function (value, compareArray) {
+        string._includes = function (value, compareArray) {
             var compareFunc = function (a, b) { return a.includes(b); };
+            var _match = copipe.compare._match;
             if (copipe.isObject(value)) {
-                return copipe.compare._match(compareFunc, value.value, value.compareArray);
+                return _match(compareFunc, value.value, value.compareArray);
             }
             else {
-                return copipe.compare._match(compareFunc, value, compareArray);
+                return _match(compareFunc, value, compareArray);
             }
+        };
+        string.includes = function (value, compareArray) {
+            var parameter = copipe.if_(copipe.isObject(value))({
+                then: value,
+                "else": { value: value, compareArray: compareArray }
+            });
+            return string._includes(parameter.value, parameter.compareArray);
         };
         /**
          * フォーマットに一致しているかどうかを判定する関数
          */
-        string.matchFormat = function (value, formatName) {
+        string._matchFormat = function (formatName, value) {
             copipe.guard(function () { return [
                 [copipe.isString(value), 'args1(value) is not string.'],
                 [copipe.isString(formatName), 'args2(formatName) is not string.'],
@@ -1145,6 +1180,13 @@ var copipe;
                 default:
                     throw new Error("matchFormat args2(formatName) is not exists format. " + formatName);
             }
+        };
+        string.matchFormat = function (formatName, value) {
+            var parameter = copipe.if_(copipe.isObject(formatName))({
+                then: formatName,
+                "else": { formatName: formatName, value: value }
+            });
+            return string._matchFormat(parameter.formatName, parameter.value);
         };
     })(string = copipe.string || (copipe.string = {}));
 })(copipe || (copipe = {}));
