@@ -2,6 +2,12 @@
 
 ## Version
 
+### 1.2.1
+#### 2019/06/09(Sun)
+- update parameter args
+  numberToString, stringToNumber, stringToInteger
+  string.includes, string.matchFormat
+
 ### 1.2.0
 #### 2019/06/08(Sat)
 - add numberToString, stringToNumber, stringToInteger

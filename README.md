@@ -84,6 +84,12 @@ console.log(
 
 ## Version
 
+### 1.2.1
+#### 2019/06/09(Sun)
+- update parameter args
+  numberToString, stringToNumber, stringToInteger
+  string.includes, string.matchFormat
+
 ### 1.2.0
 #### 2019/06/08(Sat)
 - add numberToString, stringToNumber, stringToInteger
@@ -98,21 +104,6 @@ console.log(
 - add Polyfill statsWith endsWith
 - update compare.equal or
 - add compare.matchValue defaultValue
-
-### 1.0.1
-#### 2019/06/02(Sun)
-- update consoleHook._accept
-  check args second over value
-
-### 1.0.0
-#### 2019/05/22(Wed)
-- update README.md for Web for WSH
-- Support Windows WSH (debug/release)
-- update README.md for Web for WSH
-- update pacage.json tsc command
-- Add Array.some polyfill
-- isThrownException no exceptionName support
-- update copipe_node.js forceMkDirSync
 
 ### More Info
 [VERSION_EN.md](https://github.com/standard-software/copipejs/blob/master/VERSION_EN.md)
