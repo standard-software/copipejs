@@ -2,6 +2,15 @@
 
 ## Version
 
+### 2.0.0
+#### 2019/09/26(Thu)
+Next Product  
+[standard-software / Parts.js](./partsjs)
+
+### 1.2.2
+#### 2019/09/26(Thu)
+- document update
+
 ### 1.2.1
 #### 2019/06/09(Sun)
 - update parameter args

@@ -84,6 +84,15 @@ console.log(
 
 ## Version
 
+### 2.0.0
+#### 2019/09/26(Thu)
+Next Product  
+[standard-software / Parts.js](./partsjs)
+
+### 1.2.2
+#### 2019/09/26(Thu)
+- document update
+
 ### 1.2.1
 #### 2019/06/09(Sun)
 - update parameter args
@@ -106,4 +115,4 @@ console.log(
 - add compare.matchValue defaultValue
 
 ### More Info
-[VERSION_EN.md](https://github.com/standard-software/copipejs/blob/master/VERSION_EN.md)
+[VERSION_EN.md](./VERSION_EN.md)
