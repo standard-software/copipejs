@@ -1,7 +1,7 @@
 {
   "private": false,
   "name": "@standard-software/copipe",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "simple code parts",
   "main": "./release/node/copipe",
   "scripts": {

@@ -87,7 +87,11 @@ console.log(
 ### 2.0.0
 #### 2019/09/26(Thu)
 Next Product  
-[standard-software / Parts.js](./partsjs)
+[standard-software / Parts.js](https://github.com/standard-software/partsjs)
+
+### 1.2.3
+#### 2019/09/26(Thu)
+- document update
 
 ### 1.2.2
 #### 2019/09/26(Thu)
